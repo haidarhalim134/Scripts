@@ -97,7 +97,7 @@ namespace Control.Core
             this.BaseInit();
             this.IsPlayer = true;
             this.stamina.Max = this.PlayerStats.MaxStamina;
-            this.MaxHealth = this.PlayerStats.MaxHealth;
+            this.health.Max = this.PlayerStats.MaxHealth;
             this.FullDeck = new List<AbilityContainer>(this.PlayerStats.FullDeck);
             this.ReserveDeck = new List<AbilityContainer>(this.PlayerStats.FullDeck);
             this.TeamId = 0;
@@ -105,7 +105,7 @@ namespace Control.Core
             this.Setup = this.SetupUI;
             CombatEngine.RegisterCreature(this, true);
             this.stamina.Fill();
-            this.CurrHealth = this.MaxHealth;
+            this.health.Fill();
             this.Deck = this.TEMP.GetComponent<CardDeck>();
         }
         // Start is called before the first frame update

@@ -42,7 +42,7 @@ namespace LevelManager
         {
             Object.GetComponent<SpriteRenderer>().sprite = Data.Skin;
             Script.InitStats();
-            Script.MaxHealth = Data.MaxHealth;
+            Script.health.Max = Data.MaxHealth;
             Script.stamina.Max = Data.MaxStamina;
             Script.TeamId = TeamId;
             GameObject SpawnPlace = GameObject.Find("Team"+TeamId);

@@ -10,7 +10,7 @@ namespace Control.Core
     {
         public void UpdateCounter()
         {
-            this.Counter.text = this.Creature.CurrHealth+"/"+this.Creature.MaxHealth;
+            this.Counter.text = this.Creature.health.Curr+"/"+this.Creature.health.Max;
         }
         // Start is called before the first frame update
         void Start()

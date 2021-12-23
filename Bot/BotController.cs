@@ -24,9 +24,9 @@ namespace Control.Core
             this.Acted = false;
             this.IsPlayer = false;
             this.stamina.Max = 3;
-            this.MaxHealth = 100;
+            this.health.Max = 100;
             this.stamina.Fill();
-            this.CurrHealth = this.MaxHealth;
+            this.health.Fill();
         }
         private void AssignTeam(int Id)
         {
@@ -57,7 +57,7 @@ namespace Control.Core
         {
             // TODO: call moved
             // this.InitStats();
-            this.UpdateHealth(0);
+            this.health.Update(0);
             this.stamina.Update(0);
         }
 

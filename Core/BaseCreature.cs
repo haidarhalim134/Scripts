@@ -9,10 +9,11 @@ namespace Control.Core
     {
         public int TeamId;
         public int EnemyId;
+        public Health health;
         public Stamina stamina;
-        public int MaxHealth;
-        // [HideInInspector]
-        public int CurrHealth;
+        // public int MaxHealth;
+        // // [HideInInspector]
+        // public int CurrHealth;
         public int ActiveShield = 0;
         [HideInInspector]
         public List<HealthCounter> HealthCounters = new List<HealthCounter>();
@@ -43,6 +44,7 @@ namespace Control.Core
         }
         public void BaseInit()
         {
+            this.health = new Health(this.HealthCounters);
             this.stamina = new Stamina(this.StaminaCounters);
         }
         public void IsTarget(bool to)
@@ -60,29 +62,16 @@ namespace Control.Core
             this.stamina.Update(0);
             this.Setup(to);
         }
-        public void UpdateHealth(int by)
-        {
-            this.ActiveShield += by;
-            if (this.ActiveShield < 0)
-            {
-                this.CurrHealth += this.ActiveShield;
-                this.ActiveShield = 0;
-            }
-            foreach (HealthCounter Counter in HealthCounters)
-            {
-                Counter.UpdateCounter();
-            }
-        }
         public void TakeDamage(int damage)
         {
-            if (damage >= this.CurrHealth)
+            if (damage >= this.health.Curr)
             {
-                this.UpdateHealth(this.CurrHealth * -1);
+                this.health.Update(this.health.Curr * -1);
                 this.Death();
             }
             else
             {
-                this.UpdateHealth(damage * -1);
+                this.health.Update(damage * -1);
             }
         }
         public void UseStamina(int by)
