@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Control.Combat;
 
 namespace Control.Core
@@ -27,23 +28,13 @@ namespace Control.Core
         public bool IsPlayer;
         // TODO: simplify this shit
         public Action<bool> Setup = (bool T) => { };
-        void OnMouseUp()
+        public void SendTarget()
         {
-            if (this.AsTarget)
-            {
-                if (CombatEngine.isUIOverride)
-                {
-                    Debug.Log("over ui");
-                }
-                else
-                {
-                    CombatEngine.SendTargetToPlayer(this);
-                    Debug.Log("ok");
-                }
-            }
+            CombatEngine.SendTargetToPlayer(this);
         }
         public void BaseInit()
         {
+            this.GetComponent<Button>().onClick.AddListener(this.SendTarget);
             this.health = new Health(this.HealthCounters);
             this.stamina = new Stamina(this.StaminaCounters);
         }
