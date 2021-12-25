@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEngine.Random;
 using DataContainer;
 using Control.Core;
@@ -41,12 +42,13 @@ namespace LevelManager
         {
             BotController Script = Object.GetComponent<BotController>();
             int TeamId = BotCont.TeamId;
-            Object.GetComponent<SpriteRenderer>().sprite = Data.Skin;
+            Object.GetComponent<Image>().sprite = Data.Skin;
             // initiate gameobject's stamina and health container
             Script.InitStats();
             // assigning the health
             Script.health.Max = Data.MaxHealth;
             Script.stamina.Max = Data.MaxStamina;
+            Script.health.Fill();
             Script.TeamId = TeamId;
 
             GameObject SpawnPlace = GameObject.Find("Team"+TeamId);
@@ -62,12 +64,11 @@ namespace LevelManager
         }
         public static void SpawnCounter(GameObject Object)
         {
-            SpriteRenderer Renderer = Object.GetComponent<SpriteRenderer>();
+            RectTransform RT = Object.GetComponent<RectTransform>();
             GameObject StaminaC = SpawnCounterPrefab(InGameContainer.GetInstance().StaminaCounter, Object);
             GameObject HealthC = SpawnCounterPrefab(InGameContainer.GetInstance().HealthCounter, Object);
-            StaminaC.transform.localPosition = new Vector2(0, Renderer.bounds.size.y);
-            HealthC.transform.localPosition = new Vector2(0, Renderer.bounds.size.y*-1);
-            
+            StaminaC.transform.localPosition = new Vector2(0, RT.rect.height);
+            HealthC.transform.localPosition = new Vector2(0, RT.rect.height*-1);
         }
         public static GameObject SpawnCounterPrefab(GameObject Prefab, GameObject Parent)
         {
