@@ -35,7 +35,7 @@ namespace Control.Deck
                 float Angle = CalcCardAngle(PosX[i], PosY);
                 // TODO: keep an eye on this until the card prefab choice is settled, inc. the vector target below
                 // this.ActiveDeck[i].transform.parent = this.gameObject.transform;
-                this.ActiveDeck[i].transform.SetParent(this.gameObject.transform);
+                // this.ActiveDeck[i].transform.SetParent(this.gameObject.transform);
                 // get component => set target
                 CardHandler Script = ActiveDeck[i].GetComponent<CardHandler>();
                 RectTransform rect = this.ActiveDeck[i].GetComponent<RectTransform>();
@@ -45,7 +45,7 @@ namespace Control.Deck
         }
         public void AddCard(AbilityContainer Ability)
         {
-            GameObject Card = Instantiate(this.CardPrefab) as GameObject;
+            GameObject Card = Instantiate(this.CardPrefab, new Vector2(), new Quaternion(), gameObject.transform) as GameObject;
             CardHandler Script = Card.GetComponent<CardHandler>();
             Script.Ability = Ability;
             Script.UpdateText();

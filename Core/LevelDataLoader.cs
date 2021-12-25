@@ -12,6 +12,7 @@ namespace LevelManager
     /// <summary>default spreader : random</summary>
     public static void LoadLevel(LevelDataContainer Level)
         {
+            // TODO: create a simpler version of this, use prefab with object named 1 through n, then replace each number with actual creature
             Func<GameObject, int, float[]> Spreader = RandomXY;
             if (Level.SpreadType == "straight")
             {
@@ -41,12 +42,16 @@ namespace LevelManager
         private static void SpawnCreature(GameObject Object, BotController Script, CreatureDataContainer Data, int TeamId, int TeamCount, Func<GameObject, int, float[]> PosGenerator)
         {
             Object.GetComponent<SpriteRenderer>().sprite = Data.Skin;
+            // initiate gameobject's stamina and health container
             Script.InitStats();
+            // assigning the health
             Script.health.Max = Data.MaxHealth;
             Script.stamina.Max = Data.MaxStamina;
             Script.TeamId = TeamId;
+
             GameObject SpawnPlace = GameObject.Find("Team"+TeamId);
             Object.transform.parent = SpawnPlace.transform;
+
             float[] Pos = PosGenerator(SpawnPlace, TeamCount);
             Object.transform.localPosition = new Vector3(Pos[0], Pos[1], -2835f);
             SpawnCounter(Object);
@@ -58,12 +63,12 @@ namespace LevelManager
         public static void SpawnCounter(GameObject Object)
         {
             SpriteRenderer Renderer = Object.GetComponent<SpriteRenderer>();
-            GameObject StaminaC = SpawnPrefab(InGameContainer.GetInstance().StaminaCounter, Object);
-            GameObject HealthC = SpawnPrefab(InGameContainer.GetInstance().HealthCounter, Object);
+            GameObject StaminaC = SpawnCounterPrefab(InGameContainer.GetInstance().StaminaCounter, Object);
+            GameObject HealthC = SpawnCounterPrefab(InGameContainer.GetInstance().HealthCounter, Object);
             StaminaC.transform.localPosition = new Vector2(0, Renderer.bounds.size.y);
             HealthC.transform.localPosition = new Vector2(0, Renderer.bounds.size.y*-1);
         }
-        public static GameObject SpawnPrefab(GameObject Prefab, GameObject Parent)
+        public static GameObject SpawnCounterPrefab(GameObject Prefab, GameObject Parent)
         {
             GameObject Obj = Instantiate(Prefab);
             Obj.GetComponent<BaseCounter>().Target = Parent;
