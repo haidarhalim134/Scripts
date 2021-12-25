@@ -10,9 +10,9 @@ namespace DataContainer
     public class LevelDataContainer : ScriptableObject
     {
         public string LevelId;
-        public GameObject Prefab;
+        public GameObject CreaturePrefab;
+        public GameObject SpreadPrefab;
         public BotDataContainer[] Creature;
-        public string SpreadType;
         public int GetCreatureCount(int TeamId)
         {
             int Count = 0;
@@ -32,6 +32,7 @@ namespace DataContainer
     {
         public CreatureDataContainer CreatureAsset;
         public int TeamId;
+        public int SpreadPrefabPlace;
 
     }
 }

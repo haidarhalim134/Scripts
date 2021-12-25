@@ -16,7 +16,7 @@ namespace LevelManager
             SceneManager.LoadScene(target);
             if (SceneId!= null&&SceneId!= "")
             {
-                LevelDataContainer Data = GameObject.Find("Container").GetComponent<InGameContainer>().FindLevel(SceneId);
+                LevelDataContainer Data = InGameContainer.GetInstance().FindLevel(SceneId);
                 ToLoad = Data;
             }
         }

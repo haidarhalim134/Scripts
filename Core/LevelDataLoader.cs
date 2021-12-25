@@ -13,34 +13,34 @@ namespace LevelManager
     public static void LoadLevel(LevelDataContainer Level)
         {
             // TODO: create a simpler version of this, use prefab with object named 1 through n, then replace each number with actual creature
-            Func<GameObject, int, float[]> Spreader = RandomXY;
-            if (Level.SpreadType == "straight")
-            {
-                Spreader = StraightXY;
-            }
             foreach (BotDataContainer Cont in Level.Creature)
             {
-                GameObject Creature = Instantiate(Level.Prefab) as GameObject;
+                GameObject Creature = Instantiate(Level.CreaturePrefab, GameObject.Find("Team" + Cont.TeamId).transform) as GameObject;
                 Creature.AddComponent<BotController>();
-                BotController Script = Creature.GetComponent<BotController>();
-                SpawnCreature(Creature, Script, Cont.CreatureAsset, Cont.TeamId, Level.GetCreatureCount(Cont.TeamId), Spreader);
-            }
-            float[] RandomXY(GameObject SpawnPlace, int TotalCreature)
-            { 
-                Vector2 Rect = SpawnPlace.GetComponent<RectTransform>().sizeDelta;
-                return new float[2] { Rect.x*Range(-0.4f,0.4f), Rect.y*Range(-0.4f,0.4f)};
-            }
-            float[] StraightXY(GameObject SpawnPlace, int TotalCreature)
-            {
-                Vector2 Rect = SpawnPlace.GetComponent<RectTransform>().sizeDelta;
-                int Order = SpawnPlace.transform.childCount;
-                TotalCreature+= 1;
-                float sep = Rect.x/TotalCreature;
-                return new float[2] { Rect.x*-0.5f+sep*(Order),0 };
+                SpawnCreature(Creature, Cont.CreatureAsset, Level, Cont);
             }
         }
-        private static void SpawnCreature(GameObject Object, BotController Script, CreatureDataContainer Data, int TeamId, int TeamCount, Func<GameObject, int, float[]> PosGenerator)
+        static float[] RandomXY(GameObject SpawnPlace)
         {
+            Vector2 Rect = SpawnPlace.GetComponent<RectTransform>().sizeDelta;
+            return new float[2] { Rect.x * Range(-0.4f, 0.4f), Rect.y * Range(-0.4f, 0.4f) };
+        }
+        static float[] ReadCoord(GameObject SpawnPlace, LevelDataContainer LevelCont, BotDataContainer BotCont)
+        {
+            Vector2 Rect = SpawnPlace.GetComponent<RectTransform>().sizeDelta;
+            GameObject SpreadPrefab = LevelCont.SpreadPrefab;
+            Transform Slot = SpreadPrefab.transform.Find(BotCont.SpreadPrefabPlace.ToString());
+            if (Slot == null)
+            {
+                Debug.Log("randomized, no spot");
+                return RandomXY(SpawnPlace);
+            }
+            return new float[2] { Slot.localPosition.x, Slot.localPosition.y };
+        }
+        private static void SpawnCreature(GameObject Object, CreatureDataContainer Data, LevelDataContainer LevelCont, BotDataContainer BotCont)
+        {
+            BotController Script = Object.GetComponent<BotController>();
+            int TeamId = BotCont.TeamId;
             Object.GetComponent<SpriteRenderer>().sprite = Data.Skin;
             // initiate gameobject's stamina and health container
             Script.InitStats();
@@ -52,7 +52,7 @@ namespace LevelManager
             GameObject SpawnPlace = GameObject.Find("Team"+TeamId);
             Object.transform.parent = SpawnPlace.transform;
 
-            float[] Pos = PosGenerator(SpawnPlace, TeamCount);
+            float[] Pos = ReadCoord(SpawnPlace, LevelCont, BotCont);
             Object.transform.localPosition = new Vector3(Pos[0], Pos[1], -2835f);
             SpawnCounter(Object);
             foreach (string name in Data.Abilities)
@@ -67,12 +67,12 @@ namespace LevelManager
             GameObject HealthC = SpawnCounterPrefab(InGameContainer.GetInstance().HealthCounter, Object);
             StaminaC.transform.localPosition = new Vector2(0, Renderer.bounds.size.y);
             HealthC.transform.localPosition = new Vector2(0, Renderer.bounds.size.y*-1);
+            
         }
         public static GameObject SpawnCounterPrefab(GameObject Prefab, GameObject Parent)
         {
-            GameObject Obj = Instantiate(Prefab);
+            GameObject Obj = Instantiate(Prefab, Parent.transform);
             Obj.GetComponent<BaseCounter>().Target = Parent;
-            Obj.transform.SetParent(Parent.transform);
             return Obj;
         }
     }

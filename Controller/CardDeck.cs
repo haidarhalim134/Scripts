@@ -28,7 +28,6 @@ namespace Control.Deck
         public void RefreshCardPos(int ClickedCard = -1, float ClickedCardInit = -1f)
         {
             List<float> PosX = this.CalcCardsXPos(this.ActiveDeck.Count, ClickedCard, ClickedCardInit);
-            Debug.Log(string.Join(" ", PosX.ToArray()));
             for (int i = 0; i < PosX.Count;i++)
             {
                 float PosY = CalcCardsYPos(PosX[i]);
