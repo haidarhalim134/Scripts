@@ -53,16 +53,19 @@ namespace Control.Core
             this.stamina.Update(0);
             this.Setup(to);
         }
-        public void TakeDamage(int damage)
+        /// <returns>return false if dead else true</returns>
+        public bool TakeDamage(int damage)
         {
             if (damage >= this.health.Curr)
             {
                 this.health.Update(this.health.Curr * -1);
                 this.Death();
+                return false;
             }
             else
             {
                 this.health.Update(damage * -1);
+                return true;
             }
         }
         public void UseStamina(int by)
