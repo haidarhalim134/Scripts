@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1799749426079372685}
   - component: {fileID: -3913833853798776991}
-  - component: {fileID: -1229023703216427301}
+  - component: {fileID: 366142363036064157}
   m_Layer: 0
   m_Name: OneAttack
   m_TagString: Untagged
@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee63ed205d6fa00459582b8613c585c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Cost: 0
   Desc: 
---- !u!114 &-1229023703216427301
+--- !u!114 &366142363036064157
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,4 +59,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: one attack
-  damage: 11
+  damage: 10

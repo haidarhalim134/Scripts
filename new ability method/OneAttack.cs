@@ -5,7 +5,7 @@ using Control.Core;
 
 namespace Attributes.Abilities
 {
-    public class OneAttackTest : MonoBehaviour
+    public class OneAttack : MonoBehaviour
     {
         public string Name = "one attack";
         public int damage = 10;
@@ -16,7 +16,7 @@ namespace Attributes.Abilities
         }
         public string Text()
         {
-            return $"deal {this.damage} to enemy";
+            return $"deal {this.damage} damage to enemy";
         }
         void Start()
         {
