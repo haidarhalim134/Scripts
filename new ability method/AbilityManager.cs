@@ -9,7 +9,8 @@ namespace Attributes.Abilities
     {
         public List<Action<BaseCreature, BaseCreature>> ContainedAbilities = new List<Action<BaseCreature, BaseCreature>>();
         public List<Func<string>> DescGrabber = new List<Func<string>>(); 
-        public int Cost;
+        public int cost;
+        public int target;
         public string Desc;
         public string GetDesc()
         {

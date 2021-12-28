@@ -11,7 +11,7 @@ namespace Attributes.Abilities
             return GameObject.Find(name).GetComponent<AbilityManager>();
         }
     }
-    public class AbilityContainere
+    public class AbilityContainer
     {
         public string GUID;
         public string name;
