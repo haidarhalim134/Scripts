@@ -10,7 +10,7 @@ namespace Attributes.Abilities
         public string Name = "one attack";
         public int damage = 10;
         static StatProcessor Calc = new StatProcessor();
-        public void Ability(BaseCreature caster, BaseCreature target)
+        public void Ability(BaseCreature caster, BaseCreature target, string GUID = null)
         {
             target.TakeDamage(Calc.CalcAttack(this.damage, caster));
         }

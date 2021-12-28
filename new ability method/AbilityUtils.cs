@@ -15,5 +15,9 @@ namespace Attributes.Abilities
     {
         public string GUID;
         public string name;
+        public AbilityManager GetManager()
+        {
+            return GameObject.Find(name).GetComponent<AbilityManager>();
+        }
     }
 }
