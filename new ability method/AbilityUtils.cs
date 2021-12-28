@@ -6,7 +6,10 @@ namespace Attributes.Abilities
 {
     public class AbilityUtils : MonoBehaviour
     {
-        
+        public static AbilityManager GetAbility(string name)
+        {
+            return GameObject.Find(name).GetComponent<AbilityManager>();
+        }
     }
     public class AbilityContainere
     {
