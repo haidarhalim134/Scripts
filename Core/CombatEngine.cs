@@ -18,6 +18,8 @@ namespace Control.Combat
          new List<BaseCreature>()};
         private static int index = 0;
         private static BaseCreature InTurn;
+        // TODO: delay turn when player for example opening up a deck
+        public static string PlayerOccupied;
         public static bool isUIOverride { get; private set; }
         /// <summary>called by a creature when they finished their turn</summary>
         public static void ActionFinished()

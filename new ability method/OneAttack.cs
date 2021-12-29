@@ -7,7 +7,6 @@ namespace Attributes.Abilities
 {
     public class OneAttack : MonoBehaviour
     {
-        public string Name = "one attack";
         public int damage = 10;
         static StatProcessor Calc = new StatProcessor();
         public void Ability(BaseCreature caster, BaseCreature target, string GUID = null)

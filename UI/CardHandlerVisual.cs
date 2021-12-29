@@ -23,6 +23,7 @@ namespace Control.UI
                this.NameTXT = txtlist[1];
                this.CostTXT.text = Mng.cost.ToString();
                this.NameTXT.text = this.Ability.name;
+               txtlist[2].text = Mng.GetDesc();
             }
             public void Destroy() 
             {
