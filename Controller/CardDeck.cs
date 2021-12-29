@@ -49,6 +49,7 @@ namespace Control.Deck
             Script.Ability = Ability;
             Script.UpdateText();
             Script.TargetOwner = Owner.gameObject;
+            Script.InitOwner();
             Script.TheDeck = this;
             //TODO: remove this temp card color identifier later
             // Image tmpcolorid = Card.GetComponent<Image>();

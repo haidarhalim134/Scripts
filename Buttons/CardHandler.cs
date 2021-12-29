@@ -35,7 +35,7 @@ namespace Control.Deck
             this.transform.DOLocalMove(to, duration);
             // this.MoveTarget.Add(new Move(gameObject.transform.localPosition, to, duration));
         }
-        public void Start()
+        public void InitOwner()
         {
             this.Owner = this.TargetOwner.GetComponent<PlayerController>();
         }

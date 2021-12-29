@@ -103,6 +103,7 @@ namespace Control.Core
             this.health.Max = this.PlayerStats.MaxHealth;
             this.FullDeck = new List<AbilityContainer>(this.PlayerStats.FullDeck);
             this.ReserveDeck = new List<AbilityContainer>(this.PlayerStats.FullDeck);
+            Debug.Log(this.PlayerStats.FullDeck[0]);
             this.TeamId = 0;
             this.EnemyId = 1;
             this.Setup = this.SetupUI;
