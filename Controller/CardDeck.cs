@@ -51,8 +51,8 @@ namespace Control.Deck
             Script.TargetOwner = Owner.gameObject;
             Script.TheDeck = this;
             //TODO: remove this temp card color identifier later
-            Image tmpcolorid = Card.GetComponent<Image>();
-            tmpcolorid.color = Ability==AbilitiesRepository.OneAttack?Color.blue:Ability==AbilitiesRepository.TwoAttack?Color.red:Color.gray;
+            // Image tmpcolorid = Card.GetComponent<Image>();
+            // tmpcolorid.color = Ability==AbilitiesRepository.OneAttack?Color.blue:Ability==AbilitiesRepository.TwoAttack?Color.red:Color.gray;
             this.ActiveDeck.Add(Card);
             this.RefreshCardPos();
         }

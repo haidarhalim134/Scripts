@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using DataContainer;
 
 namespace Attributes.Abilities
 {
     public class AbilityUtils : MonoBehaviour
     {
-        public static AbilityManager GetAbility(string name)
-        {
-            return GameObject.Find(name).GetComponent<AbilityManager>();
-        }
+        
     }
     public class AbilityContainer
     {
@@ -17,6 +15,11 @@ namespace Attributes.Abilities
         public string name;
         public AbilityManager GetManager()
         {
+            GameObject Object = GameObject.Find(name);
+            if (Object == null)
+            {
+                InGameContainer.GetInstance().SpawnAbilityPrefab(name);
+            }
             return GameObject.Find(name).GetComponent<AbilityManager>();
         }
     }

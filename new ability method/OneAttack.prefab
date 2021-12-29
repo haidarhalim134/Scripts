@@ -44,7 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee63ed205d6fa00459582b8613c585c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cost: 0
+  AbName: OneAttack
+  cost: 3
+  target: 0
   Desc: 
 --- !u!114 &366142363036064157
 MonoBehaviour:

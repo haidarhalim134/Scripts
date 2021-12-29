@@ -8,8 +8,9 @@ namespace Attributes.Player
     public class PlayerData : MonoBehaviour
     {
         public static PlayerDataContainer One = new PlayerDataContainer() { MaxHealth = 100, MaxStamina = 3, FullDeck = new List<AbilityContainer>(){ 
-            AbilitiesRepository.TwoAttack,AbilitiesRepository.TwoAttack,AbilitiesRepository.OneAttack,AbilitiesRepository.OneAttack,AbilitiesRepository.ShieldUp,AbilitiesRepository.ShieldUp
+            OneAttack,OneAttack,OneAttack,OneAttack,OneAttack
         }};
+        public static AbilityContainer OneAttack = new AbilityContainer(){name="OneAttack", GUID="XD"};
     }
     public class PlayerDataContainer
     {

@@ -16,6 +16,7 @@ namespace Control.Core
         private List<AbilityContainer> ReserveDeck = new List<AbilityContainer>();
         private List<AbilityContainer> UsedDeck = new List<AbilityContainer>();
         private AbilityContainer OrderedAbility;
+        public Dictionary<string, string> Modifier = new Dictionary<string, string>();
         public float CardOutSpeed = 0.1f;
         // TODO: removing this hardcoded assignment is preferred, can assign the instance directly
         public GameObject TEMP;
@@ -23,9 +24,10 @@ namespace Control.Core
         /// <returns>true if order accepted else false</returns>
         public bool OrderAbility(AbilityContainer name)
         {
-            if (this.stamina.Enough(name.cost))
+            AbilityManager Mng = name.GetManager();
+            if (this.stamina.Enough(Mng.cost))
             {
-                CombatEngine.SetupTarget(name);
+                CombatEngine.SetupTarget(Mng);
                 this.OrderedAbility = name;
                 return true;
             } else
@@ -41,7 +43,8 @@ namespace Control.Core
         {
             if (this.OrderedAbility != null && this.Control)
             {
-                bool Success = CombatEngine.RequestCast(this.OrderedAbility, this, Target);
+                AbilityManager ability = this.OrderedAbility.GetManager();
+                bool Success = CombatEngine.RequestCast(ability, this, Target, this.OrderedAbility.GUID);
                 if (Success)
                 {
                     this.RemoveFromDeck(this.OrderedAbility);

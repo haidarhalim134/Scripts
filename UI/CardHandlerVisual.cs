@@ -17,10 +17,11 @@ namespace Control.UI
             Sequence sequence;
             public void UpdateText()
             {
+               AbilityManager Mng = this.Ability.GetManager();
                TextMeshProUGUI[] txtlist =  GetComponentsInChildren<TextMeshProUGUI>();
                this.CostTXT = txtlist[0];
                this.NameTXT = txtlist[1];
-               this.CostTXT.text = this.Ability.cost.ToString();
+               this.CostTXT.text = Mng.cost.ToString();
                this.NameTXT.text = this.Ability.name;
             }
             public void Destroy() 

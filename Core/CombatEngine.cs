@@ -37,12 +37,12 @@ namespace Control.Combat
             return index;
         }
         /// <returns>true if request accepted else false</returns>
-        public static bool RequestCast(AbilityContainer Ability, BaseCreature caster, BaseCreature target = null)
+        public static bool RequestCast(AbilityManager Ability, BaseCreature caster, BaseCreature target, string GUID = null)
         {
             if (caster.stamina.Enough(Ability.cost))
             {
                 caster.UseStamina(Ability.cost);
-                Ability.ability(caster, target);
+                Ability.Activate(caster, target, GUID);
                 return true;
             } else 
             {
@@ -89,7 +89,7 @@ namespace Control.Combat
             }
         }
         /// <summary>setup target for Creature currently InTurn</summary>
-        public static void SetupTarget(AbilityContainer Ability)
+        public static void SetupTarget(AbilityManager Ability)
         {
             ClearTarget();
             if (Ability.target == 1)

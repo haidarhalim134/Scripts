@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 using static UnityEngine.Random;
 using DataContainer;
@@ -57,9 +58,11 @@ namespace LevelManager
             float[] Pos = ReadCoord(SpawnPlace, LevelCont, BotCont);
             Object.transform.localPosition = new Vector3(Pos[0], Pos[1], -2835f);
             SpawnCounter(Object);
-            foreach (string name in Data.Abilities)
+            foreach (GameObject name in Data.Abilities)
                 {
-                    Script.Skills.Add(AbilitiesRepository.GetAbility(name));
+                    AbilityManager Mng = InGameContainer.GetInstance().SpawnAbilityPrefab(name).
+                    GetComponent<AbilityManager>();
+                    Script.Skills.Add(Mng);
                 }
         }
         public static void SpawnCounter(GameObject Object)

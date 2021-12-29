@@ -10,7 +10,7 @@ namespace Control.Core
 {
     public class BotController : BaseCreature
     {
-        public List<AbilityContainer> Skills = new List<AbilityContainer>();
+        public List<AbilityManager> Skills = new List<AbilityManager>();
         private float ActionDelay = 1f;
         /// <summary>please call on start</summary>
         private void Awake() 
