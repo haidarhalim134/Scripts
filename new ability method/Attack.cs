@@ -17,7 +17,7 @@ namespace Attributes.Abilities
         {
             return $"deal {this.damage} damage to enemy";
         }
-        void Start()
+        void Awake()
         {
             AbilityManager Mng = gameObject.GetComponent<AbilityManager>();
             Mng.ContainedAbilities.Add(this.Ability);

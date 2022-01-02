@@ -15,9 +15,9 @@ namespace Attributes.Abilities
         }
         public string Text()
         {
-            return $"give {this.shield}";
+            return $"give {this.shield} shield";
         }
-        void Start()
+        void Awake()
         {
             AbilityManager Mng = gameObject.GetComponent<AbilityManager>();
             Mng.ContainedAbilities.Add(this.Ability);
