@@ -12,7 +12,7 @@ namespace DataContainer
         public GameObject StaminaCounter;
         public GameObject HealthCounter;
         public LevelDataContainer[] Levels;
-        public AssetReferenceContainer[] Abilities;
+        public PrefabContainer[] Abilities;
         public AssetReferenceContainer[] LevelsTest;
         private AsyncOperationHandle<LevelDataContainer> LevelHandle;
         public LevelDataContainer FindLevel(string name)
@@ -43,11 +43,11 @@ namespace DataContainer
             GameObject prefab = GameObject.Find(name);
             if (prefab == null)
             {
-                foreach (AssetReferenceContainer Cont in this.Abilities)
+                foreach (PrefabContainer Cont in this.Abilities)
                 {
-                    if (Cont.Id == name)
+                    if (Cont.Prefab.name == name)
                     {
-                        GameObject Object = Cont.Ref.InstantiateAsync().Result;
+                        GameObject Object = Instantiate(Cont.Prefab);
                         Object.name = name;
                     }
                 }
@@ -80,5 +80,11 @@ namespace DataContainer
     {
         public string Id;
         public AssetReference Ref;
+    }
+    [Serializable]
+    public class PrefabContainer
+    {
+        public string Id;
+        public GameObject Prefab;
     }
 }

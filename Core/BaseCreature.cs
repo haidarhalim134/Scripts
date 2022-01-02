@@ -30,7 +30,10 @@ namespace Control.Core
         public Action<bool> Setup = (bool T) => { };
         public void SendTarget()
         {
-            CombatEngine.SendTargetToPlayer(this);
+            if (this.AsTarget)
+            {
+                CombatEngine.SendTargetToPlayer(this);
+            }
         }
         public void BaseInit()
         {
@@ -74,6 +77,10 @@ namespace Control.Core
         }
         public void Death()
         {
+            if (this.Control)
+            {
+                CombatEngine.ActionFinished();
+            }
             CombatEngine.UnRegisterCreature(this);
             Destroy(gameObject);
         }

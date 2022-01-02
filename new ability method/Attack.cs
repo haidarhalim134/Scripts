@@ -5,7 +5,7 @@ using Control.Core;
 
 namespace Attributes.Abilities
 {
-    public class OneAttack : MonoBehaviour
+    public class Attack : MonoBehaviour
     {
         public int damage = 10;
         static StatProcessor Calc = new StatProcessor();
