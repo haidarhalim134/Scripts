@@ -11,7 +11,7 @@ namespace Control.Core
 {
     public class PlayerController : BaseCreature
     {
-        public PlayerDataContainer PlayerStats = PlayerData.One;
+        public PlayerDataContainer PlayerStats = LoadedSave.tmp.Player;
         public List<AbilityContainer> FullDeck = new List<AbilityContainer>();
         public List<AbilityContainer> ReserveDeck = new List<AbilityContainer>();
         public List<AbilityContainer> UsedDeck = new List<AbilityContainer>();

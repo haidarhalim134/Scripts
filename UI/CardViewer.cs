@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Events;
 using Attributes.Abilities;
 using Control.UI;
 
@@ -16,7 +18,7 @@ namespace Control.Core
             
         }
         /// <summary>pass an on click method if there is any</summary>
-        public void Enable(List<AbilityContainer> Abilities, Action OnClick = null)
+        public void Enable(List<AbilityContainer> Abilities, UnityAction OnClick = null)
         {
             GameObject Prefab = new GameObject("box");
             Prefab.AddComponent<RectTransform>();
@@ -27,6 +29,11 @@ namespace Control.Core
                 CardHandlerVisual Script = Object.GetComponent<CardHandlerVisual>();
                 Script.Ability = cont;
                 Script.UpdateText();
+                if (OnClick != null)
+                {
+                    Button btn = Object.GetComponent<Button>();
+                    btn.onClick.AddListener(OnClick);
+                }
             }
             Destroy(Prefab);
             this.gameObject.SetActive(true);
