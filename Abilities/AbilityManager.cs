@@ -7,7 +7,7 @@ namespace Attributes.Abilities
 {
     public class AbilityManager : MonoBehaviour
     {
-        public List<Action<BaseCreature, BaseCreature, string>> ContainedAbilities = new List<Action<BaseCreature, BaseCreature, string>>();
+        public List<Action<BaseCreature, BaseCreature, AbilityData>> ContainedAbilities = new List<Action<BaseCreature, BaseCreature, AbilityData>>();
         public List<Func<string>> DescGrabber = new List<Func<string>>();
         public string AbName; 
         public int cost;
@@ -23,11 +23,11 @@ namespace Attributes.Abilities
             }
             return this.Desc;
         }
-        public void Activate(BaseCreature caster, BaseCreature target, string GUID = null)
+        public void Activate(BaseCreature caster, BaseCreature target, AbilityData Data = null)
         {
-            foreach(Action<BaseCreature, BaseCreature, string> abil in ContainedAbilities)
+            foreach(Action<BaseCreature, BaseCreature, AbilityData> abil in ContainedAbilities)
             {
-                abil(caster, target, GUID);
+                abil(caster, target, Data);
             }
         }
     }

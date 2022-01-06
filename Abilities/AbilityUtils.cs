@@ -11,7 +11,7 @@ namespace Attributes.Abilities
     }
     public class AbilityContainer
     {
-        public string GUID;
+        public AbilityData Data;
         public string name;
         public AbilityManager GetManager()
         {
@@ -22,5 +22,11 @@ namespace Attributes.Abilities
             }
             return GameObject.Find(name).GetComponent<AbilityManager>();
         }
+    }
+    public class AbilityData
+    {
+        public int Level;
+        public int Damage;
+        public int Shield;
     }
 }

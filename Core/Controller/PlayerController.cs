@@ -12,9 +12,9 @@ namespace Control.Core
     public class PlayerController : BaseCreature
     {
         public PlayerDataContainer PlayerStats = PlayerData.One;
-        private List<AbilityContainer> FullDeck = new List<AbilityContainer>();
-        private List<AbilityContainer> ReserveDeck = new List<AbilityContainer>();
-        private List<AbilityContainer> UsedDeck = new List<AbilityContainer>();
+        public List<AbilityContainer> FullDeck = new List<AbilityContainer>();
+        public List<AbilityContainer> ReserveDeck = new List<AbilityContainer>();
+        public List<AbilityContainer> UsedDeck = new List<AbilityContainer>();
         private AbilityContainer OrderedAbility;
         public Dictionary<string, string> Modifier = new Dictionary<string, string>();
         public float CardOutSpeed = 0.1f;
@@ -35,19 +35,19 @@ namespace Control.Core
                 return false;
             }
         }
-        public void ClearOrder()
+        public void AbilityClearOrder()
         {
             this.OrderedAbility = null;
         }
-        public void SendOrderedAbility(BaseCreature Target)
+        public void AbilitySendOrdered(BaseCreature Target)
         {
             if (this.OrderedAbility != null && this.Control)
             {
                 AbilityManager ability = this.OrderedAbility.GetManager();
-                bool Success = CombatEngine.RequestCast(ability, this, Target, this.OrderedAbility.GUID);
+                bool Success = CombatEngine.RequestCast(ability, this, Target, this.OrderedAbility.Data);
                 if (Success)
                 {
-                    this.RemoveFromDeck(this.OrderedAbility);
+                    this.DeckRemoveFrom(this.OrderedAbility);
                     this.OrderedAbility = null;
                 }
             }
@@ -56,38 +56,38 @@ namespace Control.Core
         {
             if (T)
             {
-            StartCoroutine(this.InitDeck());
+            StartCoroutine(this.DeckInit());
             }
         }
-        public IEnumerator InitDeck(int Card = 0)
+        public IEnumerator DeckInit(int Card = 0)
         {
             yield return new WaitForSeconds(this.CardOutSpeed);   
             if (this.ReserveDeck.Count==0)
             {
-                this.RefillReservedCard();
+                this.DeckRefillReservedCard();
             }
-            AddToDeck(0);
+            DeckAddTo(0);
             if (Card<4)
             {
-                StartCoroutine(InitDeck(Card+1));
+                StartCoroutine(DeckInit(Card+1));
             }
         }
-        private void AddToDeck(int index)
+        private void DeckAddTo(int index)
         {
             this.Deck.AddCard(this.ReserveDeck[index]);
             this.ReserveDeck.RemoveAt(index);
         }
         /// <summary>called by player instance then order its deck to also remove it</summary>
-        public void RemoveFromDeck(AbilityContainer Ability)
+        public void DeckRemoveFrom(AbilityContainer Ability)
         {
             this.Deck.RemoveActiveCard();
             this.UsedDeck.Add(Ability);
         }
-        public void MoveToUsedDeck(AbilityContainer Ability)
+        public void DeckMoveToUsed(AbilityContainer Ability)
         {
             this.UsedDeck.Add(Ability);
         }
-        private void RefillReservedCard()
+        private void DeckRefillReservedCard()
         {
             while (this.UsedDeck.Count>0)
             {
@@ -103,7 +103,6 @@ namespace Control.Core
             this.health.Max = this.PlayerStats.MaxHealth;
             this.FullDeck = new List<AbilityContainer>(this.PlayerStats.FullDeck);
             this.ReserveDeck = new List<AbilityContainer>(this.PlayerStats.FullDeck);
-            Debug.Log(this.PlayerStats.FullDeck[0]);
             this.TeamId = 0;
             this.EnemyId = 1;
             this.Setup = this.SetupUI;

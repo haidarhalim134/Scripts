@@ -9,7 +9,6 @@ namespace Map
     public class CharacterController : MonoBehaviour
     {
         public Animator animator;
-        public Move move;
         public float moveDuration;
         public void Run(bool State)
         {

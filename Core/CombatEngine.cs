@@ -39,12 +39,12 @@ namespace Control.Combat
             return index;
         }
         /// <returns>true if request accepted else false</returns>
-        public static bool RequestCast(AbilityManager Ability, BaseCreature caster, BaseCreature target, string GUID = null)
+        public static bool RequestCast(AbilityManager Ability, BaseCreature caster, BaseCreature target, AbilityData Data = null)
         {
             if (caster.stamina.Enough(Ability.cost))
             {
                 caster.UseStamina(Ability.cost);
-                Ability.Activate(caster, target, GUID);
+                Ability.Activate(caster, target, Data);
                 return true;
             } else 
             {
@@ -78,7 +78,7 @@ namespace Control.Combat
         }
         public static void SendTargetToPlayer(BaseCreature Creature)
         {
-            InTurn.gameObject.GetComponent<PlayerController>().SendOrderedAbility(Creature);          
+            InTurn.gameObject.GetComponent<PlayerController>().AbilitySendOrdered(Creature);          
         }
         public static void ClearTarget()
         {
@@ -143,14 +143,14 @@ namespace Control.Combat
         {
             Creature.SetupUI();
         }
-        void OnMouseUp()
+        /// <summary>call this to clear current player's highlighted card</summary>
+        public void OnClick()
         {
             Debug.Log("click");
             if (InTurn.IsPlayer)
             {
                 PlayerController Controller = InTurn.gameObject.GetComponent<PlayerController>();
-                Controller.ClearOrder();
-                Controller.Deck.RefreshCardPos();
+                Controller.Deck.ClearHighlight();
                 
             }
         }

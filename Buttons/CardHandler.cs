@@ -14,24 +14,37 @@ namespace Control.Deck
         PlayerController Owner;
         public CardDeck TheDeck;
         public bool Active = false;
+        public Animator animator;
         public void OnClick() 
         {
             bool Sucess = this.Owner.OrderAbility(this.Ability);
             if (Sucess)
             {
                 this.TheDeck.HighlightCard(this.gameObject);
-                this.Active = true;
+                this.Highlight(true);
             } else
             {
                 
             }
         }
+        public void Highlight(bool to)
+        {
+            if (to)
+            {
+                this.Active = true;
+                this.animator.SetBool("Active", true);
+                this.gameObject.transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0.1f);
+                this.gameObject.transform.DOLocalMoveY(5 - this.GetComponent<RectTransform>().rect.height / 2, 0.1f);
+                this.gameObject.transform.SetAsLastSibling();
+            }else
+            {
+                this.Active = false;
+                this.animator.SetBool("Active", false);
+                this.gameObject.transform.SetAsLastSibling();
+            }
+        }
         public void AddMoveTarget(Vector2 to, float duration = 0.1f,bool overrideTarget = false)
         {
-            if (overrideTarget)
-            {
-                this.MoveTarget.Clear();
-            }
             this.transform.DOLocalMove(to, duration);
             // this.MoveTarget.Add(new Move(gameObject.transform.localPosition, to, duration));
         }

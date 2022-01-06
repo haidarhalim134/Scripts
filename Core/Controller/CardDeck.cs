@@ -24,6 +24,11 @@ namespace Control.Deck
             this.ActiveCard = Card;
             this.RefreshCardPos(Index, PosX[Index]);
         }
+        public void ClearHighlight()
+        {
+            this.Owner.AbilityClearOrder();
+            this.RefreshCardPos();
+        }
         /// <summary>ClickedCardInit refer to x position</summary>
         public void RefreshCardPos(int ClickedCard = -1, float ClickedCardInit = -1f)
         {
@@ -32,14 +37,15 @@ namespace Control.Deck
             {
                 float PosY = CalcCardsYPos(PosX[i]);
                 float Angle = CalcCardAngle(PosX[i], PosY);
-                // TODO: keep an eye on this until the card prefab choice is settled, inc. the vector target below
-                // this.ActiveDeck[i].transform.parent = this.gameObject.transform;
-                // this.ActiveDeck[i].transform.SetParent(this.gameObject.transform);
                 // get component => set target
                 CardHandler Script = ActiveDeck[i].GetComponent<CardHandler>();
                 RectTransform rect = this.ActiveDeck[i].GetComponent<RectTransform>();
                 Script.AddMoveTarget(new Vector2(PosX[i] - rect.rect.width/2,PosY-this.DeckCurve - rect.rect.height/2));
                 this.ActiveDeck[i].transform.rotation = Quaternion.Euler(0,0,Angle);
+                if (i != ClickedCard)
+                {
+                    Script.Highlight(false);
+                }
             }
         }
         public void AddCard(AbilityContainer Ability)
@@ -69,7 +75,7 @@ namespace Control.Deck
         {
             foreach (GameObject Card in this.ActiveDeck)
             {
-                this.Owner.MoveToUsedDeck(Card.GetComponent<CardHandler>().Ability);
+                this.Owner.DeckMoveToUsed(Card.GetComponent<CardHandler>().Ability);
                 Card.GetComponent<CardHandler>().Destroy();
                 // Destroy(Card);
             }
@@ -140,7 +146,7 @@ namespace Control.Deck
                 int Median = Convert.ToInt32(Math.Floor(Count/2));
                 int StartPoint = Math.Abs(-1 * ClickedCard + TargetCard);
                 float SepMlt = (float)(1/Math.Sqrt(StartPoint));
-                return BaseSep * SepMlt * 1.5f;
+                return BaseSep * SepMlt * 1.3f;
             }
             return BaseSep;
         }
@@ -152,9 +158,9 @@ namespace Control.Deck
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Mouse1))
             {
-                this.RefreshCardPos();
+                this.ClearHighlight();
             }
         }
     }
