@@ -11,6 +11,7 @@ namespace Attributes.Abilities
         public List<Func<string>> DescGrabber = new List<Func<string>>();
         public string AbName; 
         public int cost;
+        public int GoldCost;
         [Tooltip("self 0;allies 1;enemy 2")]
         public int target;
         public string Desc;

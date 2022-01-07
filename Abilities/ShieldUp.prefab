@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AbName: ShieldUp
   cost: 1
+  GoldCost: 125
   target: 0
   Desc: 
 --- !u!114 &8802296006738153692
@@ -60,4 +61,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbf966ed19cebb4ba28b2352e2534f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shield: 10
+  shield: 15

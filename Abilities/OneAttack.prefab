@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AbName: OneAttack
   cost: 1
+  GoldCost: 100
   target: 2
   Desc: 
 --- !u!114 &366142363036064157

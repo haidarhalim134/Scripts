@@ -40,11 +40,11 @@ namespace Control.Deck
                 // get component => set target
                 CardHandler Script = ActiveDeck[i].GetComponent<CardHandler>();
                 RectTransform rect = this.ActiveDeck[i].GetComponent<RectTransform>();
-                Script.AddMoveTarget(new Vector2(PosX[i] - rect.rect.width/2,PosY-this.DeckCurve - rect.rect.height/2));
-                this.ActiveDeck[i].transform.rotation = Quaternion.Euler(0,0,Angle);
+                Script.AddMoveTarget(new Vector2(PosX[i] - rect.rect.width/2,PosY-this.DeckCurve - rect.rect.height/2));        
                 if (i != ClickedCard)
                 {
                     Script.Highlight(false);
+                    this.ActiveDeck[i].transform.rotation = Quaternion.Euler(0, 0, Angle);
                 }
             }
         }

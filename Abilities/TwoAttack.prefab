@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AbName: TwoAttack
   cost: 2
+  GoldCost: 150
   target: 2
   Desc: 
 --- !u!114 &-7193082020283863780
@@ -60,4 +61,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eb1f483592418e49b15384945b158a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 30

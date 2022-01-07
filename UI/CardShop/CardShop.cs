@@ -1,36 +1,30 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
 using Attributes.Abilities;
 using Control.UI;
 
 namespace Control.Core
 {
-    public class CardViewer : MonoBehaviour
+    public class CardShop : MonoBehaviour
     {
         List<AbilityContainer> Cards;
         public GameObject Prefab;
         public GameObject Grid;
         void Awake()
         {
-            
+
         }
         /// <summary>pass an on click method if there is any</summary>
         public void Enable(List<AbilityContainer> Abilities)
         {
-            GameObject Prefab = new GameObject("box");
-            Prefab.AddComponent<RectTransform>();
             foreach (AbilityContainer cont in Abilities)
             {
-                GameObject Parent = Instantiate(Prefab,this.Grid.transform);
-                GameObject Object = Instantiate(this.Prefab, Parent.transform);
-                CardHandlerVisual Script = Object.GetComponent<CardHandlerVisual>();
+                GameObject Object = Instantiate(this.Prefab, this.Grid.transform);
+                ShopItem Script = Object.GetComponent<ShopItem>();
                 Script.Ability = cont;
-                Script.UpdateText();
+                Script.Init();
             }
-            Destroy(Prefab);
             this.gameObject.SetActive(true);
         }
         public void Disable()
