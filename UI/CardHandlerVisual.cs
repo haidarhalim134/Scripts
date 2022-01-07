@@ -22,6 +22,10 @@ namespace Control.UI
                this.CostTXT = txtlist[0];
                this.NameTXT = txtlist[1];
                this.CostTXT.text = Mng.cost.ToString();
+               for (var i = 1;i<Mng.cost+1;i++)
+               {
+                   this.gameObject.transform.Find("Cost"+i).gameObject.SetActive(true);
+               }
                this.NameTXT.text = this.Ability.name;
                txtlist[2].text = Mng.GetDesc();
             }
