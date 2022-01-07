@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Control.Core
 {
-    public class Processor
+    public class FileProcessor
     {
         /// <summary>
         /// Writes the given object instance to an XML file.
