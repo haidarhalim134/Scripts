@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using Control.Core;
 
 namespace Map
 {
@@ -14,6 +15,7 @@ namespace Map
         public Material LineMaterial;
         public GameObject Character;
         NodeHandler InitializedMainTree;
+        Tree CurrentTree = null;
         private void ClearBoard()
         {
             for(int i = 0;i<gameObject.transform.childCount;i++)
@@ -21,15 +23,40 @@ namespace Map
                 Destroy(gameObject.transform.GetChild(i).gameObject);
             }
         }
-        public void Spawn()
+        public void Spawn(Tree tree = null)
         {
-            Tree result = TreeGenerator.Generate(MaxWidthp: 10);
-            Debug.Log("generated len:"+result.Length.ToString());
-            this.DrawTree(result);
-            this.InitializedMainTree = result.SelfInstance;
+            if (tree == null)
+            {
+                this.CurrentTree = TreeGenerator.Generate(MaxWidthp: 5);
+                Debug.Log("generated len:" + this.CurrentTree.Length.ToString());
+            } else
+            {
+                this.CurrentTree = tree;
+            }
+            this.DrawTree(this.CurrentTree);
+            this.InitializedMainTree = this.CurrentTree.SelfInstance;
             //enable the parent tree as starter
             this.InitializedMainTree.ProceedNode();
             Character.GetComponent<CharacterController>().SetPosition(this.InitializedMainTree.gameObject.transform.position);
+        }
+        public void Generate()
+        {
+            this.Spawn();
+        }
+        public void SaveTree()
+        {
+            if (this.CurrentTree!= null)
+            {
+                FileProcessor.WriteToXmlFile<Tree>("B:/tree.xml",this.CurrentTree);
+                Debug.Log("saved");
+            }
+        }
+        public void LoadTree()
+        {
+            Tree tree = FileProcessor.ReadFromXmlFile<Tree>("B:/tree.xml");
+            tree.AssignParent();
+            this.Spawn(tree);
+            Debug.Log("loaded");
         }
         public void ProgressPosition(NodeHandler Caller)
         {

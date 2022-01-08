@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using UnityEngine;
+using System.Linq;
+using System.Xml.Serialization;
 using Random = System.Random;
 
 namespace Map
@@ -30,7 +31,7 @@ namespace Map
             {"pre_node", new Dictionary<string, int[]>(){
                 {"normal", new int[] {6}},
                 {"branch", new int[] {3, 5, 4, 2}},
-                {"join", new int[] {2}}
+                {"join", new int[] {0}}
             }},
             {"node", new Dictionary<string, int[]>(){
                 {Home, new int[] {2}},
@@ -54,7 +55,8 @@ namespace Map
             MaxWidth = MaxWidthp;
             MinWidth = MinWidthp;
             CurrLen = 1;
-            MainTree = new Tree(Enemy, NodeValue[Enemy]);
+            MainTree = new Tree();
+            MainTree.Init(Enemy, NodeValue[Enemy]);
             CurrentBranches.Clear();
             CurrentBranches.Add(MainTree);
             while (CurrLen < TargetLen)
@@ -90,7 +92,8 @@ namespace Map
                  PreNode=="normal"?1:2);
                 foreach (string node in Nodes)
                 {
-                    Tree NewNode = new Tree(node, BranchValue(Nodes.Count)+NodeValue[node], branch);
+                    Tree NewNode = new Tree();
+                    NewNode.Init(node, BranchValue(Nodes.Count) + NodeValue[node], branch);
                     if(QParent!= null)
                     {
                         NewNode.Parent.Add(QParent);
@@ -130,22 +133,39 @@ namespace Map
     public class Tree
     {
         public string Type;
+        [XmlIgnore]
         public List<Tree> Parent = new List<Tree>();
         public List<Tree> Child = new List<Tree>();
         public float PathValue;
         public int Length;
-        /// <summary>need refactor if parent count increased</summary>
+        [XmlIgnore]
         public NodeHandler SelfInstance;
-        public Tree Createdon;
-        public Tree(string Type, float InitValue = 0, Tree Parent = null, Tree Child = null)
+        public void Init(string Type, float InitValue = 0, Tree Parent = null, Tree Child = null)
         {
             this.Type = Type;
             this.PathValue = InitValue;
-            if (Parent!= null)
+            if (Parent != null)
             {
-                this.Createdon = Parent;
                 this.Parent.Add(Parent);
-                this.PathValue+= Parent.PathValue;
+                this.PathValue += Parent.PathValue;
+            }
+        }
+        public void AssignParent(Tree tree = null)
+        {
+            if (tree == null)
+            {
+                tree = this;
+            }
+            if (tree.Child.Count == 0)
+            {
+                return;
+            }
+            foreach (Tree child in tree.Child)
+            {
+                child.Parent.Add(tree);
+                child.Parent.Distinct().ToList();
+                child.Child.Distinct().ToList();
+                this.AssignParent(child);
             }
         }
 

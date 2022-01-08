@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Control.Deck;
 using Attributes.Abilities;
 using DG.Tweening;
 
@@ -15,6 +16,7 @@ namespace Control.UI
             private TextMeshProUGUI NameTXT;
             private TextMeshProUGUI CostTXT;
             Sequence sequence;
+            public Vector2 Exit;
             public void UpdateText()
             {
                AbilityManager Mng = this.Ability.GetManager();
@@ -29,10 +31,22 @@ namespace Control.UI
                this.NameTXT.text = this.Ability.name;
                txtlist[2].text = Mng.GetDesc();
             }
-            public void Destroy() 
+            public void Destroy(RemoveStatus type) 
             {
-                this.DOKill();
-                Destroy(gameObject);
+                if (type == RemoveStatus.used)
+                {
+                    // this.transform.DOMove((Vector2)this.transform.position+new Vector2(0,5), 0.5f)
+                    // .OnComplete(()=>this.transform.DOMove(this.Exit, 0.2f).SetEase(Ease.Linear)
+                    // .SetDelay(0.2f).OnComplete(()=>Destroy(this.gameObject)));
+
+                    this.transform.DOMove(this.Exit- new Vector2(0f, 3f), 0.1f).SetEase(Ease.Linear)
+                    .OnComplete(()=>Destroy(this.gameObject));
+                    // Destroy(this.gameObject);
+                } else
+                {
+                    this.DOKill();
+                    Destroy(this.gameObject);
+                }
             }
     }
 }

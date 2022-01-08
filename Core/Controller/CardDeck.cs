@@ -15,10 +15,14 @@ namespace Control.Deck
         public PlayerController Owner;
         public int CardSep = 20;
         public int DeckCurve = 1000;
+        [Tooltip("used as card enter route")]
+        public GameObject ReserveDeck;
+        [Tooltip("used as card exit route")]
+        public GameObject UsedDeck;
         GameObject ActiveCard;
         /// <summary>auto refresh before highlighting</summary>
         public void HighlightCard(GameObject Card)
-        {         
+        { 
             List<float> PosX = this.CalcCardsXPos(this.ActiveDeck.Count);
             int Index = this.ActiveDeck.IndexOf(Card);
             this.ActiveCard = Card;
@@ -50,12 +54,14 @@ namespace Control.Deck
         }
         public void AddCard(AbilityContainer Ability)
         {
-            GameObject Card = Instantiate(this.CardPrefab, new Vector2(), new Quaternion(), gameObject.transform) as GameObject;
+            Vector2 spawnPlace = (Vector2)this.ReserveDeck.gameObject.transform.position - new Vector2(0f, 1f);
+            GameObject Card = Instantiate(this.CardPrefab, spawnPlace, new Quaternion(), gameObject.transform) as GameObject;
             CardHandler Script = Card.GetComponent<CardHandler>();
             Script.Ability = Ability;
             Script.UpdateText();
             Script.TargetOwner = Owner.gameObject;
             Script.InitOwner();
+            Script.Exit = this.UsedDeck.transform.position;
             Script.TheDeck = this;
             //TODO: remove this temp card color identifier later
             // Image tmpcolorid = Card.GetComponent<Image>();
@@ -66,7 +72,9 @@ namespace Control.Deck
         public void RemoveActiveCard()
         {
             this.ActiveDeck.Remove(this.ActiveCard);
-            this.ActiveCard.GetComponent<CardHandler>().Destroy();
+            CardHandler handler = this.ActiveCard.GetComponent<CardHandler>();
+            handler.animator.SetBool("Active", false);
+            handler.Destroy(RemoveStatus.used);
             // Destroy(this.ActiveCard);
             this.RefreshCardPos();
             this.ActiveCard = null;
@@ -76,7 +84,7 @@ namespace Control.Deck
             foreach (GameObject Card in this.ActiveDeck)
             {
                 this.Owner.DeckMoveToUsed(Card.GetComponent<CardHandler>().Ability);
-                Card.GetComponent<CardHandler>().Destroy();
+                Card.GetComponent<CardHandler>().Destroy(RemoveStatus.discard);
                 // Destroy(Card);
             }
             this.ActiveDeck.Clear();
@@ -164,5 +172,5 @@ namespace Control.Deck
             }
         }
     }
-
+    public enum RemoveStatus { discard, used };
 }
