@@ -1,5 +1,6 @@
 using System.Xml.Serialization;
 using System.IO;
+using UnityEngine;
 
 namespace Control.Core
 {
@@ -15,19 +16,16 @@ namespace Control.Core
         /// <param name="filePath">The file path to write the object instance to.</param>
         /// <param name="objectToWrite">The object instance to write to the file.</param>
         /// <param name="append">If false the file will be overwritten if it already exists. If true the contents will be appended to the file.</param>
-        public static void WriteToXmlFile<T>(string filePath, T objectToWrite, bool append = false) where T : new()
+        public static void WriteToXmlFile<T>(string filePath, T objectToWrite) where T : new()
         {
-            TextWriter writer = null;
             try
             {
-                var serializer = new XmlSerializer(typeof(T));
-                writer = new StreamWriter(filePath, append);
-                serializer.Serialize(writer, objectToWrite);
+                string jsonString = JsonUtility.ToJson(objectToWrite);
+                File.WriteAllText(filePath, jsonString);
             }
             finally
             {
-                if (writer != null)
-                    writer.Close();
+                
             }
         }
 
@@ -40,17 +38,14 @@ namespace Control.Core
         /// <returns>Returns a new instance of the object read from the XML file.</returns>
         public static T ReadFromXmlFile<T>(string filePath) where T : new()
         {
-            TextReader reader = null;
             try
             {
-                var serializer = new XmlSerializer(typeof(T));
-                reader = new StreamReader(filePath);
-                return (T)serializer.Deserialize(reader);
+                string fileContent = File.ReadAllText(filePath);
+                return JsonUtility.FromJson<T>(fileContent);
             }
             finally
             {
-                if (reader != null)
-                    reader.Close();
+                
             }
         }
     }

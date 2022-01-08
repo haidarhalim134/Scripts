@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Xml.Serialization;
 using Random = System.Random;
+using Control.Core;
 
 namespace Map
 {
@@ -14,30 +15,32 @@ namespace Map
     public static class TreeGenerator
     {
         private static Random rnd = new Random();
-        private static string Home = "home";
-        private static string Enemy = "enemy";
-        private static string Event = "event";
         private static string Node = "node";
         private static string PreNode = "pre_node";
         // TODO: consider creating custom data container, plus a custom config data interface, might require massive refactor
-        private static Dictionary<string, float> NodeValue = new Dictionary<string, float>()
+        private static Dictionary<NodeType, float> NodeValue = new Dictionary<NodeType, float>()
         {
-            {Home, 80f},
-            {Enemy, 30f},
-            {Event, 50f},
+            {NodeType.Home, 80f},
+            {NodeType.Enemy, 30f},
+            {NodeType.Event, 50f},
         };
         private static Dictionary<string, Dictionary<string, int[]>> Tendencies = new Dictionary<string, Dictionary<string, int[]>>()
         {
             {"pre_node", new Dictionary<string, int[]>(){
                 {"normal", new int[] {6}},
-                {"branch", new int[] {3, 5, 4, 2}},
+                {"branch", new int[] {3}},
                 {"join", new int[] {0}}
             }},
             {"node", new Dictionary<string, int[]>(){
-                {Home, new int[] {2}},
-                {Enemy, new int[] {8}},
-                {Event, new int[] {6}}
+                {"Home", new int[] {0}},
+                {"Enemy", new int[] {8}},
+                {"Event", new int[] {0}}
             }}
+        };
+        static Dictionary<string, NodeType> Convert = new Dictionary<string, NodeType>(){
+            {"Home",NodeType.Home},
+            {"Enemy",NodeType.Enemy},
+            {"Event",NodeType.Event},
         };
         public static float BranchValue(int count)
         {
@@ -56,7 +59,7 @@ namespace Map
             MinWidth = MinWidthp;
             CurrLen = 1;
             MainTree = new Tree();
-            MainTree.Init(Enemy, NodeValue[Enemy]);
+            MainTree.Init(NodeType.Enemy, NodeValue[NodeType.Enemy]);
             CurrentBranches.Clear();
             CurrentBranches.Add(MainTree);
             while (CurrLen < TargetLen)
@@ -90,7 +93,7 @@ namespace Map
                 }
                 List<string> Nodes = rnd.Choice(new List<string>(Tendencies["node"].Keys), CalcNodeWeights(),
                  PreNode=="normal"?1:2);
-                foreach (string node in Nodes)
+                foreach (NodeType node in Nodes.Select((a)=>Convert[a]))
                 {
                     Tree NewNode = new Tree();
                     NewNode.Init(node, BranchValue(Nodes.Count) + NodeValue[node], branch);
@@ -120,9 +123,9 @@ namespace Map
         }
         private static List<int> CalcNodeWeights()
         {
-            int wHome = CalcWeightIndex(Tendencies[Node][Home]);
-            int wEnemy = CalcWeightIndex(Tendencies[Node][Enemy]);
-            int wEvent = CalcWeightIndex(Tendencies[Node][Event]);
+            int wHome = CalcWeightIndex(Tendencies[Node]["Home"]);
+            int wEnemy = CalcWeightIndex(Tendencies[Node]["Enemy"]);
+            int wEvent = CalcWeightIndex(Tendencies[Node]["Event"]);
             return new List<int>(){wHome, wEnemy, wEvent};
         }
         private static int CalcWeightIndex(int[] Weights)
@@ -130,17 +133,19 @@ namespace Map
             return Weights[(int)Math.Ceiling((decimal)(CurrLen*(Weights.Length)/(float)TargetLen))-1];
         }
     }
+    [Serializable]
     public class Tree
     {
-        public string Type;
-        [XmlIgnore]
+        public bool CurrentPlayerPos;
+        public NodeType Type;
+        [NonSerialized]
         public List<Tree> Parent = new List<Tree>();
         public List<Tree> Child = new List<Tree>();
         public float PathValue;
         public int Length;
-        [XmlIgnore]
+        [NonSerialized]
         public NodeHandler SelfInstance;
-        public void Init(string Type, float InitValue = 0, Tree Parent = null, Tree Child = null)
+        public void Init(NodeType Type, float InitValue = 0, Tree Parent = null, Tree Child = null)
         {
             this.Type = Type;
             this.PathValue = InitValue;

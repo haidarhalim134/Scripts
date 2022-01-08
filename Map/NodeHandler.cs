@@ -2,23 +2,25 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Control.Core;
 
 namespace Map
 {
     public class NodeHandler : MonoBehaviour
     {
-        public string Type;
+        public NodeType Type;
         public List<NodeHandler> Child = new List<NodeHandler>();
         public List<NodeHandler> Parent = new List<NodeHandler>();
         /// <summary>if node is active choice for player to move</summary>
         public bool Active;
         public MapHandler mapHandler;
-        public void Init(string Type, List<NodeHandler> Parent)
+        public Tree tree;
+        public void Init(NodeType Type, List<NodeHandler> Parent)
         {
             this.Type = Type;
             this.Parent = Parent;
             gameObject.GetComponent<Image>().color =
-             this.Type == "enemy" ? Color.red : this.Type == "event" ? Color.blue : Color.yellow;
+             this.Type == NodeType.Enemy ? Color.red : this.Type == NodeType.Event ? Color.blue : Color.yellow;
             if (this.Parent != null)
             {
                 foreach (NodeHandler parent in this.Parent)
@@ -33,6 +35,7 @@ namespace Map
                     lineRenderer.positionCount = 2;
                     lineRenderer.useWorldSpace = true;
                     lineRenderer.textureMode = LineTextureMode.Tile;
+                    lineRenderer.useWorldSpace = false;
                     // Material material = mapHandler.LineMaterial;
                     // material.mainTextureScale = new Vector2(10f, 1);
                     // lineRenderer.material = material;
@@ -51,6 +54,7 @@ namespace Map
             {
                 return;
             }
+            this.tree.CurrentPlayerPos = true;
             mapHandler.ProgressPosition(this);
             // this.SetActive(false);
             this.CloseChoiceNode();
@@ -67,9 +71,10 @@ namespace Map
         /// <summary>disable other choice after picking one node as a path</summary>
         public void CloseChoiceNode()
         {
-            foreach (NodeHandler parent in this.Parent)
+            foreach (NodeHandler parent in this.Parent?? Enumerable.Empty<NodeHandler>())
             {
                 parent.ProceedNode(false);
+                parent.tree.CurrentPlayerPos = false;
             }
         }
         public void SetActive(bool to)

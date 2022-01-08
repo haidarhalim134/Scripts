@@ -9,16 +9,15 @@ namespace Map
     public class CharacterController : MonoBehaviour
     {
         public Animator animator;
-        public float moveDuration;
         public void Run(bool State)
         {
             this.animator.SetBool("Run", State);
         }
         /// <summary>use "AddMoveDelta" if target is not transform.position</summary>
-        public void AddMove(Vector2 to)
+        public void AddMove(Vector2 to, float moveDuration)
         {
             this.Run(true);
-            Vector2 target = to + new Vector2(0, this.GetComponent<SpriteRenderer>().bounds.size.y / 2);
+            Vector2 target = to; //+ new Vector2(0, this.GetComponent<SpriteRenderer>().bounds.size.y / 2);
             this.transform.DOMove(target,moveDuration).SetEase(Ease.Linear).OnComplete(()=>this.Run(false));
         }
         public void SetPosition(Vector3 to)

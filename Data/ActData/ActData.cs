@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace Control.Core
 {
-    public class ActDataContainer
+    public class ActData : ScriptableObject
     {
-        public Tree tree;
-    }   
+        
+    }
+    public enum NodeType{Enemy,Home,Event}
 }

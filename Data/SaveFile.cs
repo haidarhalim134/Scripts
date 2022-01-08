@@ -1,8 +1,9 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Attributes.Player;
 using Attributes.Abilities;
+using Tree = Map.Tree;
 
 namespace Control.Core
 {
@@ -10,6 +11,7 @@ namespace Control.Core
     {
         public static SaveFile tmp = new SaveFile();
     };
+    [Serializable]
     public class SaveFile
     {
         public PlayerDataContainer Player = new PlayerDataContainer()
@@ -28,5 +30,12 @@ namespace Control.Core
             }
         };
         public int Gold = 500;
+        public Dictionary<Act,ActCont> act = new Dictionary<Act, ActCont>();
+    }
+    public enum Act{ Act1, Act2 }
+    public class ActCont
+    {
+        public bool finished = false;
+        public Tree tree = null;
     }
 }

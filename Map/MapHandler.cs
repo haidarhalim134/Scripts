@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using Control.Core;
 
 namespace Map
@@ -16,6 +17,8 @@ namespace Map
         public GameObject Character;
         NodeHandler InitializedMainTree;
         Tree CurrentTree = null;
+        public float moveDuration;
+        public NodeHandler CurrentPlayerPos;
         private void ClearBoard()
         {
             for(int i = 0;i<gameObject.transform.childCount;i++)
@@ -27,7 +30,8 @@ namespace Map
         {
             if (tree == null)
             {
-                this.CurrentTree = TreeGenerator.Generate(MaxWidthp: 5);
+                this.CurrentTree = TreeGenerator.Generate();
+                this.CurrentTree.CurrentPlayerPos = true;
                 Debug.Log("generated len:" + this.CurrentTree.Length.ToString());
             } else
             {
@@ -36,8 +40,9 @@ namespace Map
             this.DrawTree(this.CurrentTree);
             this.InitializedMainTree = this.CurrentTree.SelfInstance;
             //enable the parent tree as starter
-            this.InitializedMainTree.ProceedNode();
-            Character.GetComponent<CharacterController>().SetPosition(this.InitializedMainTree.gameObject.transform.position);
+            // this.InitializedMainTree.ProceedNode();
+            this.InitializedMainTree.Active = true;
+            this.ProgressPosition(this.CurrentPlayerPos);
         }
         public void Generate()
         {
@@ -47,20 +52,22 @@ namespace Map
         {
             if (this.CurrentTree!= null)
             {
-                FileProcessor.WriteToXmlFile<Tree>("B:/tree.xml",this.CurrentTree);
+                FileProcessor.WriteToXmlFile<Tree>("B:/tree.json",this.CurrentTree);
                 Debug.Log("saved");
             }
         }
         public void LoadTree()
         {
-            Tree tree = FileProcessor.ReadFromXmlFile<Tree>("B:/tree.xml");
+            Tree tree = FileProcessor.ReadFromXmlFile<Tree>("B:/tree.json");
             tree.AssignParent();
             this.Spawn(tree);
             Debug.Log("loaded");
         }
         public void ProgressPosition(NodeHandler Caller)
         {
-            Character.GetComponent<CharacterController>().AddMove(Caller.gameObject.transform.position);
+            Character.GetComponent<CharacterController>().AddMove(Character.transform.position, this.moveDuration);
+            float delta = Caller.transform.position.x - Character.transform.position.x;
+            this.transform.DOMoveX(this.transform.position.x - delta, this.moveDuration);
         }
         public void DrawTree(Tree tree)
         {
@@ -92,6 +99,12 @@ namespace Map
                 NodeHandler Script = Object.GetComponent<NodeHandler>();
                 Script.mapHandler = this;
                 Branch.SelfInstance = Script;
+                Script.tree = Branch;
+                if (Branch.CurrentPlayerPos)
+                {
+                    this.CurrentPlayerPos = Script;
+                    Script.Active = true;
+                }
                 if(Branch.Parent.Count>0)
                 {
                     Script.Init(Branch.Type, Branch.Parent.Select(tree => tree.SelfInstance).ToList());
