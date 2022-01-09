@@ -12,5 +12,6 @@ public class ChangeLevel : MonoBehaviour
     {
         Debug.Log(target);
         LevelLoader.LoadLevel(target, SceneId);
+        LevelLoader.testing = true;
     }
 }

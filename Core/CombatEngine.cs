@@ -20,6 +20,7 @@ namespace Control.Combat
         private static BaseCreature InTurn;
         // TODO: delay turn when player for example opening up a deck
         public static string PlayerOccupied;
+        public static bool GameGoing = true;
         public static bool isUIOverride { get; private set; }
         /// <summary>called by a creature when they finished their turn</summary>
         public static void ActionFinished()
@@ -94,7 +95,7 @@ namespace Control.Combat
         public static void SetupTarget(AbilityManager Ability)
         {
             ClearTarget();
-            if (Ability.target == 1)
+            if (Ability.target == AbTarget.allies)
             {
                 foreach (BaseCreature Creature in RegisteredCreature[InTurn.TeamId])
                 {
@@ -103,7 +104,7 @@ namespace Control.Combat
                         Creature.IsTarget(true);
                     }
                 }
-            } else if (Ability.target == 2)
+            } else if (Ability.target == AbTarget.enemy)
             {
                 foreach (BaseCreature Creature in RegisteredCreature[InTurn.EnemyId])
                 {
@@ -152,6 +153,16 @@ namespace Control.Combat
                 PlayerController Controller = InTurn.gameObject.GetComponent<PlayerController>();
                 Controller.Deck.ClearHighlight();
                 
+            }
+        }
+        public static void EndGame(bool win)
+        {
+            GameGoing = false;
+            if (!LevelLoader.testing)
+            {
+                LoadedSave.Loaded.LastLevelWin = win;
+                Debug.Log("loading act map");
+                ToActMap.LoadScene();
             }
         }
         /// <summary>call level loader and remove prev level garbage</summary>

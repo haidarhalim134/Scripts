@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Control.Core;
+using DataContainer;
+using LevelManager;
 
 namespace Map
 {
@@ -53,12 +55,19 @@ namespace Map
             if (!this.Active)
             {
                 return;
+            }else if (this.tree.CurrentPlayerPos)
+            {
+                LevelDataContainer cont = LoadedActData.loadedActData
+                .GetLevel(this.Type, LoadedSave.Loaded.QueuedLevel.GetQueued(this.Type));
+                LevelLoader.LoadLevel(cont);
+            }else{
+                this.tree.CurrentPlayerPos = true;
+                mapHandler.ProgressPosition(this);
+                // this.SetActive(false);
+                this.CloseChoiceNode();
+                LoadedSave.Loaded.LastLevelWin = false;
+                SaveFile.Save(LoadedSave.Loaded);
             }
-            this.tree.CurrentPlayerPos = true;
-            mapHandler.ProgressPosition(this);
-            // this.SetActive(false);
-            this.CloseChoiceNode();
-            this.ProceedNode();
         }
         /// <summary>set the activation of all of this node's childs</summary>
         public void ProceedNode(bool to = true)

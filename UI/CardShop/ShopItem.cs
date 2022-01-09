@@ -23,9 +23,9 @@ namespace Control.Core
         }
         void onClick()
         {
-            if (Ability.GetManager().GoldCost<= LoadedSave.tmp.Gold)
+            if (Ability.GetManager().GoldCost<= LoadedSave.Loaded.Gold)
             {
-                LoadedSave.tmp.Player.CardAdd(this.Ability);
+                LoadedSave.Loaded.Player.CardAdd(this.Ability);
                 Destroy(this.gameObject);
             }
         }

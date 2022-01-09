@@ -28,6 +28,7 @@ namespace Control.Core
         public bool IsPlayer;
         // TODO: simplify this shit
         public Action<bool> Setup = (bool T) => { };
+        public Action OnDeath = () => { };
         public void SendTarget()
         {
             if (this.AsTarget)
@@ -82,7 +83,8 @@ namespace Control.Core
                 CombatEngine.ActionFinished();
             }
             CombatEngine.UnRegisterCreature(this);
-            Destroy(gameObject);
+            this.OnDeath();
+            Destroy(this.gameObject);
         }
         public void GiveShield(int by)
         {

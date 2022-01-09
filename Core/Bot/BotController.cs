@@ -27,6 +27,7 @@ namespace Control.Core
             this.health.Max = 100;
             this.stamina.Fill();
             this.health.Fill();
+            this.OnDeath = this.OnDeathBot;
         }
         private void AssignTeam(int Id)
         {
@@ -49,8 +50,12 @@ namespace Control.Core
                 CombatEngine.ActionFinished();
                 this.Control = false;
             } else {
-                 StartCoroutine(Decide());
+                 if (CombatEngine.GameGoing)StartCoroutine(Decide());
             }
+        }
+        public void OnDeathBot()
+        {
+            if (CombatEngine.RegisteredCreature[this.TeamId].Count == 0) CombatEngine.EndGame(true);
         }
         // Start is called before the first frame update
         void Start()

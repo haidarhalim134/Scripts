@@ -12,9 +12,9 @@ namespace Attributes.Player
     [Serializable]
     public class PlayerDataContainer
     {
-        public int MaxHealth { get;set; }
-        public int MaxStamina { get;set; }
-        public List<AbilityContainer> FullDeck { get;set; }
+        public int MaxHealth;
+        public int MaxStamina;
+        public List<AbilityContainer> FullDeck;
         public void CardAdd(AbilityContainer Ability)
         {
             this.FullDeck.Add(Ability);

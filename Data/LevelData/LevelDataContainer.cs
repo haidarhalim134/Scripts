@@ -6,7 +6,7 @@ using Attributes.Abilities;
 
 namespace DataContainer
 {
-    [CreateAssetMenu(fileName = "LevelData", menuName = "Level/new Level")]
+    [CreateAssetMenu(fileName = "LevelData", menuName = "new Level")]
     public class LevelDataContainer : ScriptableObject
     {
         public string LevelId;

@@ -9,6 +9,7 @@ namespace Attributes.Abilities
     {
         
     }
+    [Serializable]
     public class AbilityContainer
     {
         public AbilityData Data;
@@ -23,6 +24,7 @@ namespace Attributes.Abilities
             return GameObject.Find(name).GetComponent<AbilityManager>();
         }
     }
+    [Serializable]
     public class AbilityData
     {
         public int Level;

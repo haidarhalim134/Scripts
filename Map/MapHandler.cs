@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Control.Core;
+using DataContainer;
 
 namespace Map
 {
@@ -26,12 +27,34 @@ namespace Map
                 Destroy(gameObject.transform.GetChild(i).gameObject);
             }
         }
+        void Awake()
+        {
+            if (LoadedSave.Loaded.act[LoadedActData.CurrAct].tree == null)
+            {
+                this.Spawn();
+                LoadedSave.Loaded.act[LoadedActData.CurrAct].tree = this.CurrentTree;
+                SaveFile.Save(LoadedSave.Loaded);
+            }else
+            {
+                this.Spawn(LoadedSave.Loaded.act[LoadedActData.CurrAct].tree);
+                if (LoadedSave.Loaded.LastLevelWin)
+                {
+                    this.CurrentPlayerPos.ProceedNode();
+                    if (this.CurrentPlayerPos.Child.Count == 0)
+                    {
+                        LoadedSave.Loaded.act[LoadedActData.CurrAct].finished = true;
+                        ToActChooseScreen.LoadScene();
+                    }
+                }
+            }
+        }
         public void Spawn(Tree tree = null)
         {
             if (tree == null)
             {
-                this.CurrentTree = TreeGenerator.Generate();
+                this.CurrentTree = TreeGenerator.Generate(TargetLenp:LoadedActData.loadedActData.Length+1);
                 this.CurrentTree.CurrentPlayerPos = true;
+                LoadedSave.Loaded.act[LoadedActData.CurrAct].tree = this.CurrentTree;
                 Debug.Log("generated len:" + this.CurrentTree.Length.ToString());
             } else
             {
@@ -42,32 +65,16 @@ namespace Map
             //enable the parent tree as starter
             // this.InitializedMainTree.ProceedNode();
             this.InitializedMainTree.Active = true;
+            float tmp = this.moveDuration;
+            this.moveDuration = 0;
             this.ProgressPosition(this.CurrentPlayerPos);
-        }
-        public void Generate()
-        {
-            this.Spawn();
-        }
-        public void SaveTree()
-        {
-            if (this.CurrentTree!= null)
-            {
-                FileProcessor.WriteToXmlFile<Tree>("B:/tree.json",this.CurrentTree);
-                Debug.Log("saved");
-            }
-        }
-        public void LoadTree()
-        {
-            Tree tree = FileProcessor.ReadFromXmlFile<Tree>("B:/tree.json");
-            tree.AssignParent();
-            this.Spawn(tree);
-            Debug.Log("loaded");
+            this.moveDuration = tmp;
         }
         public void ProgressPosition(NodeHandler Caller)
         {
             Character.GetComponent<CharacterController>().AddMove(Character.transform.position, this.moveDuration);
             float delta = Caller.transform.position.x - Character.transform.position.x;
-            this.transform.DOMoveX(this.transform.position.x - delta, this.moveDuration);
+            this.transform.DOMoveX(this.transform.position.x - delta, this.moveDuration).OnComplete(()=>Caller.Active = true);
         }
         public void DrawTree(Tree tree)
         {

@@ -11,6 +11,8 @@ namespace LevelManager
     public class LevelLoader
     {
         public static LevelDataContainer ToLoad;
+        public static bool testing;
+        /// <summary>for testing purpose only shit old code</summary>
         public static void LoadLevel(string target, string SceneId = null)
         {
             SceneManager.LoadScene(target);
@@ -19,6 +21,12 @@ namespace LevelManager
                 LevelDataContainer Data = InGameContainer.GetInstance().FindLevel(SceneId);
                 ToLoad = Data;
             }
+        }
+        public static void LoadLevel(LevelDataContainer cont)
+        {
+            testing = false;
+            ToLoad = cont;
+            SceneManager.LoadScene("CombatScene");
         }
     }
 }

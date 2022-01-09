@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Attributes.Abilities;
+using Control.Core;
 
 namespace DataContainer
 {
@@ -13,6 +14,7 @@ namespace DataContainer
         public GameObject HealthCounter;
         public LevelDataContainer[] Levels;
         public PrefabContainer[] Abilities;
+        public ActContainer[] Acts;
         public AssetReferenceContainer[] LevelsTest;
         private AsyncOperationHandle<LevelDataContainer> LevelHandle;
         public LevelDataContainer FindLevel(string name)
@@ -38,6 +40,18 @@ namespace DataContainer
             Debug.Log("no found");
             return null;
         }
+        public ActData FindAct(Act act)
+        {
+            foreach (ActContainer cont in this.Acts)
+            {
+                if (cont.act == act)
+                {
+                    return cont.data;
+                }
+            }
+            Debug.Log("act not found");
+            return null;
+        }
         public void SpawnAbilityPrefab(string name)
         {
             GameObject prefab = GameObject.Find(name);
@@ -52,7 +66,8 @@ namespace DataContainer
                     }
                 }
             }
-        }public GameObject SpawnAbilityPrefab(GameObject name)
+        }
+        public GameObject SpawnAbilityPrefab(GameObject name)
         {
             // AsyncOperationHandle<GameObject> handle = name.InstantiateAsync();
             // GameObject prefab = handle.Result;
@@ -86,5 +101,11 @@ namespace DataContainer
     {
         public string Id;
         public GameObject Prefab;
+    }
+    [Serializable]
+    public class ActContainer
+    {
+        public Act act;
+        public ActData data;
     }
 }

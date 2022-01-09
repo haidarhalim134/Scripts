@@ -11,7 +11,7 @@ namespace Control.Core
 {
     public class PlayerController : BaseCreature
     {
-        public PlayerDataContainer PlayerStats = LoadedSave.tmp.Player;
+        public PlayerDataContainer PlayerStats = LoadedSave.Loaded.Player;
         public List<AbilityContainer> FullDeck = new List<AbilityContainer>();
         public List<AbilityContainer> ReserveDeck = new List<AbilityContainer>();
         public List<AbilityContainer> UsedDeck = new List<AbilityContainer>();
@@ -96,6 +96,10 @@ namespace Control.Core
                 this.UsedDeck.RemoveAt(RandIndex);
             }
         }
+        public void OnDeathPlayer()
+        {
+            CombatEngine.EndGame(false);
+        }
         void Awake() {
             this.BaseInit();
             this.IsPlayer = true;
@@ -106,6 +110,7 @@ namespace Control.Core
             this.TeamId = 0;
             this.EnemyId = 1;
             this.Setup = this.SetupUI;
+            this.OnDeath = this.OnDeathPlayer;
             CombatEngine.RegisterCreature(this, true);
             this.stamina.Fill();
             this.health.Fill();
