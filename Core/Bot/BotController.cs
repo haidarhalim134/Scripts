@@ -10,7 +10,7 @@ namespace Control.Core
 {
     public class BotController : BaseCreature
     {
-        public List<AbilityManager> Skills = new List<AbilityManager>();
+        public List<AbilityContainer> Skills = new List<AbilityContainer>();
         private float ActionDelay = 1f;
         /// <summary>please call on start</summary>
         private void Awake() 
@@ -43,8 +43,9 @@ namespace Control.Core
         private IEnumerator Decide()
         {
             yield return new WaitForSeconds(this.ActionDelay);
-            CombatEngine.RequestCast(this.Skills[Range(0, this.Skills.Count)], this,CombatEngine.RegisteredCreature[this.EnemyId][
-                Range(0,CombatEngine.RegisteredCreature[this.EnemyId].Count)]);
+            var Cont = this.Skills[Range(0, this.Skills.Count)];
+            CombatEngine.RequestCast(Cont.GetManager(), this,CombatEngine.RegisteredCreature[this.EnemyId][
+                Range(0,CombatEngine.RegisteredCreature[this.EnemyId].Count)],Cont.Data);
             if (this.stamina.Curr<1)
             {
                 CombatEngine.ActionFinished();

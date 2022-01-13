@@ -40,7 +40,7 @@ namespace Control.Combat
             return index;
         }
         /// <returns>true if request accepted else false</returns>
-        public static bool RequestCast(AbilityManager Ability, BaseCreature caster, BaseCreature target, AbilityData Data = null)
+        public static bool RequestCast(AbilityManager Ability, BaseCreature caster, BaseCreature target, AbilityData Data)
         {
             if (caster.stamina.Enough(Ability.cost))
             {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Attributes.Abilities;
 using UnityEngine.AddressableAssets;
 
 namespace DataContainer
@@ -10,7 +11,7 @@ namespace DataContainer
     {
         public int MaxHealth;
         public int MaxStamina;
-        public GameObject[] Abilities;
+        public AbilityContainer[] Abilities;
         public Sprite Skin;
     }
 }

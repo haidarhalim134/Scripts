@@ -8,9 +8,11 @@ namespace Control.Core
 {
     public class HealthCounter : BaseCounter
     {
+        public GameObject Bar;
         public void UpdateCounter()
         {
             this.Counter.text = this.Creature.health.Curr+"/"+this.Creature.health.Max;
+            Bar.transform.localScale = new Vector2(this.Creature.health.Curr / (float)this.Creature.health.Max,1);
         }
         // Start is called before the first frame update
         void Start()

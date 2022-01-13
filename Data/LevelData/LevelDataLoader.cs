@@ -43,7 +43,7 @@ namespace LevelManager
         {
             BotController Script = Object.GetComponent<BotController>();
             int TeamId = BotCont.TeamId;
-            Object.GetComponent<Image>().sprite = Data.Skin;
+            Object.GetComponent<SpriteRenderer>().sprite = Data.Skin;
             // initiate gameobject's stamina and health container
             Script.InitStats();
             // assigning the health
@@ -58,11 +58,9 @@ namespace LevelManager
             float[] Pos = ReadCoord(SpawnPlace, LevelCont, BotCont);
             Object.transform.localPosition = new Vector3(Pos[0], Pos[1], -2835f);
             SpawnCounter(Object);
-            foreach (GameObject name in Data.Abilities)
+            foreach (AbilityContainer name in Data.Abilities)
                 {
-                    AbilityManager Mng = InGameContainer.GetInstance().SpawnAbilityPrefab(name).
-                    GetComponent<AbilityManager>();
-                    Script.Skills.Add(Mng);
+                    Script.Skills.Add(name);
                 }
         }
         public static void SpawnCounter(GameObject Object)
@@ -72,6 +70,7 @@ namespace LevelManager
             GameObject HealthC = SpawnCounterPrefab(InGameContainer.GetInstance().HealthCounter, Object);
             StaminaC.transform.localPosition = new Vector2(0, RT.rect.height);
             HealthC.transform.localPosition = new Vector2(0, RT.rect.height*-1);
+            HealthC.transform.SetParent(GameObject.Find("UI").transform);
         }
         public static GameObject SpawnCounterPrefab(GameObject Prefab, GameObject Parent)
         {

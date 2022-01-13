@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Control.Combat;
+using DG.Tweening;
 
 namespace Control.Core
 {
@@ -83,8 +84,12 @@ namespace Control.Core
                 CombatEngine.ActionFinished();
             }
             CombatEngine.UnRegisterCreature(this);
+            this.HealthCounters.ForEach((counter)=>{
+                Destroy(counter.gameObject);
+            });
             this.OnDeath();
-            Destroy(this.gameObject);
+            this.GetComponent<SpriteRenderer>().DOFade(0f, 0.25f)
+            .OnComplete(()=>Destroy(this.gameObject));
         }
         public void GiveShield(int by)
         {

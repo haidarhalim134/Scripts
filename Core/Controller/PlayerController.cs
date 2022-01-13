@@ -121,18 +121,11 @@ namespace Control.Core
         {
 
         }
-        // Update is called once per frame
-        void Update()
+        public void FinishTurn()
         {
-            if (this.Control)
-            {
-                if (this.stamina.Curr<1)
-                {
-                    CombatEngine.ActionFinished();
-                    this.Deck.ClearDeck();
-                    this.Control = false;
-                }
-            }
+            CombatEngine.ActionFinished();
+            this.Deck.ClearDeck();
+            this.Control = false;
         }
     }
 }
