@@ -11,7 +11,7 @@ namespace Attributes.Abilities
         static StatProcessor Calc = new StatProcessor();
         public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data = null)
         {
-            caster.GiveShield(this.shield);
+            caster.GiveShield(this.shield + Data.Shield);
         }
         public string Text()
         {

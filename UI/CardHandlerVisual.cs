@@ -33,7 +33,7 @@ namespace Control.UI
             }
             public void Destroy(RemoveStatus type) 
             {
-                if (type == RemoveStatus.used)
+                if (type == RemoveStatus.used||type == RemoveStatus.discard)
                 {
                     // this.transform.DOMove((Vector2)this.transform.position+new Vector2(0,5), 0.5f)
                     // .OnComplete(()=>this.transform.DOMove(this.Exit, 0.2f).SetEase(Ease.Linear)
