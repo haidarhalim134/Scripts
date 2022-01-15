@@ -67,14 +67,19 @@ namespace LevelManager
             RectTransform RT = Object.GetComponent<RectTransform>();
             GameObject StaminaC = SpawnCounterPrefab(InGameContainer.GetInstance().StaminaCounter, Object);
             GameObject HealthC = SpawnCounterPrefab(InGameContainer.GetInstance().HealthCounter, Object);
+            GameObject ShieldC = SpawnCounterPrefab(InGameContainer.GetInstance().ShieldCounter, Object);
             StaminaC.transform.localPosition = new Vector2(0, RT.rect.height);
             HealthC.transform.localPosition = new Vector2(0, RT.rect.height*-1);
+            ShieldC.transform.localPosition = new Vector2(-35, RT.rect.height * -1);
+            // HealthC.GetComponent<HealthCounter>().Bar.GetComponent<SpriteRenderer>().bounds.size.x * -17
             HealthC.transform.SetParent(GameObject.Find("UI").transform);
+            ShieldC.transform.SetParent(GameObject.Find("UI").transform);
         }
         public static GameObject SpawnCounterPrefab(GameObject Prefab, GameObject Parent)
         {
             GameObject Obj = Instantiate(Prefab, Parent.transform);
             Obj.GetComponent<BaseCounter>().Target = Parent;
+            Obj.transform.SetAsFirstSibling();
             return Obj;
         }
     }

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,14 +14,13 @@ namespace Control.Core
         public int EnemyId;
         public Health health;
         public Stamina stamina;
-        // public int MaxHealth;
-        // // [HideInInspector]
-        // public int CurrHealth;
-        public int ActiveShield = 0;
+        public Shield shield;
         [HideInInspector]
         public List<HealthCounter> HealthCounters = new List<HealthCounter>();
         [HideInInspector]
         public List<StaminaCounter> StaminaCounters = new List<StaminaCounter>();
+        [HideInInspector]
+        public List<ShieldCounter> ShieldCounters = new List<ShieldCounter>();
         // [HideInInspector]
         public bool Control = false;
         [HideInInspector]
@@ -42,6 +42,7 @@ namespace Control.Core
             this.GetComponent<Button>().onClick.AddListener(this.SendTarget);
             this.health = new Health(this.HealthCounters);
             this.stamina = new Stamina(this.StaminaCounters);
+            this.shield = new Shield(this.ShieldCounters);
         }
         public void IsTarget(bool to)
         {
@@ -61,13 +62,20 @@ namespace Control.Core
         /// <returns>return false if dead else true</returns>
         public bool TakeDamage(int damage)
         {
-            if (damage >= this.health.Curr)
+            if (this.shield.Curr>0)
+            {
+                    this.health.Update(this.shield.Damage(damage * -1) *-1);
+                    if (this.health.Curr<=0)
+                    {
+                        return true;
+                    }
+                return false;
+            } else if (damage >= this.health.Curr)
             {
                 this.health.Update(this.health.Curr * -1);
                 this.Death();
                 return false;
-            }
-            else
+            } else
             {
                 this.health.Update(damage * -1);
                 return true;
@@ -87,13 +95,13 @@ namespace Control.Core
             this.HealthCounters.ForEach((counter)=>{
                 Destroy(counter.gameObject);
             });
+            this.ShieldCounters.ForEach((counter) =>
+            {
+                Destroy(counter.gameObject);
+            });
             this.OnDeath();
             this.GetComponent<SpriteRenderer>().DOFade(0f, 0.25f)
             .OnComplete(()=>Destroy(this.gameObject));
-        }
-        public void GiveShield(int by)
-        {
-            this.ActiveShield += by;
         }
     }
     public class Stamina
@@ -154,13 +162,46 @@ namespace Control.Core
         {
             return this.Curr >= cost;
         }
-
         public void Update(int by)
         {
             this.Curr += by;
             foreach (HealthCounter Counter in this.Counters)
             {
                 Counter.UpdateCounter();
+            }
+        }
+    }
+    public class Shield
+    {
+        public int Curr = 0;
+        public List<ShieldCounter> Counters;
+        public Shield(List<ShieldCounter> Counters)
+        {
+            this.Counters = Counters;
+        }
+        public bool Enough(int cost)
+        {
+            return this.Curr >= cost;
+        }
+        public void Update(int by)
+        {
+            this.Curr += by;
+            Counters.ForEach((counter) => counter.UpdateCounter());
+        }
+        /// <summary>return excess damage as positive int</summary>
+        public int Damage(int by)
+        {
+            this.Curr += by;
+            if (this.Curr >= 0)
+            {
+                Counters.ForEach((counter) => counter.UpdateCounter());
+                return 0;
+            } else
+            {
+                int excess = Curr*-1;
+                this.Curr = 0;
+                Counters.ForEach((counter)=>counter.UpdateCounter());
+                return excess;
             }
         }
     }

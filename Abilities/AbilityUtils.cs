@@ -31,4 +31,5 @@ namespace Attributes.Abilities
         public int Damage;
         public int Shield;
     }
+    public enum Debuffs{vulnerable, weakened}
 }

@@ -12,7 +12,7 @@ namespace Attributes.Abilities
         static StatProcessor Calc = new StatProcessor();
         public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data = null)
         {
-            caster.GiveShield(this.shield + Data.Shield);
+            caster.shield.Update(this.shield + Data.Shield);
             Instantiate(effect, caster.transform).transform.localPosition = new Vector2();
         }
         public string Text()
