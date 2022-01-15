@@ -53,7 +53,6 @@ namespace LevelManager
             Script.TeamId = TeamId;
 
             GameObject SpawnPlace = GameObject.Find("Team"+TeamId);
-            Object.transform.parent = SpawnPlace.transform;
 
             float[] Pos = ReadCoord(SpawnPlace, LevelCont, BotCont);
             Object.transform.localPosition = new Vector3(Pos[0], Pos[1], -2835f);
