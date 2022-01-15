@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Control.Core;
@@ -9,6 +9,14 @@ namespace Attributes.Abilities
     {
         public int CalcAttack(int BaseDamage, BaseCreature Caster)
         {
+            if (Caster.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.vulnerable) != null)
+            {
+                BaseDamage = (int)Math.Floor(BaseDamage * 1.5f);
+            };
+            if (Caster.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.weakened) != null)
+            {
+                BaseDamage = (int)Math.Floor(BaseDamage * 0.75f);
+            };
             return BaseDamage;
         }
     }

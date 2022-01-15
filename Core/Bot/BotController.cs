@@ -48,6 +48,7 @@ namespace Control.Core
                 Range(0,CombatEngine.RegisteredCreature[this.EnemyId].Count)],Cont.Data);
             if (this.stamina.Curr<1)
             {
+                this.DebuffReduceCharge();
                 CombatEngine.ActionFinished();
                 this.Control = false;
             } else {

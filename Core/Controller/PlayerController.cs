@@ -123,6 +123,7 @@ namespace Control.Core
         }
         public void FinishTurn()
         {
+            this.DebuffReduceCharge();
             CombatEngine.ActionFinished();
             this.Deck.ClearDeck();
             this.Control = false;

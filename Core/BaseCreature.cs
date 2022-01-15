@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Control.Combat;
 using DG.Tweening;
+using Attributes.Abilities;
 
 namespace Control.Core
 {
@@ -21,13 +22,12 @@ namespace Control.Core
         public List<StaminaCounter> StaminaCounters = new List<StaminaCounter>();
         [HideInInspector]
         public List<ShieldCounter> ShieldCounters = new List<ShieldCounter>();
-        // [HideInInspector]
+        public List<PassiveDebuff> passiveDebuffs = new List<PassiveDebuff>();
         public bool Control = false;
         [HideInInspector]
         public bool Acted;
         public bool AsTarget = false;
         public bool IsPlayer;
-        // TODO: simplify this shit
         public Action<bool> Setup = (bool T) => { };
         public Action OnDeath = () => { };
         public void SendTarget()
@@ -62,6 +62,7 @@ namespace Control.Core
         /// <returns>return false if dead else true</returns>
         public bool TakeDamage(int damage)
         {
+            
             if (this.shield.Curr>0)
             {
                     this.health.Update(this.shield.Damage(damage * -1) *-1);
@@ -81,9 +82,22 @@ namespace Control.Core
                 return true;
             }
         }
+        /// <summary>input positive number</summary>
         public void UseStamina(int by)
         {
             this.stamina.Update(by * -1);
+        }
+        public void DebuffReduceCharge()
+        {
+            List<PassiveDebuff> PRemove = new List<PassiveDebuff>();
+            this.passiveDebuffs.ForEach((cont)=>{
+                cont.charge-= 1;
+                if (cont.charge<= 0)
+                {
+                    PRemove.Add(cont);
+                }
+            });
+            PRemove.ForEach((cont)=> this.passiveDebuffs.Remove(cont));
         }
         public void Death()
         {
@@ -204,5 +218,10 @@ namespace Control.Core
                 return excess;
             }
         }
+    }
+    public class PassiveDebuff
+    {
+        public int charge;
+        public Debuffs debuff;
     }
 }
