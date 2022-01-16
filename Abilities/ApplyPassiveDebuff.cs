@@ -13,12 +13,12 @@ namespace Attributes.Abilities
         static StatProcessor Calc = new StatProcessor();
         public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data = null)
         {
-            caster.DebuffsAddPassive(this.type, this.charge);
+            target.DebuffsAddPassive(this.type, this.charge);
             if (effect!=null)Instantiate(effect, caster.transform).transform.localPosition = new Vector2();
         }
         public string Text()
         {
-            return $"Apply {this.type} for {this.charge} turn";
+            return $"Apply {this.type} for {this.charge} turn, ";
         }
         void Awake()
         {

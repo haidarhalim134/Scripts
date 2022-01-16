@@ -22,8 +22,8 @@ namespace Control.Core
         public List<StaminaCounter> StaminaCounters = new List<StaminaCounter>();
         [HideInInspector]
         public List<ShieldCounter> ShieldCounters = new List<ShieldCounter>();
-        public DebuffCounter debuffCounter;
-        public List<PassiveDebuff> passiveDebuffs = new List<PassiveDebuff>();
+        // public DebuffCounter debuffCounter;
+        public BuffDebuff buffDebuff = new BuffDebuff();
         public bool Control = false;
         [HideInInspector]
         public bool Acted;
@@ -51,6 +51,8 @@ namespace Control.Core
         }
         public void turn(bool to)
         {
+            // var cont = new PassiveDebuff() { charge = 1, debuff = Debuffs.vulnerable };
+            // this.buffDebuff.passiveDebuffs.Add(cont);
             this.Control = to;
             this.Acted = false;
             if (to)
@@ -85,17 +87,18 @@ namespace Control.Core
         }
         public void DebuffsAddPassive(Debuffs debuff, int charge)
         {
-            PassiveDebuff cont = this.passiveDebuffs.Find((cont) => cont.debuff == debuff);
+            PassiveDebuff cont = this.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == debuff);
             if (cont != null)
             {
                 cont.charge+= charge;
             }else
             {
                 cont = new PassiveDebuff() { charge = charge, debuff = debuff };
-                this.passiveDebuffs.Add(cont);
-                Debug.Log(this.debuffCounter);
-                this.debuffCounter.AddPassive(cont);
+                this.buffDebuff.passiveDebuffs.Add(cont);
             }
+            this.buffDebuff.passiveDebuffs.ForEach((cont)=>{
+                Debug.Log(""+cont.charge+cont.debuff);
+            });
         }
         /// <summary>input positive number to reduce stamina</summary>
         public void UseStamina(int by)
@@ -106,14 +109,14 @@ namespace Control.Core
         public void DebuffReduceCharge()
         {
             List<PassiveDebuff> PRemove = new List<PassiveDebuff>();
-            this.passiveDebuffs.ForEach((cont)=>{
+            this.buffDebuff.passiveDebuffs.ForEach((cont)=>{
                 cont.charge-= 1;
                 if (cont.charge<= 0)
                 {
                     PRemove.Add(cont);
                 }
             });
-            PRemove.ForEach((cont)=> this.passiveDebuffs.Remove(cont));
+            PRemove.ForEach((cont)=> this.buffDebuff.passiveDebuffs.Remove(cont));
         }
         public void Death()
         {
@@ -132,6 +135,10 @@ namespace Control.Core
             this.OnDeath();
             this.GetComponent<SpriteRenderer>().DOFade(0f, 0.25f)
             .OnComplete(()=>Destroy(this.gameObject));
+        }
+        void Update()
+        {
+            
         }
     }
     public class Stamina
@@ -235,9 +242,15 @@ namespace Control.Core
             }
         }
     }
+    [Serializable]
     public class PassiveDebuff
     {
         public int charge;
         public Debuffs debuff;
+    }
+    [Serializable]
+    public class BuffDebuff
+    {
+        public List<PassiveDebuff> passiveDebuffs = new List<PassiveDebuff>();
     }
 }
