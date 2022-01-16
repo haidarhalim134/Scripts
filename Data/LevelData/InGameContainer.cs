@@ -15,6 +15,7 @@ namespace DataContainer
         public GameObject ShieldCounter;
         public LevelDataContainer[] Levels;
         public PrefabContainer[] Abilities;
+        public PassiveDebuffCont[] PassiveDebuffPrefab;
         public ActContainer[] Acts;
         public AssetReferenceContainer[] LevelsTest;
         private AsyncOperationHandle<LevelDataContainer> LevelHandle;
@@ -108,5 +109,11 @@ namespace DataContainer
     {
         public Act act;
         public ActData data;
+    }
+    [Serializable]
+    public class PassiveDebuffCont
+    {
+        public Debuffs debuff;
+        public GameObject prefab;
     }
 }
