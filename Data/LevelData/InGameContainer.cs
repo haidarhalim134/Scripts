@@ -13,6 +13,7 @@ namespace DataContainer
         public GameObject StaminaCounter;
         public GameObject HealthCounter;
         public GameObject ShieldCounter;
+        public GameObject debuffCounter;
         public LevelDataContainer[] Levels;
         public PrefabContainer[] Abilities;
         public PassiveDebuffCont[] PassiveDebuffPrefab;

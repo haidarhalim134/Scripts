@@ -7,9 +7,9 @@ namespace Attributes.Abilities
 {
     public class StatProcessor
     {
-        public int CalcAttack(int BaseDamage, BaseCreature Caster)
+        public int CalcAttack(int BaseDamage, BaseCreature Caster, BaseCreature Target)
         {
-            if (Caster.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.vulnerable) != null)
+            if (Target.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.vulnerable) != null)
             {
                 BaseDamage = (int)Math.Floor(BaseDamage * 1.5f);
             };

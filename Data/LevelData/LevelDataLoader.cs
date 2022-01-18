@@ -68,12 +68,16 @@ namespace LevelManager
             GameObject StaminaC = SpawnCounterPrefab(InGameContainer.GetInstance().StaminaCounter, Object);
             GameObject HealthC = SpawnCounterPrefab(InGameContainer.GetInstance().HealthCounter, Object);
             GameObject ShieldC = SpawnCounterPrefab(InGameContainer.GetInstance().ShieldCounter, Object);
+            GameObject DebuffC = Instantiate(InGameContainer.GetInstance().debuffCounter, Object.transform);
+            DebuffC.GetComponent<DebuffCounter>().Creature = Object.GetComponent<BaseCreature>();
             StaminaC.transform.localPosition = new Vector2(0, RT.rect.height);
             HealthC.transform.localPosition = new Vector2(0, RT.rect.height*-1);
             ShieldC.transform.localPosition = new Vector2(-35, RT.rect.height * -1);
+            DebuffC.transform.localPosition = new Vector2(10, (RT.rect.height * -1)-7);
             // HealthC.GetComponent<HealthCounter>().Bar.GetComponent<SpriteRenderer>().bounds.size.x * -17
             HealthC.transform.SetParent(GameObject.Find("UI").transform);
             ShieldC.transform.SetParent(GameObject.Find("UI").transform);
+            DebuffC.transform.SetParent(GameObject.Find("UI").transform);
         }
         public static GameObject SpawnCounterPrefab(GameObject Prefab, GameObject Parent)
         {

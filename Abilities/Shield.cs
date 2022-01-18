@@ -13,7 +13,7 @@ namespace Attributes.Abilities
         public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data = null)
         {
             caster.shield.Update(this.shield + Data.Shield);
-            Instantiate(effect, caster.transform).transform.localPosition = new Vector2();
+            Animations.SpawnEffect(caster.gameObject, effect);
         }
         public string Text()
         {

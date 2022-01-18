@@ -112,7 +112,6 @@ namespace Control.Core
             this.Setup = this.SetupUI;
             this.OnDeath = this.OnDeathPlayer;
             CombatEngine.RegisterCreature(this, true);
-            this.stamina.Fill();
             this.health.Fill();
             this.Deck = this.TEMP.GetComponent<CardDeck>();
         }

@@ -34,4 +34,8 @@ public class Animations
         tween = target.transform.DOLocalMoveX(target.transform.localPosition.x - distance, toback).SetEase(Ease.Linear);
         yield return tween.WaitForCompletion();
     }
+    public static void SpawnEffect(GameObject target, GameObject effect)
+    {
+        if (effect!=null)GameObject.Instantiate(effect, target.transform).transform.localPosition = new Vector2();
+    }
 }
