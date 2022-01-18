@@ -17,7 +17,7 @@ namespace Map
         public Material LineMaterial;
         public GameObject Character;
         NodeHandler InitializedMainTree;
-        Tree CurrentTree = null;
+        List<Tree> CurrentTree = null;
         public float moveDuration;
         public NodeHandler CurrentPlayerPos;
         private void ClearBoard()
@@ -48,23 +48,24 @@ namespace Map
                 }
             }
         }
-        public void Spawn(Tree tree = null)
+        public void Spawn(List<Tree> tree = null)
         {
             if (tree == null)
             {
                 this.CurrentTree = TreeGenerator.Generate(TargetLenp:LoadedActData.loadedActData.Length+1);
-                this.CurrentTree.CurrentPlayerPos = true;
+                this.CurrentTree[0].CurrentPlayerPos = true;
                 LoadedSave.Loaded.act[LoadedActData.CurrAct].tree = this.CurrentTree;
-                Debug.Log("generated len:" + this.CurrentTree.Length.ToString());
+                Debug.Log("generated len:" + this.CurrentTree[this.CurrentTree.Count-1].point.x.ToString());
             } else
             {
                 this.CurrentTree = tree;
             }
             this.DrawTree(this.CurrentTree);
-            this.InitializedMainTree = this.CurrentTree.SelfInstance;
+            this.InitializedMainTree = this.CurrentTree[0].SelfInstance;
             //enable the parent tree as starter
             // this.InitializedMainTree.ProceedNode();
             this.InitializedMainTree.Active = true;
+            // so the movement is instant on load
             float tmp = this.moveDuration;
             this.moveDuration = 0;
             this.ProgressPosition(this.CurrentPlayerPos);
@@ -76,25 +77,28 @@ namespace Map
             float delta = Caller.transform.position.x - Character.transform.position.x;
             this.transform.DOMoveX(this.transform.position.x - delta, this.moveDuration).OnComplete(()=>Caller.Active = true);
         }
-        public void DrawTree(Tree tree)
+        public void DrawTree(List<Tree> tree)
         {
             ClearBoard();
-            List<Tree> CurrBranch = new List<Tree>(){tree};
+            List<Tree> CurrBranch = new List<Tree>(){tree[0]};
             int Collumn = 1;
-            while (Collumn<tree.Length)
+            while (Collumn<tree.Count)
             {
                 List<Tree> Temp = new List<Tree>();
-                this.DrawTreeRow(CurrBranch, (Collumn-1)*HorizontalSep);
+                this.DrawTreeRow(tree, CurrBranch, (Collumn-1)*HorizontalSep);
                 foreach(Tree Branch in CurrBranch)
                 {
                     if(Branch.Child.Count<= 0)break;
-                    Temp.AddRange(Branch.Child);
+                    foreach (Point point in Branch.Child)
+                    {
+                        Temp.Add(Point.FindWithPoint(tree, point));
+                    }
                 }
                 CurrBranch = Temp.Distinct().ToList();
                 Collumn++;
             }
         }
-        private void DrawTreeRow(List<Tree> Row, float X)
+        private void DrawTreeRow(List<Tree> WholeTree, List<Tree> Row, float X)
         {
             int BranchCount = Row.Count;
             List<float> YPos = CalcYPos(BranchCount);
@@ -114,7 +118,7 @@ namespace Map
                 }
                 if(Branch.Parent.Count>0)
                 {
-                    Script.Init(Branch.Type, Branch.Parent.Select(tree => tree.SelfInstance).ToList());
+                    Script.Init(Branch.Type, Branch.Parent.Select(tree => Point.FindWithPoint(WholeTree,tree).SelfInstance).ToList());
                 }else
                 {
                     Script.Init(Branch.Type, null);

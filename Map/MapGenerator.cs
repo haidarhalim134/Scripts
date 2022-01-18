@@ -5,6 +5,7 @@ using System.Linq;
 using System.Xml.Serialization;
 using Random = System.Random;
 using Control.Core;
+using UnityEngine;
 
 namespace Map
 {
@@ -28,11 +29,11 @@ namespace Map
         {
             {"pre_node", new Dictionary<string, int[]>(){
                 {"normal", new int[] {6}},
-                {"branch", new int[] {3}},
+                {"branch", new int[] {0}},
                 {"join", new int[] {0}}
             }},
             {"node", new Dictionary<string, int[]>(){
-                {"Home", new int[] {0}},
+                {"Home", new int[] {2}},
                 {"Enemy", new int[] {8}},
                 {"Event", new int[] {0}}
             }}
@@ -50,18 +51,20 @@ namespace Map
         public static int MaxWidth;
         public static int MinWidth;
         public static int CurrLen;
-        public static Tree MainTree;
+        public static int CurrWidth;
+        public static List<Tree> MainTree;
         public static List<Tree> CurrentBranches = new List<Tree>();
-        public static Tree Generate(int TargetLenp = 10, int MaxWidthp = 7, int MinWidthp = 4) 
+        public static List<Tree> Generate(int TargetLenp = 10, int MaxWidthp = 7, int MinWidthp = 4) 
         {
             TargetLen = TargetLenp;
             MaxWidth = MaxWidthp;
             MinWidth = MinWidthp;
             CurrLen = 1;
-            MainTree = new Tree();
-            MainTree.Init(NodeType.Enemy, NodeValue[NodeType.Enemy]);
+            CurrWidth = 1;
+            MainTree = new List<Tree>(){new Tree()};
+            MainTree[0].Init(NodeType.Enemy, new Point(){x=CurrLen,y=CurrWidth});
             CurrentBranches.Clear();
-            CurrentBranches.Add(MainTree);
+            CurrentBranches.Add(MainTree[0]);
             while (CurrLen < TargetLen)
             {
                 Grow();
@@ -72,6 +75,8 @@ namespace Map
         { 
             List<Tree> NextBranches = new List<Tree>();
             Tree QParent = null;
+            CurrWidth = 1;
+            CurrLen+= 1;
             foreach (Tree branch in CurrentBranches)
             {
                 string PreNode;
@@ -96,20 +101,20 @@ namespace Map
                 foreach (NodeType node in Nodes.Select((a)=>Convert[a]))
                 {
                     Tree NewNode = new Tree();
-                    NewNode.Init(node, BranchValue(Nodes.Count) + NodeValue[node], branch);
+                    NewNode.Init(node, new Point() { x = CurrLen, y = CurrWidth }, branch.point);
+                    MainTree.Add(NewNode);
                     if(QParent!= null)
                     {
-                        NewNode.Parent.Add(QParent);
-                        QParent.Child.Add(NewNode);
+                        NewNode.Parent.Add(QParent.point);
+                        QParent.Child.Add(NewNode.point);
                         QParent = null;
                     }
-                    branch.Child.Add(NewNode);
+                    branch.Child.Add(NewNode.point);
                     NextBranches.Add(NewNode);
+                    CurrWidth += 1;
                 }
             }
             CurrentBranches = NextBranches;
-            CurrLen+= 1;
-            MainTree.Length = CurrLen;
         }
         /// <summary>calculate weight for each pre node action chance</summary>
         private static List<int> CalcPreNodeWeights()
@@ -137,43 +142,21 @@ namespace Map
     public class Tree
     {
         public bool CurrentPlayerPos;
+        public Point point;
         public NodeType Type;
-        [NonSerialized]
-        public List<Tree> Parent = new List<Tree>();
-        public List<Tree> Child = new List<Tree>();
-        public float PathValue;
-        public int Length;
+        public List<Point> Parent = new List<Point>();
+        public List<Point> Child = new List<Point>();
         [NonSerialized]
         public NodeHandler SelfInstance;
-        public void Init(NodeType Type, float InitValue = 0, Tree Parent = null, Tree Child = null)
+        public void Init(NodeType Type, Point point, Point Parent = null, Point Child = null)
         {
             this.Type = Type;
-            this.PathValue = InitValue;
+            this.point = point;
             if (Parent != null)
             {
                 this.Parent.Add(Parent);
-                this.PathValue += Parent.PathValue;
             }
         }
-        public void AssignParent(Tree tree = null)
-        {
-            if (tree == null)
-            {
-                tree = this;
-            }
-            if (tree.Child.Count == 0)
-            {
-                return;
-            }
-            foreach (Tree child in tree.Child)
-            {
-                child.Parent.Add(tree);
-                child.Parent.Distinct().ToList();
-                child.Child.Distinct().ToList();
-                this.AssignParent(child);
-            }
-        }
-
     }
     static class Utils
     {

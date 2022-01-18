@@ -61,12 +61,9 @@ namespace Control.Core
             foreach (ActSaveWrapper wrap in file.actsave)
             {
                 file.act[wrap.act] = wrap.cont;
-                if (wrap.cont.tree.Length == 0)
+                if (wrap.cont.tree.Count == 0)
                 {
                     wrap.cont.tree = null;
-                } else
-                {
-                    wrap.cont.tree.AssignParent();
                 }
             }
             return file;
@@ -81,7 +78,7 @@ namespace Control.Core
     public class ActCont
     {
         public bool finished = false;
-        public Tree tree = null;
+        public List<Tree> tree = null;
     }
     [Serializable]
     public class ActSaveWrapper
