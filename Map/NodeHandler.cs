@@ -37,16 +37,18 @@ namespace Map
                     lineRenderer.positionCount = 2;
                     lineRenderer.useWorldSpace = true;
                     lineRenderer.textureMode = LineTextureMode.Tile;
-                    lineRenderer.useWorldSpace = false;
-                    // Material material = mapHandler.LineMaterial;
-                    // material.mainTextureScale = new Vector2(10f, 1);
-                    // lineRenderer.material = material;
+                    // lineRenderer.useWorldSpace = false;
+                    Material material = mapHandler.LineMaterial;
+                    material.mainTextureScale = new Vector2(Vector3.Distance(transform.position,parent.transform.position), 1);
+                    lineRenderer.material = material;
+                    lineRenderer.gameObject.AddComponent<DotRenderer>();
                     // lineRenderer.material.SetTextureScale("_MainTex", new Vector2(10f, 1));
                     // lineRenderer.material.mainTextureScale = new Vector2(0.1f, 1f);
 
                     //For drawing line in the world space, provide the x,y,z values
                     lineRenderer.SetPosition(0, transform.position); //x,y and z position of the starting point of the line
                     lineRenderer.SetPosition(1, parent.transform.position); //x,y and z position of the end point of the line
+                    // DotRenderer.Lines.Add(new Line(){point1=transform.position,point2=parent.transform.position });
                 }
             }
         }

@@ -6,7 +6,7 @@ using Control.Core;
 
 namespace Attributes.Abilities
 {
-    public class Attack : MonoBehaviour
+    public class Shot : MonoBehaviour
     {
         public int damage = 10;
         public GameObject effect;
@@ -19,7 +19,7 @@ namespace Attributes.Abilities
                 StartCoroutine(Animations.AwayCenterHit(target.gameObject, () => { }, 0.2f, 5f));
                 Animations.SpawnEffect(target.gameObject, effect);
             }
-            StartCoroutine(Animations.TowardsCenterAttack(caster.gameObject, Hit));
+            StartCoroutine(Animations.AwayCenterShot(caster.gameObject, Hit, 0.3f, 10f));
             
         }
         public string Text()

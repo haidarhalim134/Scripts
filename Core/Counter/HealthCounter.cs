@@ -26,6 +26,7 @@ namespace Control.Core
             this.Awoke();
             this.Creature.HealthCounters.Add(this);
             this.UpdateCounter();
+            this.Bar.transform.position = new Vector3(this.Bar.transform.position.x, this.Bar.transform.position.y, -1f);
         }
 
         // Update is called once per frame

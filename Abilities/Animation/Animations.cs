@@ -20,11 +20,25 @@ public class Animations
         tween = target.transform.DOLocalMoveX(target.transform.localPosition.x - distance, toback).SetEase(Ease.Linear);
         yield return tween.WaitForCompletion();
     }
-    public static IEnumerator TowardsCenterHit(GameObject target, Action onHit, float totalTime = 0.5f, float distance = 50f)
+    public static IEnumerator AwayCenterHit(GameObject target, Action onHit, float totalTime = 0.5f, float distance = 50f)
     {
         float tohit = totalTime * 1 / 2f;
         float toback = totalTime * 1 / 2f;
-        if (target.transform.position.x > 0)
+        if (target.transform.position.x < 0)
+        {
+            distance *= -1;
+        }
+        var tween = target.transform.DOLocalMoveX(target.transform.localPosition.x + distance, tohit).SetEase(Ease.Linear);
+        yield return tween.WaitForCompletion();
+        onHit();
+        tween = target.transform.DOLocalMoveX(target.transform.localPosition.x - distance, toback).SetEase(Ease.Linear);
+        yield return tween.WaitForCompletion();
+    }
+    public static IEnumerator AwayCenterShot(GameObject target, Action onHit, float totalTime = 0.5f, float distance = 50f)
+    {
+        float tohit = totalTime * 1 / 2f;
+        float toback = totalTime * 1 / 2f;
+        if (target.transform.position.x < 0)
         {
             distance *= -1;
         }
