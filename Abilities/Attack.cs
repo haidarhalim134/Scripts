@@ -24,7 +24,7 @@ namespace Attributes.Abilities
         }
         public string Text()
         {
-            return $"deal {this.damage} damage to enemy";
+            return $"deal {this.damage} damage to enemy. ";
         }
         void Awake()
         {

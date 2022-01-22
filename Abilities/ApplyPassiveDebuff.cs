@@ -18,7 +18,7 @@ namespace Attributes.Abilities
         }
         public string Text()
         {
-            return $"Apply {this.type} for {this.charge} turn, ";
+            return $"Apply {this.type} for {this.charge} turn. ";
         }
         void Awake()
         {

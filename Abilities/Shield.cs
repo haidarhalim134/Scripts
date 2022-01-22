@@ -17,7 +17,7 @@ namespace Attributes.Abilities
         }
         public string Text()
         {
-            return $"give {this.shield} shield";
+            return $"give {this.shield} shield. ";
         }
         void Awake()
         {
