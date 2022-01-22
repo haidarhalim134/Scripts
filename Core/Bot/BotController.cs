@@ -5,12 +5,13 @@ using UnityEngine;
 using static UnityEngine.Random;
 using Control.Combat;
 using Attributes.Abilities;
+using DataContainer;
 
 namespace Control.Core
 {
     public class BotController : BaseCreature
     {
-        public List<AbilityContainer> Skills = new List<AbilityContainer>();
+        public List<BotAbilityCont> Skills = new List<BotAbilityCont>();
         private float ActionDelay = 1f;
         /// <summary>please call on start</summary>
         private void Awake() 
@@ -44,7 +45,8 @@ namespace Control.Core
         {
             yield return new WaitForSeconds(this.ActionDelay);
             var Cont = this.Skills[Range(0, this.Skills.Count)];
-            CombatEngine.RequestCast(Cont.GetManager(), this,CombatEngine.RegisteredCreature[this.EnemyId][
+            AbilityManager Mng = InGameContainer.GetInstance().SpawnAbilityPrefab(Cont.Ability).GetComponent<AbilityManager>();
+            CombatEngine.RequestCast(Mng, this,CombatEngine.RegisteredCreature[this.EnemyId][
                 Range(0,CombatEngine.RegisteredCreature[this.EnemyId].Count)],Cont.Data);
             if (this.stamina.Curr<1)
             {

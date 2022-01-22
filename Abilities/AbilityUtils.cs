@@ -36,5 +36,12 @@ namespace Attributes.Abilities
             return new AbilityData(){ Level=Level, Damage=Damage, Shield=Shield };
         }
     }
+
+    [Serializable]
+    public class BotAbilityCont
+    {
+        public GameObject Ability;
+        public AbilityData Data;
+    }
     public enum Debuffs{vulnerable, weakened}
 }
