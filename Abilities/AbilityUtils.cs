@@ -27,7 +27,7 @@ namespace Attributes.Abilities
     [Serializable]
     public class AbilityData
     {
-        public int Level;
+        public int Level = 1;
         public int Damage;
         public int Shield;
         // TODO: either copy the container or create non serializable field called temp
