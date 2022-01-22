@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -15,7 +16,7 @@ namespace DataContainer
         public GameObject ShieldCounter;
         public GameObject debuffCounter;
         public LevelDataContainer[] Levels;
-        public PrefabContainer[] Abilities;
+        public GameObject[] Abilities;
         public PassiveDebuffCont[] PassiveDebuffPrefab;
         public ActContainer[] Acts;
         public AssetReferenceContainer[] LevelsTest;
@@ -60,14 +61,9 @@ namespace DataContainer
             GameObject prefab = GameObject.Find(name);
             if (prefab == null)
             {
-                foreach (PrefabContainer Cont in this.Abilities)
-                {
-                    if (Cont.Prefab.name == name)
-                    {
-                        GameObject Object = Instantiate(Cont.Prefab);
-                        Object.name = name;
-                    }
-                }
+                GameObject fab = Array.Find(this.Abilities, (prefab)=> prefab.GetComponent<AbilityManager>().AbName == name);
+                GameObject Object = Instantiate(fab);
+                Object.name = name;
             }
         }
         public GameObject SpawnAbilityPrefab(GameObject name)

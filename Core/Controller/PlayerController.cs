@@ -11,7 +11,7 @@ namespace Control.Core
 {
     public class PlayerController : BaseCreature
     {
-        public PlayerDataContainer PlayerStats = LoadedSave.Loaded.Player;
+        public PlayerDataContainer PlayerStats;
         public List<AbilityContainer> FullDeck = new List<AbilityContainer>();
         public List<AbilityContainer> ReserveDeck = new List<AbilityContainer>();
         public List<AbilityContainer> UsedDeck = new List<AbilityContainer>();
@@ -103,6 +103,7 @@ namespace Control.Core
         void Awake() {
             this.BaseInit();
             this.IsPlayer = true;
+            this.PlayerStats = LoadedSave.Loaded.Player;
             this.stamina.Max = this.PlayerStats.MaxStamina;
             this.health.Max = this.PlayerStats.MaxHealth;
             this.FullDeck = new List<AbilityContainer>(this.PlayerStats.FullDeck);

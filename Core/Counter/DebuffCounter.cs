@@ -10,23 +10,28 @@ public class DebuffCounter : MonoBehaviour
 {
     public BaseCreature Creature;
     public bool Active = false;
-    void Awake()
+    void Start()
     {
-
+        Creature.debuffCounter = this;
     }
-    void Enable()
+    public void AddPassiveDebuff(PassiveDebuff debuff)
     {
-        this.Creature.buffDebuff.passiveDebuffs.ForEach((debuff) => {
-            this.SpawnPassive(debuff);
-        });
+        Debug.Log("added "+debuff.debuff);
+        this.SpawnPassive(debuff);
     }
-    void Disable()
-    {
-        foreach (Transform child in this.transform)
-        {
-            Destroy(child.gameObject);
-        }
-    }
+    // void Enable()
+    // {
+    //     this.Creature.buffDebuff.passiveDebuffs.ForEach((debuff) => {
+    //         this.SpawnPassive(debuff);
+    //     });
+    // }
+    // void Disable()
+    // {
+    //     foreach (Transform child in this.transform)
+    //     {
+    //         Destroy(child.gameObject);
+    //     }
+    // }
     void SpawnPassive(PassiveDebuff debuff)
     {
         GameObject prefab = Array.Find(InGameContainer.GetInstance()
@@ -37,17 +42,17 @@ public class DebuffCounter : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            if (this.Active)
-            {
-                this.Disable();
-                this.Active = false;
-            } else
-            {
-                this.Enable();
-                this.Active = true;
-            }
-        }
+        // if (Input.GetKeyDown(KeyCode.LeftControl))
+        // {
+        //     if (this.Active)
+        //     {
+        //         this.Disable();
+        //         this.Active = false;
+        //     } else
+        //     {
+        //         this.Enable();
+        //         this.Active = true;
+        //     }
+        // }
     }
 }

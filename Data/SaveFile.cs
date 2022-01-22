@@ -18,7 +18,7 @@ namespace Control.Core
     {
         public PlayerDataContainer Player = new PlayerDataContainer()
         {
-            MaxHealth = 100,
+            MaxHealth = 120,
             MaxStamina = 3,
             FullDeck = new List<AbilityContainer>(){
             new AbilityContainer(){name="Stomp", Data=new AbilityData()},new AbilityContainer(){name="TwoAttack", Data=new AbilityData()},

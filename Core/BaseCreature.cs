@@ -22,7 +22,7 @@ namespace Control.Core
         public List<StaminaCounter> StaminaCounters = new List<StaminaCounter>();
         [HideInInspector]
         public List<ShieldCounter> ShieldCounters = new List<ShieldCounter>();
-        // public DebuffCounter debuffCounter;
+        public DebuffCounter debuffCounter;
         public BuffDebuff buffDebuff = new BuffDebuff();
         public bool Control = false;
         [HideInInspector]
@@ -95,10 +95,8 @@ namespace Control.Core
             {
                 cont = new PassiveDebuff() { charge = charge, debuff = debuff };
                 this.buffDebuff.passiveDebuffs.Add(cont);
+                this.debuffCounter.AddPassiveDebuff(cont);
             }
-            this.buffDebuff.passiveDebuffs.ForEach((cont)=>{
-                Debug.Log(""+cont.charge+cont.debuff);
-            });
         }
         /// <summary>input positive number to reduce stamina</summary>
         public void UseStamina(int by)

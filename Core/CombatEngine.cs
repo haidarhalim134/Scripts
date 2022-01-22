@@ -62,7 +62,6 @@ namespace Control.Combat
             {
                 RegisteredCreature[Creature.TeamId].Add(Creature);
             }
-            Debug.Log(RegisteredCreature[0].Count);
         }
         public static void UnRegisterCreature(BaseCreature Creature)
         {
@@ -121,7 +120,6 @@ namespace Control.Combat
         /// <summary>class internal function to change turn</summary>
         private static void ChangeTurn(int index, bool turn)
         {
-            Debug.Log(index+":"+turn);
             ClearTarget();
             if (index >= RegisteredCreature[0].Count)
             {

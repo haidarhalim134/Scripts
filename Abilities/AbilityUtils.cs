@@ -30,6 +30,11 @@ namespace Attributes.Abilities
         public int Level;
         public int Damage;
         public int Shield;
+        // TODO: either copy the container or create non serializable field called temp
+        public AbilityData Copy()
+        {
+            return new AbilityData(){ Level=Level, Damage=Damage, Shield=Shield };
+        }
     }
     public enum Debuffs{vulnerable, weakened}
 }
