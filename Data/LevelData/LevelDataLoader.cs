@@ -73,9 +73,13 @@ namespace LevelManager
             ShieldC.transform.localPosition = new Vector2(-35, height * -1);
             DebuffC.transform.localPosition = new Vector2(10, (height * -1)-7);
             // HealthC.GetComponent<HealthCounter>().Bar.GetComponent<SpriteRenderer>().bounds.size.x * -17
-            HealthC.transform.SetParent(GameObject.Find("UI").transform);
-            ShieldC.transform.SetParent(GameObject.Find("UI").transform);
-            DebuffC.transform.SetParent(GameObject.Find("UI").transform);
+            GameObject UI = GameObject.Find("UI");
+            HealthC.transform.SetParent(UI.transform);
+            ShieldC.transform.SetParent(UI.transform);
+            DebuffC.transform.SetParent(UI.transform);
+            HealthC.transform.SetAsFirstSibling();
+            ShieldC.transform.SetAsFirstSibling();
+            DebuffC.transform.SetAsFirstSibling();
         }
         public static GameObject SpawnCounterPrefab(GameObject Prefab, GameObject Parent)
         {
