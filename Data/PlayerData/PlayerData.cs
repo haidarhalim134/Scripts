@@ -13,7 +13,7 @@ namespace Attributes.Player
     public class PlayerDataContainer
     {
         public int MaxHealth;
-        public int MaxStamina;
+        public int MaxStamina = 3;
         public List<AbilityContainer> FullDeck;
         public void CardAdd(AbilityContainer Ability)
         {

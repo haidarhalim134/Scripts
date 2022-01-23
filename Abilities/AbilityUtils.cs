@@ -25,6 +25,16 @@ namespace Attributes.Abilities
         }
     }
     [Serializable]
+    public class BotAbilityCont
+    {
+        public GameObject Ability;
+        public AbilityData Data;
+        public AbilityContainer ToNormalContainer()
+        {
+            return new AbilityContainer(){name=Ability.GetComponent<AbilityManager>().AbName, Data=Data};
+        }
+    }
+    [Serializable]
     public class AbilityData
     {
         public int Level = 1;
@@ -35,13 +45,6 @@ namespace Attributes.Abilities
         {
             return new AbilityData(){ Level=Level, Damage=Damage, Shield=Shield };
         }
-    }
-
-    [Serializable]
-    public class BotAbilityCont
-    {
-        public GameObject Ability;
-        public AbilityData Data;
     }
     public enum Debuffs{vulnerable, weakened}
 }

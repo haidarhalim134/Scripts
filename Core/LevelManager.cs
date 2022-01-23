@@ -12,7 +12,7 @@ namespace LevelManager
     {
         public static LevelDataContainer ToLoad;
         public static bool testing;
-        /// <summary>for testing purpose only shit old code</summary>
+        /// <summary>for testing purpose only</summary>
         public static void LoadLevel(string target, string SceneId = null)
         {
             SceneManager.LoadScene(target);

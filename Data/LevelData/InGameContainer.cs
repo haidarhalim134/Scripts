@@ -16,11 +16,13 @@ namespace DataContainer
         public GameObject ShieldCounter;
         public GameObject debuffCounter;
         public LevelDataContainer[] Levels;
+        public CharacterDataCont[] Characters;
         public GameObject[] Abilities;
         public PassiveDebuffCont[] PassiveDebuffPrefab;
         public ActContainer[] Acts;
         public AssetReferenceContainer[] LevelsTest;
         private AsyncOperationHandle<LevelDataContainer> LevelHandle;
+        /// <summary>for testing purpose only</summary>
         public LevelDataContainer FindLevel(string name)
         {
             // TODO: finalize the method, this is potentialy bad
@@ -46,15 +48,9 @@ namespace DataContainer
         }
         public ActData FindAct(Act act)
         {
-            foreach (ActContainer cont in this.Acts)
-            {
-                if (cont.act == act)
-                {
-                    return cont.data;
-                }
-            }
-            Debug.Log("act not found");
-            return null;
+            ActData result = Array.Find(this.Acts,(cont)=>cont.act == act).data;
+            if (result == null) Debug.Log("act not found");
+            return result;
         }
         public void SpawnAbilityPrefab(string name)
         {

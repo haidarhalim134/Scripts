@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Attributes.Abilities;
 
-public class CharacterDataCont : MonoBehaviour
+[CreateAssetMenu(fileName = "LevelData", menuName = "new Character")]
+public class CharacterDataCont : ScriptableObject
 {
     public string Name;
-    public AbilityContainer[] StartingAbilitiy;
+    public BotAbilityCont[] StartingAbilitiy;
     public int StartingHealth;
-    public AbilityContainer[] AvailableAbility;
+    public BotAbilityCont[] AvailableAbility;
 }
