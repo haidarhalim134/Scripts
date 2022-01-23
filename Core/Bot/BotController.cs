@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,7 +45,8 @@ namespace Control.Core
         private IEnumerator Decide()
         {
             yield return new WaitForSeconds(this.ActionDelay);
-            var Cont = this.Skills[Range(0, this.Skills.Count)];
+            var EnoughMana = this.Skills.Where((cont)=> cont.Ability.GetComponent<AbilityManager>().cost<=this.stamina.Curr);
+            var Cont = EnoughMana.ToList()[Range(0, EnoughMana.Count())];
             AbilityManager Mng = InGameContainer.GetInstance().SpawnAbilityPrefab(Cont.Ability).GetComponent<AbilityManager>();
             CombatEngine.RequestCast(Mng, this,CombatEngine.RegisteredCreature[this.EnemyId][
                 Range(0,CombatEngine.RegisteredCreature[this.EnemyId].Count)],Cont.Data);
