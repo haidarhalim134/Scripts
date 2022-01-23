@@ -25,10 +25,6 @@ namespace Control.Core
             this.BaseInit();
             this.Acted = false;
             this.IsPlayer = false;
-            this.stamina.Max = 3;
-            this.health.Max = 100;
-            this.stamina.Fill();
-            this.health.Fill();
             this.OnDeath = this.OnDeathBot;
         }
         private void AssignTeam(int Id)
