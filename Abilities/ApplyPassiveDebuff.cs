@@ -14,7 +14,7 @@ namespace Attributes.Abilities
         public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data = null)
         {
             target.DebuffsAddPassive(this.type, this.charge);
-            if (effect!=null)Instantiate(effect, caster.transform).transform.localPosition = new Vector2();
+            Animations.SpawnEffect(caster.gameObject, effect);
         }
         public string Text()
         {

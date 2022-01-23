@@ -61,6 +61,10 @@ namespace Control.Core
             }
             this.stamina.Update(0);
             this.Setup(to);
+            if (!to)
+            {
+                this.buffDebuff.Activate(this.buffDebuff.endTurnActivate);
+            }
         }
         /// <returns>return false if dead else true</returns>
         public bool TakeDamage(int damage)
@@ -96,6 +100,19 @@ namespace Control.Core
                 cont = new PassiveDebuff() { charge = charge, debuff = debuff };
                 this.buffDebuff.passiveDebuffs.Add(cont);
                 this.debuffCounter.AddPassiveDebuff(cont);
+            }
+        }
+        public void DebuffAddActive(List<ActiveDebuff> list, ActiveDebuff debuff)
+        {
+            ActiveDebuff cont = list.Find((cont) => cont.name == debuff.name);
+            switch(cont)
+            {
+                case null:
+                    list.Add(debuff);
+                    break;
+                default:
+                    cont.charge+= debuff.charge;
+                    break;
             }
         }
         /// <summary>input positive number to reduce stamina</summary>
@@ -247,8 +264,35 @@ namespace Control.Core
         public Debuffs debuff;
     }
     [Serializable]
+    public class ActiveDebuff
+    {
+        public string name;
+        public int charge;
+        public AbilityData data;
+        public BaseCreature caster;
+        public BaseCreature target;
+        public Action<ActiveDebuff> debuff;
+        public void Trigger()
+        {
+            debuff(this);
+        }
+        public ActiveDebuff(string name, int charge, AbilityData data, BaseCreature caster, BaseCreature target, Action<ActiveDebuff> function)
+        {
+            this.charge = charge;
+            this.data = data;
+            this.caster = caster;
+            this.target = target;
+            this.debuff = function;
+        }
+    }
+    [Serializable]
     public class BuffDebuff
     {
         public List<PassiveDebuff> passiveDebuffs = new List<PassiveDebuff>();
+        public List<ActiveDebuff> endTurnActivate = new List<ActiveDebuff>();
+        public void Activate(List<ActiveDebuff> list)
+        {
+            list.ForEach((debuff)=>debuff.Trigger());
+        }
     }
 }
