@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,20 +17,7 @@ namespace Control.Core
     [Serializable]
     public class SaveFile
     {
-        public PlayerDataContainer Player = new PlayerDataContainer()
-        {
-            MaxHealth = 120,
-            FullDeck = new List<AbilityContainer>(){
-            new AbilityContainer(){name="Stomp", Data=new AbilityData()},new AbilityContainer(){name="TwoAttack", Data=new AbilityData()},
-            new AbilityContainer(){name="ShieldUp", Data=new AbilityData()},
-            new AbilityContainer(){name="OneAttack", Data=new AbilityData()},new AbilityContainer(){name="TwoAttack", Data=new AbilityData()},
-            new AbilityContainer(){name="Stomp", Data=new AbilityData()},
-            new AbilityContainer(){name="OneAttack", Data=new AbilityData()},new AbilityContainer(){name="TwoAttack", Data=new AbilityData()},
-            new AbilityContainer(){name="ShieldUp", Data=new AbilityData()},
-            new AbilityContainer(){name="OneAttack", Data=new AbilityData()},new AbilityContainer(){name="TwoAttack", Data=new AbilityData()},
-            new AbilityContainer(){name="Stomp", Data=new AbilityData()},
-            }
-        };
+        public PlayerDataContainer Player;
         public int Gold = 500;
         public bool LastLevelWin;
         public QueuedLevel QueuedLevel = new QueuedLevel();
@@ -70,6 +58,13 @@ namespace Control.Core
         public static bool CheckIfExist()
         {
             return File.Exists(Application.persistentDataPath+"/save.json");
+        }
+        public void InitCharacter(CharacterDataCont cont)
+        {
+            this.Player = new PlayerDataContainer();
+            this.Player.MaxHealth = cont.StartingHealth;
+            this.Player.FullDeck = new List<AbilityContainer>(cont.StartingAbilitiy.Select((cont)=>cont.ToNormalContainer()));
+            this.Player.DeckShuffle();
         }
     }
     public enum Act{ Act1, Act2 }

@@ -52,6 +52,12 @@ namespace DataContainer
             if (result == null) Debug.Log("act not found");
             return result;
         }
+        public CharacterDataCont FindCharacter(string name)
+        {
+            CharacterDataCont result = Array.Find(this.Characters, (cont) => cont.Name == name);
+            if (result == null) Debug.Log("character not found");
+            return result;
+        }
         public void SpawnAbilityPrefab(string name)
         {
             GameObject prefab = GameObject.Find(name);
