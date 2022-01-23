@@ -19,6 +19,7 @@ namespace Control.Core
             {
                 Bar.transform.localPosition = new Vector2(0 - ((1-percentage)/2f)*Bar.GetComponent<SpriteRenderer>().bounds.size.x/Bar.transform.localScale.x*4,0);
             }
+            this.SetZ();
         }
         // Start is called before the first frame update
         void Start()
@@ -26,9 +27,13 @@ namespace Control.Core
             this.Awoke();
             this.Creature.HealthCounters.Add(this);
             this.UpdateCounter();
-            this.Bar.transform.position = new Vector3(this.Bar.transform.position.x, this.Bar.transform.position.y, -1f);
+            this.SetZ();
         }
-
+        public void SetZ()
+        {
+            this.Bar.transform.position = new Vector3(
+                this.Bar.transform.position.x, this.Bar.transform.position.y, -1f);
+        }
         // Update is called once per frame
         void Update()
         {
