@@ -62,18 +62,21 @@ namespace LevelManager
         public static void SpawnCounter(GameObject Object)
         {
             RectTransform RT = Object.GetComponent<RectTransform>();
+            SpriteRenderer SR = Object.GetComponent<SpriteRenderer>();
+            GameObject UI = GameObject.Find("UI");
             GameObject StaminaC = SpawnCounterPrefab(InGameContainer.GetInstance().StaminaCounter, Object);
             GameObject HealthC = SpawnCounterPrefab(InGameContainer.GetInstance().HealthCounter, Object);
             GameObject ShieldC = SpawnCounterPrefab(InGameContainer.GetInstance().ShieldCounter, Object);
             GameObject DebuffC = Instantiate(InGameContainer.GetInstance().debuffCounter, Object.transform);
             DebuffC.GetComponent<DebuffCounter>().Creature = Object.GetComponent<BaseCreature>();
-            float height = RT.rect.height;
+            // float heights = RT.rect.height;
+            float height = SR.bounds.size.y*17;//UI.GetComponent<RectTransform>().localScale.y;
+            // Debug.Log(""+height+" "+heights);
             StaminaC.transform.localPosition = new Vector2(0, height);
             HealthC.transform.localPosition = new Vector2(0, height *-1);
             ShieldC.transform.localPosition = new Vector2(-35, height * -1);
             DebuffC.transform.localPosition = new Vector2(10, (height * -1)-7);
             // HealthC.GetComponent<HealthCounter>().Bar.GetComponent<SpriteRenderer>().bounds.size.x * -17
-            GameObject UI = GameObject.Find("UI");
             HealthC.transform.SetParent(UI.transform);
             ShieldC.transform.SetParent(UI.transform);
             DebuffC.transform.SetParent(UI.transform);
