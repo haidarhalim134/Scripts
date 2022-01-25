@@ -114,5 +114,6 @@ namespace DataContainer
     {
         public Debuffs debuff;
         public GameObject prefab;
+        public string description;
     }
 }
