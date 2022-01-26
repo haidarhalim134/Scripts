@@ -58,6 +58,7 @@ namespace Control.Core
             if (to)
             {
                 this.stamina.Fill();
+                this.buffDebuff.Activate(this.buffDebuff.startTurnActivate);
             }
             this.stamina.Update(0);
             this.Setup(to);
@@ -291,6 +292,7 @@ namespace Control.Core
     {
         public List<PassiveDebuff> passiveDebuffs = new List<PassiveDebuff>();
         public List<ActiveDebuff> endTurnActivate = new List<ActiveDebuff>();
+        public List<ActiveDebuff> startTurnActivate = new List<ActiveDebuff>();
         public void Activate(List<ActiveDebuff> list)
         {
             list.ForEach((debuff)=>debuff.Trigger());
