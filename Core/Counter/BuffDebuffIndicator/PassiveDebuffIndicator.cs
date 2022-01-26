@@ -16,7 +16,7 @@ public class PassiveDebuffIndicator : MonoBehaviour
     TooltipManager tooltipManager;
     void Awake()
     {
-        description = Array.Find(InGameContainer.GetInstance()
+        description = "<b>"+passive.debuff+"</b>\n"+Array.Find(InGameContainer.GetInstance()
         .PassiveDebuffPrefab, (cont) => cont.debuff == passive.debuff).description;
         trigger = icon.GetComponent<EventTrigger>();
         tooltipManager = TooltipManager.GetInstance();
