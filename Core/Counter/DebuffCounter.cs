@@ -40,6 +40,12 @@ public class DebuffCounter : MonoBehaviour
         PassiveDebuffIndicator indicator = Object.GetComponent<PassiveDebuffIndicator>();
         indicator.passive = debuff;
     }
+    public void SpawnSimpleActive(GameObject prefab, ActiveDebuff debuff)
+    {
+        GameObject Object = Instantiate(prefab, this.transform);
+        SimpleActiveDebuffIndicator indicator = Object.GetComponent<SimpleActiveDebuffIndicator>();
+        indicator.active = debuff;
+    }
     void Update()
     {
         // if (Input.GetKeyDown(KeyCode.LeftControl))

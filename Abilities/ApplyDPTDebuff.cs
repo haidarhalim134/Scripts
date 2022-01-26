@@ -14,12 +14,16 @@ namespace Attributes.Abilities
         AbilityManager Mng;
         public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data)
         {
-            void Debuff(ActiveDebuff Data)
+            void debuff(ActiveDebuff Data)
             {
                 Data.target.TakeDamage(this.DPT);
             }
+            string desc(ActiveDebuff Data)
+            {
+                return $" < b >{Mng.AbName}</ b >\ndeal {this.DPT} damage when turn ends";
+            }
             target.DebuffAddActive(target.buffDebuff.endTurnActivate, 
-            new ActiveDebuff(Mng.AbName, charge, Data, caster, target, Debuff));
+            new ActiveDebuff(Mng.AbName, charge, Data, caster, target, debuff, desc), debuffIcon);
         }
         public string Text()
         {

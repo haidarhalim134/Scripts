@@ -103,13 +103,14 @@ namespace Control.Core
                 this.debuffCounter.AddPassiveDebuff(cont);
             }
         }
-        public void DebuffAddActive(List<ActiveDebuff> list, ActiveDebuff debuff)
+        public void DebuffAddActive(List<ActiveDebuff> list, ActiveDebuff debuff, GameObject prefab)
         {
             ActiveDebuff cont = list.Find((cont) => cont.name == debuff.name);
             switch(cont)
             {
                 case null:
                     list.Add(debuff);
+                    debuffCounter.SpawnSimpleActive(prefab, debuff);
                     break;
                 default:
                     cont.charge+= debuff.charge;
@@ -274,17 +275,19 @@ namespace Control.Core
         public BaseCreature caster;
         public BaseCreature target;
         public Action<ActiveDebuff> debuff;
+        public Func<ActiveDebuff, string> description;
         public void Trigger()
         {
             debuff(this);
         }
-        public ActiveDebuff(string name, int charge, AbilityData data, BaseCreature caster, BaseCreature target, Action<ActiveDebuff> function)
+        public ActiveDebuff(string name, int charge, AbilityData data, BaseCreature caster, BaseCreature target, Action<ActiveDebuff> function,Func<ActiveDebuff,string> description)
         {
             this.charge = charge;
             this.data = data;
             this.caster = caster;
             this.target = target;
             this.debuff = function;
+            this.description = description;
         }
     }
     [Serializable]
