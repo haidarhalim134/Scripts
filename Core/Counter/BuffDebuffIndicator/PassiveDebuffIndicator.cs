@@ -13,19 +13,25 @@ public class PassiveDebuffIndicator : MonoBehaviour
     public PassiveDebuff passive;
     string description;
     EventTrigger trigger;
+    TooltipManager tooltipManager;
     void Awake()
     {
         description = Array.Find(InGameContainer.GetInstance()
         .PassiveDebuffPrefab, (cont) => cont.debuff == passive.debuff).description;
         trigger = icon.GetComponent<EventTrigger>();
+        tooltipManager = TooltipManager.GetInstance();
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerEnter;
         entry.callback.AddListener((eventData) => { showDesc(); });
         trigger.triggers.Add(entry);
+        entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerExit;
+        entry.callback.AddListener((eventData) => { tooltipManager.Hide(); });
+        trigger.triggers.Add(entry);
     }
     void showDesc()
     {
-        Debug.Log(description);
+        tooltipManager.SpawnTooltip(description, this.transform.position);
     }
     void Update()
     {
