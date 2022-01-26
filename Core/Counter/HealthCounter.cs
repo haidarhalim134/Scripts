@@ -17,7 +17,7 @@ namespace Control.Core
             // Debug.Log(""+percentage+"-"+((1 - percentage) / 2f)+"-"+Bar.GetComponent<SpriteRenderer>().bounds.size.x/ Bar.transform.localScale.x);
             if (percentage>0)
             {
-                Bar.transform.localPosition = new Vector2(0 - ((1-percentage)/2f)*Bar.GetComponent<SpriteRenderer>().bounds.size.x/Bar.transform.localScale.x*4,0);
+                Bar.transform.localPosition = new Vector2(0 - ((1-percentage)/2f)*Bar.GetComponent<SpriteRenderer>().bounds.size.x/Bar.transform.localScale.x/8f,0);
             }
             this.SetZ();
         }
