@@ -80,10 +80,11 @@ namespace LevelManager
             // HealthC.GetComponent<HealthCounter>().Bar.GetComponent<SpriteRenderer>().bounds.size.x * -17
             HealthC.transform.SetParent(UI.transform);
             ShieldC.transform.SetParent(UI.transform);
+            ShieldC.transform.position+= new Vector3(0,0,-2);
             DebuffC.transform.SetParent(UI.transform);
-            HealthC.transform.SetAsFirstSibling();
-            ShieldC.transform.SetAsFirstSibling();
             DebuffC.transform.SetAsFirstSibling();
+            ShieldC.transform.SetAsFirstSibling();
+            HealthC.transform.SetAsFirstSibling();
         }
         public static GameObject SpawnCounterPrefab(GameObject Prefab, GameObject Parent)
         {
