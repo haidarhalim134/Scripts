@@ -25,6 +25,7 @@ public class TooltipManager : MonoBehaviour
         Vector2 padding = new Vector2(5,5);
 
         backgroundRT.sizeDelta = textsize + padding;
+        this.text.gameObject.GetComponent<RectTransform>().localPosition = new Vector2(3, backgroundRT.sizeDelta.y/2);
     }
     public void SpawnTooltip(string tooltiptext, Vector2 position)
     {
