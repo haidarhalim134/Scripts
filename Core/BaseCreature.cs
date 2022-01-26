@@ -147,6 +147,7 @@ namespace Control.Core
             {
                 Destroy(counter.gameObject);
             });
+            Destroy(this.debuffCounter.gameObject);
             this.OnDeath();
             this.GetComponent<SpriteRenderer>().DOFade(0f, 0.25f)
             .OnComplete(()=>Destroy(this.gameObject));
