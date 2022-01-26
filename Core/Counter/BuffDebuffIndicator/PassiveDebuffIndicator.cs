@@ -17,7 +17,7 @@ public class PassiveDebuffIndicator : MonoBehaviour
     void Awake()
     {
         description = "<b>"+passive.debuff+"</b>\n"+Array.Find(InGameContainer.GetInstance()
-        .PassiveDebuffPrefab, (cont) => cont.debuff == passive.debuff).description;
+        .PassiveDebuffPrefab, (cont) => cont.debuff == passive.debuff).GetDesc();
         trigger = icon.GetComponent<EventTrigger>();
         tooltipManager = TooltipManager.GetInstance();
         EventTrigger.Entry entry = new EventTrigger.Entry();
