@@ -27,6 +27,8 @@ namespace Control.Core
             this.Awoke();
             this.Creature.HealthCounters.Add(this);
             this.UpdateCounter();
+            this.Bar.transform.localScale = new Vector3(1, 1, 1);
+            this.transform.localScale = new Vector3(1, 1, 1);
             this.SetZ();
         }
         public void SetZ()
