@@ -16,7 +16,7 @@ namespace Attributes.Abilities
         {
             void debuff(ActiveDebuff Data)
             {
-                Data.target.TakeDamage(this.DPT);
+                Data.target.TakeDamage(Calc.CalcDPT(this.DPT, caster, target));
                 Data.charge-= 1;
             }
             string desc(ActiveDebuff Data)

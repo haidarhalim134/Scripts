@@ -19,6 +19,14 @@ namespace Attributes.Abilities
             };
             return BaseDamage;
         }
+        public int CalcDPT(int BaseDamage, BaseCreature Caster, BaseCreature Target)
+        {
+            if (Target.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.vulnerable) != null)
+            {
+                BaseDamage = (int)Math.Floor(BaseDamage * 1.5f);
+            };
+            return BaseDamage;
+        }
     }
 }
 
