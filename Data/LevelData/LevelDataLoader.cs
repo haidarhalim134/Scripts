@@ -70,9 +70,9 @@ namespace LevelManager
             GameObject DebuffC = Instantiate(InGameContainer.GetInstance().debuffCounter, Object.transform);
             DebuffC.GetComponent<DebuffCounter>().Creature = Object.GetComponent<BaseCreature>();
             // float heights = RT.rect.height;
-            float height = SR.bounds.size.y*17;//UI.GetComponent<RectTransform>().localScale.y;
+            float height = SR.bounds.size.y/1.5f;//UI.GetComponent<RectTransform>().localScale.y;
             // Debug.Log(""+height+" "+heights);
-            float padding = 3;
+            float padding = 0;
             StaminaC.transform.localPosition = new Vector2(0, height);
             HealthC.transform.localPosition = new Vector2(0, height *-1-padding);
             ShieldC.transform.localPosition = new Vector2(-35, height * -1-padding);
