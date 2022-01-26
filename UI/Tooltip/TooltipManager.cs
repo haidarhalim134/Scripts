@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 using TMPro;
 
 public class TooltipManager : MonoBehaviour
@@ -26,14 +28,21 @@ public class TooltipManager : MonoBehaviour
     }
     public void SpawnTooltip(string tooltiptext, Vector2 position)
     {
-        // rectTransform.anchoredPosition = position; 
-        this.transform.position = position;
+        // Debug.Log(""+position.x+"-"+this.backgroundRT.rect.width);
+        // Debug.Log(""+(position.x*2 + this.backgroundRT.rect.width*2) +"-"+GameObject.Find("UI").GetComponent<RectTransform>().rect.width);
         SetText(tooltiptext);
-        this.gameObject.SetActive(true);
+        if (position.x * 2 + this.backgroundRT.rect.width * 2 > GameObject.Find("UI").GetComponent<RectTransform>().rect.width)
+        {
+            position.x = GameObject.Find("UI").GetComponent<RectTransform>().rect.width / 2 - backgroundRT.rect.width;
+        }
+        this.transform.position = position;
+        this.background.gameObject.GetComponent<Image>().DOFade(1f, 0.1f);
+        this.text.DOFade(1f, 0.1f);
     }
     public void Hide()
     {
-        this.gameObject.SetActive(false);
+        this.background.gameObject.GetComponent<Image>().DOFade(0f,0.1f);
+        this.text.DOFade(0f, 0.1f);
     }
     public static TooltipManager GetInstance()
     {

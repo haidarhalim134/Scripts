@@ -31,7 +31,8 @@ public class PassiveDebuffIndicator : MonoBehaviour
     }
     void showDesc()
     {
-        tooltipManager.SpawnTooltip(description, this.transform.position);
+        tooltipManager.SpawnTooltip(description, (Vector2)this.transform.position+
+        new Vector2(0,this.icon.GetComponent<RectTransform>().rect.height/2));
     }
     void Update()
     {
