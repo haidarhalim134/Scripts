@@ -115,5 +115,9 @@ namespace DataContainer
         public Debuffs debuff;
         public GameObject prefab;
         public string description;
+        public string GetDesc()
+        {
+            return description.Replace("\\n", "\n");
+        }
     }
 }
