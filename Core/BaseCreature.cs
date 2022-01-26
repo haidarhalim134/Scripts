@@ -298,7 +298,9 @@ namespace Control.Core
         public List<ActiveDebuff> startTurnActivate = new List<ActiveDebuff>();
         public void Activate(List<ActiveDebuff> list)
         {
-            list.ForEach((debuff)=>debuff.Trigger());
+            var outofcharge = new List<ActiveDebuff>();
+            list.ForEach((debuff)=>{debuff.Trigger();if(debuff.charge<=0)outofcharge.Add(debuff);});
+            outofcharge.ForEach((debuff)=>list.Remove(debuff));
         }
     }
 }
