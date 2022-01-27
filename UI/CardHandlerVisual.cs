@@ -14,22 +14,21 @@ namespace Control.UI
             public AbilityContainer Ability;
             protected bool MouseOnCard;
             private TextMeshProUGUI NameTXT;
-            private TextMeshProUGUI CostTXT;
+            public TextMeshProUGUI desctxt;
             Sequence sequence;
             public Vector2 Exit;
             public void UpdateText()
             {
                AbilityManager Mng = this.Ability.GetManager();
                TextMeshProUGUI[] txtlist =  GetComponentsInChildren<TextMeshProUGUI>();
-               this.CostTXT = txtlist[0];
-               this.NameTXT = txtlist[1];
-               this.CostTXT.text = Mng.GetStaminaCost(Ability.Data).ToString();
+               this.NameTXT = txtlist[0];
+               this.desctxt = txtlist[1];
                for (var i = 1;i<Mng.GetStaminaCost(Ability.Data) +1;i++)
                {
                    this.gameObject.transform.Find("Cost"+i).gameObject.SetActive(true);
                }
                this.NameTXT.text = this.Ability.name;
-               txtlist[2].text = Mng.GetDesc(Ability.Data);
+               txtlist[1].text = Mng.GetDesc(Ability.Data);
             }
             public void Destroy(RemoveStatus type) 
             {
