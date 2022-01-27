@@ -16,6 +16,7 @@ namespace Control.Core
         public List<AbilityContainer> ReserveDeck = new List<AbilityContainer>();
         public List<AbilityContainer> UsedDeck = new List<AbilityContainer>();
         private AbilityContainer OrderedAbility;
+        public BaseCreature HoverTarget;
         public Dictionary<string, string> Modifier = new Dictionary<string, string>();
         public float CardOutSpeed = 0.1f;
         // TODO: removing this hardcoded assignment is preferred, can assign the instance directly
