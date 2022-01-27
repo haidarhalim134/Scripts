@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Control.Core;
@@ -8,19 +9,16 @@ namespace Attributes.Abilities
     public class AbilityManager : MonoBehaviour
     {
         public List<Action<BaseCreature, BaseCreature, AbilityData>> ContainedAbilities = new List<Action<BaseCreature, BaseCreature, AbilityData>>();
-        public List<Func<string>> DescGrabber = new List<Func<string>>();
+        public List<Func<AbilityData, string>> DescGrabber = new List<Func<AbilityData, string>>();
         public string AbName; 
         public int cost;
         public int GoldCost;
         public AbTarget target;
         public string Desc;
-        public string GetDesc()
+        public string GetDesc(AbilityData data)
         {
             this.Desc = "";
-            foreach (Func<string> text in DescGrabber)
-            {
-                this.Desc+= text();
-            }
+            DescGrabber.ForEach((text)=>this.Desc+= text(data));
             return this.Desc;
         }
         public int GetStaminaCost(AbilityData Data)

@@ -29,7 +29,7 @@ namespace Control.UI
                    this.gameObject.transform.Find("Cost"+i).gameObject.SetActive(true);
                }
                this.NameTXT.text = this.Ability.name;
-               txtlist[2].text = Mng.GetDesc();
+               txtlist[2].text = Mng.GetDesc(Ability.Data);
             }
             public void Destroy(RemoveStatus type) 
             {

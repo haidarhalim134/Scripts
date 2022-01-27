@@ -15,7 +15,7 @@ namespace Attributes.Abilities
             caster.shield.Update(this.shield + Data.Shield);
             Animations.SpawnEffect(caster.gameObject, effect);
         }
-        public string Text()
+        public string Text(AbilityData data)
         {
             return $"give {this.shield} shield. ";
         }
