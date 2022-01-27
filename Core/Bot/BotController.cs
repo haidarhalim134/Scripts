@@ -41,7 +41,7 @@ namespace Control.Core
         private IEnumerator Decide()
         {
             yield return new WaitForSeconds(this.ActionDelay);
-            var EnoughMana = this.Skills.Where((cont)=> cont.Ability.GetComponent<AbilityManager>().cost<=this.stamina.Curr);
+            var EnoughMana = this.Skills.Where((cont)=> cont.Ability.GetComponent<AbilityManager>().GetStaminaCost(cont.Data)<=this.stamina.Curr);
             var Cont = EnoughMana.ToList()[Range(0, EnoughMana.Count())];
             AbilityManager Mng = InGameContainer.GetInstance().SpawnAbilityPrefab(Cont.Ability).GetComponent<AbilityManager>();
             CombatEngine.RequestCast(Mng, this,CombatEngine.RegisteredCreature[this.EnemyId][

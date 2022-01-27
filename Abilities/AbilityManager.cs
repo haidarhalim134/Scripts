@@ -10,7 +10,7 @@ namespace Attributes.Abilities
         public List<Action<BaseCreature, BaseCreature, AbilityData>> ContainedAbilities = new List<Action<BaseCreature, BaseCreature, AbilityData>>();
         public List<Func<string>> DescGrabber = new List<Func<string>>();
         public string AbName; 
-        public int cost;
+        private int cost;
         public int GoldCost;
         public AbTarget target;
         public string Desc;
@@ -23,7 +23,11 @@ namespace Attributes.Abilities
             }
             return this.Desc;
         }
-        public void Activate(BaseCreature caster, BaseCreature target, AbilityData Data = null)
+        public int GetStaminaCost(AbilityData Data)
+        {
+            return this.cost+Data.Staminacost;
+        }
+        public void Activate(BaseCreature caster, BaseCreature target, AbilityData Data)
         {
             foreach(Action<BaseCreature, BaseCreature, AbilityData> abil in ContainedAbilities)
             {

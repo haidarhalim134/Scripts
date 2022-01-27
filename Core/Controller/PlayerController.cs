@@ -25,7 +25,7 @@ namespace Control.Core
         public bool OrderAbility(AbilityContainer name)
         {
             AbilityManager Mng = name.GetManager();
-            if (this.stamina.Enough(Mng.cost))
+            if (this.stamina.Enough(Mng.GetStaminaCost(name.Data)))
             {
                 CombatEngine.SetupTarget(Mng);
                 this.OrderedAbility = name;

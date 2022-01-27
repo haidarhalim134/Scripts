@@ -42,9 +42,9 @@ namespace Control.Combat
         /// <returns>true if request accepted else false</returns>
         public static bool RequestCast(AbilityManager Ability, BaseCreature caster, BaseCreature target, AbilityData Data)
         {
-            if (caster.stamina.Enough(Ability.cost))
+            if (caster.stamina.Enough(Ability.GetStaminaCost(Data)))
             {
-                caster.UseStamina(Ability.cost);
+                caster.UseStamina(Ability.GetStaminaCost(Data));
                 Ability.Activate(caster, target, Data);
                 return true;
             } else 

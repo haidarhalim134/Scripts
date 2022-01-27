@@ -23,8 +23,8 @@ namespace Control.UI
                TextMeshProUGUI[] txtlist =  GetComponentsInChildren<TextMeshProUGUI>();
                this.CostTXT = txtlist[0];
                this.NameTXT = txtlist[1];
-               this.CostTXT.text = Mng.cost.ToString();
-               for (var i = 1;i<Mng.cost+1;i++)
+               this.CostTXT.text = Mng.GetStaminaCost(Ability.Data).ToString();
+               for (var i = 1;i<Mng.GetStaminaCost(Ability.Data) +1;i++)
                {
                    this.gameObject.transform.Find("Cost"+i).gameObject.SetActive(true);
                }
