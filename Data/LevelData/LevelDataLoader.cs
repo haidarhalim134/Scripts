@@ -49,6 +49,7 @@ namespace LevelManager
             // assigning the health
             Script.health.Max = Data.MaxHealth;
             Script.stamina.Max = Data.MaxStamina;
+            Script.ChanceForTwo = Data.ChanceForTwo;
             Script.health.Fill();
             Script.TeamId = TeamId;
 

@@ -10,6 +10,9 @@ namespace DataContainer
     {
         public int MaxHealth;
         public int MaxStamina;
+        [Tooltip("chance to get 2 stamina")]
+        [Range(0,1)]
+        public float ChanceForTwo;
         public BotAbilityCont[] Abilities;
         public Sprite Skin;
     }
