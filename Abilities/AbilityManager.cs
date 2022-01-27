@@ -10,7 +10,7 @@ namespace Attributes.Abilities
         public List<Action<BaseCreature, BaseCreature, AbilityData>> ContainedAbilities = new List<Action<BaseCreature, BaseCreature, AbilityData>>();
         public List<Func<string>> DescGrabber = new List<Func<string>>();
         public string AbName; 
-        private int cost;
+        public int cost;
         public int GoldCost;
         public AbTarget target;
         public string Desc;
