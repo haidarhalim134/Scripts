@@ -24,7 +24,13 @@ namespace Attributes.Abilities
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
-            if (caster!=null)return $"deal {Calc.CalcAttack(this.damage + data.Damage, caster, target)} damage to enemy. ";
+            if (caster!=null)
+            {
+                int calcdamage = Calc.CalcAttack(this.damage + data.Damage, caster, target);
+                if (calcdamage==damage)return $"deal {calcdamage} damage to enemy. ";
+                else if (calcdamage > damage) return $"deal <color=\"green\">{calcdamage}</color> damage to enemy. ";
+                else return $"deal <color=\"red\">{calcdamage}</color> damage to enemy. ";
+            }
             else return $"deal {this.damage + data.Damage} damage to enemy. ";
         }
         void Awake()
