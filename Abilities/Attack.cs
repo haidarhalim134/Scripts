@@ -22,9 +22,10 @@ namespace Attributes.Abilities
             StartCoroutine(Animations.TowardsCenterAttack(caster.gameObject, Hit));
             
         }
-        public string Text(AbilityData data)
+        public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
-            return $"deal {this.damage} damage to enemy. ";
+            if (caster!=null)return $"deal {Calc.CalcAttack(this.damage + data.Damage, caster, target)} damage to enemy. ";
+            else return $"deal {this.damage + data.Damage} damage to enemy. ";
         }
         void Awake()
         {

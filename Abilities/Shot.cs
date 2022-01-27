@@ -22,7 +22,7 @@ namespace Attributes.Abilities
             StartCoroutine(Animations.AwayCenterShot(caster.gameObject, Hit, 0.3f, 10f));
             
         }
-        public string Text(AbilityData data)
+        public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
             return $"deal {this.damage} damage to enemy. ";
         }

@@ -5,6 +5,7 @@ using TMPro;
 using Control.Deck;
 using Attributes.Abilities;
 using DG.Tweening;
+using Control.Core;
 
 namespace Control.UI
 {
@@ -17,7 +18,7 @@ namespace Control.UI
             public TextMeshProUGUI desctxt;
             Sequence sequence;
             public Vector2 Exit;
-            public void UpdateText()
+            public void UpdateText(PlayerController caster = null, BaseCreature target = null)
             {
                AbilityManager Mng = this.Ability.GetManager();
                TextMeshProUGUI[] txtlist =  GetComponentsInChildren<TextMeshProUGUI>();
@@ -28,8 +29,15 @@ namespace Control.UI
                    this.gameObject.transform.Find("Cost"+i).gameObject.SetActive(true);
                }
                this.NameTXT.text = this.Ability.name;
-               txtlist[1].text = Mng.GetDesc(Ability.Data);
+            //    txtlist[1].text = Mng.GetDesc(Ability.Data);
+            if (caster != null)
+            {
+                this.desctxt.text = this.Ability.GetManager().GetDesc(this.Ability.Data, caster, target);
+            }else
+            {
+                this.desctxt.text = this.Ability.GetManager().GetDesc(this.Ability.Data);
             }
+        }
             public void Destroy(RemoveStatus type) 
             {
                 if (type == RemoveStatus.used||type == RemoveStatus.discard)

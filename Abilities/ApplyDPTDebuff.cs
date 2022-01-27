@@ -26,7 +26,7 @@ namespace Attributes.Abilities
             target.DebuffAddActive(target.buffDebuff.endTurnActivate, 
             new ActiveDebuff(Mng.AbName, charge, Data, caster, target, debuff, desc), debuffIcon);
         }
-        public string Text(AbilityData data)
+        public string Text(AbilityData data, PlayerController caster, BaseCreature target)
         {
             return $"Apply {this.charge} {this.DPT} DPT. ";
         }

@@ -16,7 +16,7 @@ namespace Attributes.Abilities
             target.DebuffsAddPassive(this.type, this.charge);
             Animations.SpawnEffect(caster.gameObject, effect);
         }
-        public string Text(AbilityData data)
+        public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
             return $"Apply {this.charge} <b>{this.type}</b>. ";
         }

@@ -28,6 +28,15 @@ namespace Control.Deck
             this.ActiveCard = Card;
             this.RefreshCardPos(Index, PosX[Index]);
         }
+        public void updateActiveCardText(PlayerController caster = null, BaseCreature target = null)
+        {
+            if (this.ActiveCard!=null)
+            {
+                CardHandler script = this.ActiveCard.transform.GetComponent<CardHandler>();
+                if (caster!=null)script.UpdateText(caster,target);
+                else script.UpdateText();
+            }
+        }
         public void ClearHighlight()
         {
             this.Owner.AbilityClearOrder();
@@ -63,9 +72,6 @@ namespace Control.Deck
             Script.InitOwner();
             Script.Exit = this.UsedDeck.transform.position;
             Script.TheDeck = this;
-            //TODO: remove this temp card color identifier later
-            // Image tmpcolorid = Card.GetComponent<Image>();
-            // tmpcolorid.color = Ability==AbilitiesRepository.OneAttack?Color.blue:Ability==AbilitiesRepository.TwoAttack?Color.red:Color.gray;
             this.ActiveDeck.Add(Card);
             this.RefreshCardPos();
         }
