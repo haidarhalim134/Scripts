@@ -27,9 +27,8 @@ namespace Attributes.Abilities
             if (caster != null)
             {
                 int calcdamage = Calc.CalcAttack(this.damage + data.Damage, caster, target);
-                if (calcdamage == damage) return $"deal {calcdamage} damage to enemy. ";
-                else if (calcdamage > damage) return $"deal <color=\"green\">{calcdamage}</color> damage to enemy. ";
-                else return $"deal <color=\"red\">{calcdamage}</color> damage to enemy. ";
+                string color = AbilityUtils.CalcColor(this.damage, calcdamage);
+                return $"deal {color}{calcdamage}</color> damage to enemy. ";
             }
             else return $"deal {this.damage + data.Damage} damage to enemy. ";
         }

@@ -5,9 +5,16 @@ using DataContainer;
 
 namespace Attributes.Abilities
 {
-    public class AbilityUtils : MonoBehaviour
+    public class AbilityUtils
     {
-        
+        public static string g = "<color=#29b400>";
+        public static string r = "<color=\"red\">";
+        public static string CalcColor(int basenumber, int calcnumber)
+        {
+            if (basenumber == calcnumber)return "";
+            else if (basenumber < calcnumber)return g;
+            else return r;
+        }
     }
     [Serializable]
     public class AbilityContainer
