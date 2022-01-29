@@ -20,7 +20,7 @@ namespace Control.Deck
             bool Sucess = this.Owner.OrderAbility(this.Ability);
             if (Sucess)
             {
-                this.TheDeck.HighlightCard(this.gameObject);
+                this.TheDeck.HighlightCard(this);
                 this.Highlight(true);
             } else
             {

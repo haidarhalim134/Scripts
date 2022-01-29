@@ -10,7 +10,7 @@ namespace Control.Deck
 {
     public class CardDeck : MonoBehaviour
     {
-        List<GameObject> ActiveDeck = new List<GameObject>();
+        List<CardHandler> ActiveDeck = new List<CardHandler>();
         public GameObject CardPrefab;
         public PlayerController Owner;
         public int CardSep = 20;
@@ -19,9 +19,9 @@ namespace Control.Deck
         public GameObject ReserveDeck;
         [Tooltip("used as card exit route")]
         public GameObject UsedDeck;
-        GameObject ActiveCard;
+        CardHandler ActiveCard;
         /// <summary>auto refresh before highlighting</summary>
-        public void HighlightCard(GameObject Card)
+        public void HighlightCard(CardHandler Card)
         { 
             List<float> PosX = this.CalcCardsXPos(this.ActiveDeck.Count);
             int Index = this.ActiveDeck.IndexOf(Card);
@@ -73,7 +73,7 @@ namespace Control.Deck
             Script.InitOwner();
             Script.Exit = this.UsedDeck.transform.position;
             Script.TheDeck = this;
-            this.ActiveDeck.Add(Card);
+            this.ActiveDeck.Add(Script);
             this.RefreshCardPos();
         }
         public void RemoveActiveCard()
@@ -88,10 +88,10 @@ namespace Control.Deck
         }
         public void ClearDeck()
         {
-            foreach (GameObject Card in this.ActiveDeck)
+            foreach (CardHandler Card in this.ActiveDeck)
             {
-                this.Owner.DeckMoveToUsed(Card.GetComponent<CardHandler>().Ability);
-                Card.GetComponent<CardHandler>().Destroy(RemoveStatus.discard);
+                this.Owner.DeckMoveToUsed(Card.Ability);
+                Card.Destroy(RemoveStatus.discard);
                 // Destroy(Card);
             }
             this.ActiveDeck.Clear();
