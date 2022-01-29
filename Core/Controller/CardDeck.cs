@@ -40,6 +40,7 @@ namespace Control.Deck
         public void ClearHighlight()
         {
             this.Owner.AbilityClearOrder();
+            this.ActiveCard = null;
             this.RefreshCardPos();
         }
         /// <summary>ClickedCardInit refer to x position</summary>
