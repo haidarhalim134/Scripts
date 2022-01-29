@@ -32,7 +32,7 @@ namespace Control.Deck
         {
             if (this.ActiveCard!=null)
             {
-                CardHandler script = this.ActiveCard.transform.GetComponent<CardHandler>();
+                CardHandler script = this.ActiveCard;
                 if (caster!=null)script.UpdateText(caster,target);
                 else script.UpdateText();
             }
@@ -52,7 +52,7 @@ namespace Control.Deck
                 float PosY = CalcCardsYPos(PosX[i]);
                 float Angle = CalcCardAngle(PosX[i], PosY);
                 // get component => set target
-                CardHandler Script = ActiveDeck[i].GetComponent<CardHandler>();
+                CardHandler Script = ActiveDeck[i];
                 RectTransform rect = this.ActiveDeck[i].GetComponent<RectTransform>();
                 Script.AddMoveTarget(new Vector2(PosX[i] - rect.rect.width/2,PosY-this.DeckCurve - rect.rect.height/2));        
                 if (i != ClickedCard)
@@ -79,7 +79,7 @@ namespace Control.Deck
         public void RemoveActiveCard()
         {
             this.ActiveDeck.Remove(this.ActiveCard);
-            CardHandler handler = this.ActiveCard.GetComponent<CardHandler>();
+            CardHandler handler = this.ActiveCard;
             handler.animator.SetBool("Active", false);
             handler.Destroy(RemoveStatus.used);
             // Destroy(this.ActiveCard);
