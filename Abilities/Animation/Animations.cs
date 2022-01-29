@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class Animations
 {
-    public static IEnumerator TowardsCenterAttack(GameObject target, Action onHit, float totalTime = 0.5f, float distance = 50f)
+    public static IEnumerator TowardsCenterAttack(GameObject target, Action onHit, float totalTime = 0.25f, float distance = 25f)
     {
         float tohit = totalTime * 1/2f;
         float toback = totalTime * 1/2f;
