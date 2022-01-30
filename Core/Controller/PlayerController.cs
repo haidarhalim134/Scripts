@@ -17,7 +17,7 @@ namespace Control.Core
         public List<AbilityContainer> UsedDeck = new List<AbilityContainer>();
         private AbilityContainer OrderedAbility;
         public float CardOutSpeed = 0.1f;
-        public int MaxDeckSize = 10;
+        public int MaxDeckSize = 5;
         // TODO: removing this hardcoded assignment is preferred, can assign the instance directly
         public GameObject TEMP;
         public CardDeck Deck;
