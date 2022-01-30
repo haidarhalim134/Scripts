@@ -8,7 +8,6 @@ using Attributes.Abilities;
 public class DrawCard : MonoBehaviour
 {
     public int card = 1;
-    public GameObject effect;
     static StatProcessor Calc = new StatProcessor();
     public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data)
     {
