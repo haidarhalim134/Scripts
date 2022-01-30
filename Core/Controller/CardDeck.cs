@@ -10,7 +10,7 @@ namespace Control.Deck
 {
     public class CardDeck : MonoBehaviour
     {
-        List<CardHandler> ActiveDeck = new List<CardHandler>();
+        public List<CardHandler> ActiveDeck = new List<CardHandler>();
         public GameObject CardPrefab;
         public PlayerController Owner;
         public int CardSep = 20;
@@ -72,7 +72,7 @@ namespace Control.Deck
             Script.TargetOwner = Owner.gameObject;
             Script.InitOwner();
             Script.Exit = this.UsedDeck.transform.position;
-            Script.TheDeck = this;
+            Script.Deck = this;
             this.ActiveDeck.Add(Script);
             this.RefreshCardPos();
         }

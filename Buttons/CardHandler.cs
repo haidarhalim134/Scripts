@@ -12,7 +12,7 @@ namespace Control.Deck
     {
         public GameObject TargetOwner;
         PlayerController Owner;
-        public CardDeck TheDeck;
+        public CardDeck Deck;
         public bool Active = false;
         public Animator animator;
         public void OnClick() 
@@ -20,7 +20,7 @@ namespace Control.Deck
             bool Sucess = this.Owner.OrderAbility(this.Ability);
             if (Sucess)
             {
-                this.TheDeck.HighlightCard(this);
+                this.Deck.HighlightCard(this);
                 this.Highlight(true);
             } else
             {

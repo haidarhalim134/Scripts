@@ -16,8 +16,8 @@ namespace Control.Core
         public List<AbilityContainer> ReserveDeck = new List<AbilityContainer>();
         public List<AbilityContainer> UsedDeck = new List<AbilityContainer>();
         private AbilityContainer OrderedAbility;
-        public Dictionary<string, string> Modifier = new Dictionary<string, string>();
         public float CardOutSpeed = 0.1f;
+        public int MaxDeckSize = 10;
         // TODO: removing this hardcoded assignment is preferred, can assign the instance directly
         public GameObject TEMP;
         public CardDeck Deck;
@@ -47,7 +47,7 @@ namespace Control.Core
                 bool Success = CombatEngine.RequestCast(ability, this, Target, this.OrderedAbility.Data);
                 if (Success)
                 {
-                    this.DeckRemoveFrom(this.OrderedAbility);
+                    this.DeckRemoveActive(this.OrderedAbility);
                     this.OrderedAbility = null;
                 }
             }
@@ -67,18 +67,21 @@ namespace Control.Core
                 this.DeckRefillReservedCard();
             }
             DeckAddTo(0);
-            if (Card<4)
+            if (Card<this.MaxDeckSize-1)
             {
                 StartCoroutine(DeckInit(Card+1));
             }
         }
-        private void DeckAddTo(int index)
+        public void DeckAddTo(int index)
         {
-            this.Deck.AddCard(this.ReserveDeck[index]);
-            this.ReserveDeck.RemoveAt(index);
+            if (this.Deck.ActiveDeck.Count<MaxDeckSize)
+            {
+                this.Deck.AddCard(this.ReserveDeck[index]);
+                this.ReserveDeck.RemoveAt(index);
+            }
         }
         /// <summary>called by player instance then order its deck to also remove it</summary>
-        public void DeckRemoveFrom(AbilityContainer Ability)
+        public void DeckRemoveActive(AbilityContainer Ability)
         {
             this.Deck.RemoveActiveCard();
             this.UsedDeck.Add(Ability);
