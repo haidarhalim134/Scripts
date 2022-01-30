@@ -17,7 +17,7 @@ namespace Control.Core
         public List<AbilityContainer> UsedDeck = new List<AbilityContainer>();
         private AbilityContainer OrderedAbility;
         public float CardOutSpeed = 0.1f;
-        public int MaxDeckSize = 5;
+        public int MaxDeckSize = 10;
         // TODO: removing this hardcoded assignment is preferred, can assign the instance directly
         public GameObject TEMP;
         public CardDeck Deck;
@@ -67,7 +67,7 @@ namespace Control.Core
                 this.DeckRefillReservedCard();
             }
             DeckAddTo(0);
-            if (Card<this.MaxDeckSize-1)
+            if (Card<4)
             {
                 StartCoroutine(DeckInit(Card+1));
             }
