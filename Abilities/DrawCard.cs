@@ -29,7 +29,7 @@ public class DrawCard : MonoBehaviour
     void Awake()
     {
         AbilityManager Mng = gameObject.GetComponent<AbilityManager>();
-        // Mng.ContainedAbilities.Add(this.Ability);
+        Mng.ContainedAbilities.Add(this.Ability);
         Mng.DescGrabber.Add(this.Text);
     }
 }
