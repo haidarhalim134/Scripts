@@ -161,7 +161,7 @@ namespace Control.Deck
                 int Median = Convert.ToInt32(Math.Floor(Count/2));
                 int StartPoint = Math.Abs(-1 * ClickedCard + TargetCard);
                 float SepMlt = (float)(1/Math.Pow(StartPoint,1/1.1));
-                return Math.Max(BaseSep*9/10f,BaseSep * SepMlt * 1.3f);
+                return Math.Max(BaseSep,BaseSep * SepMlt * 1.3f);
             }
             return BaseSep;
         }
