@@ -28,9 +28,9 @@ namespace Attributes.Abilities
             {
                 int calcdamage = Calc.CalcAttack(this.damage + data.Damage, caster, target);
                 string color = AbilityUtils.CalcColor(this.damage, calcdamage);
-                return $"deal {color}{calcdamage}</color> damage to enemy. ";
+                return $"deal {color}{calcdamage}</color> damage. ";
             }
-            else return $"deal {this.damage + data.Damage} damage to enemy. ";
+            else return $"deal {this.damage + data.Damage} damage. ";
         }
         void Awake()
         {
