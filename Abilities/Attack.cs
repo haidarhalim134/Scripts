@@ -15,7 +15,7 @@ namespace Attributes.Abilities
         {
             void Hit()
             {
-                target.TakeDamage(Calc.CalcAttack(this.damage + Data.Damage, caster, target));
+                target.TakeDamage(Calc.CalcAttack(this.damage + Data.Damage, caster, target), caster);
                 StartCoroutine(Animations.AwayCenterHit(target.gameObject, () => { }, 0.2f, 5f));
                 Animations.SpawnEffect(target.gameObject, effect);
             }
