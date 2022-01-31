@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class Animations
 {
-    public static IEnumerator TowardsCenterAttack(GameObject target, Action onHit, float totalTime = 0.25f, float distance = 25f)
+    public static IEnumerator TowardsCenterAttack(GameObject target, Action onHit,Action postHit, float totalTime = 0.25f, float distance = 25f)
     {
         float tohit = totalTime * 1/2f;
         float toback = totalTime * 1/2f;
@@ -19,6 +19,7 @@ public class Animations
         onHit();
         tween = target.transform.DOLocalMoveX(target.transform.localPosition.x - distance, toback).SetEase(Ease.Linear);
         yield return tween.WaitForCompletion();
+        postHit();
     }
     public static IEnumerator AwayCenterHit(GameObject target, Action onHit, float totalTime = 0.5f, float distance = 50f)
     {
