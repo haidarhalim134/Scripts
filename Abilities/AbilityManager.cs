@@ -8,7 +8,7 @@ namespace Attributes.Abilities
 {
     public class AbilityManager : MonoBehaviour
     {
-        public List<Action<BaseCreature, BaseCreature, AbilityData>> ContainedAbilities = new List<Action<BaseCreature, BaseCreature, AbilityData>>();
+        public ListAbil ContainedAbilities = new ListAbil();
         public List<Func<AbilityData,PlayerController,BaseCreature, string>> DescGrabber = new List<Func<AbilityData, PlayerController, BaseCreature, string>>();
         public string AbName; 
         public int cost;
