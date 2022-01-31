@@ -34,4 +34,15 @@ namespace Attributes.Abilities
         }
     }
     public enum AbTarget{self, allies, enemy}
+    public enum ModType{preAttack,preDamage,postDamage,postAttack}
+    public class Modifier
+    {
+        public Dictionary<ModType, ListAbil> modifier = new Dictionary<ModType, ListAbil>()
+        {{ModType.preAttack, new ListAbil()},{ModType.preDamage, new ListAbil()},
+        {ModType.postDamage, new ListAbil()},{ModType.postAttack, new ListAbil()}};
+    }
+    public class ListAbil : List<Action<BaseCreature, BaseCreature, AbilityData>>
+    {
+
+    }
 }
