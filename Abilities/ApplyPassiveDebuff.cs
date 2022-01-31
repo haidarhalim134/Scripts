@@ -9,6 +9,7 @@ namespace Attributes.Abilities
     {
         public Debuffs type;
         public int charge;
+        public ModType modType;
         public GameObject effect;
         static StatProcessor Calc = new StatProcessor();
         public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data = null)
@@ -23,7 +24,7 @@ namespace Attributes.Abilities
         void Awake()
         {
             AbilityManager Mng = gameObject.GetComponent<AbilityManager>();
-            Mng.ContainedAbilities.Add(this.Ability);
+            Mng.modifier.modifier[modType].Add(this.Ability);
             Mng.DescGrabber.Add(this.Text);
         }
     }

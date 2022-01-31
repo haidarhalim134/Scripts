@@ -10,6 +10,7 @@ namespace Attributes.Abilities
     {
         public ListAbil ContainedAbilities = new ListAbil();
         public List<Func<AbilityData,PlayerController,BaseCreature, string>> DescGrabber = new List<Func<AbilityData, PlayerController, BaseCreature, string>>();
+        public Modifier modifier = new Modifier();
         public string AbName; 
         public int cost;
         public int GoldCost;

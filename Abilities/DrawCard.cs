@@ -8,6 +8,7 @@ using Attributes.Abilities;
 public class DrawCard : MonoBehaviour
 {
     public int card = 1;
+    public ModType modType;
     static StatProcessor Calc = new StatProcessor();
     public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data)
     {
@@ -29,7 +30,7 @@ public class DrawCard : MonoBehaviour
     void Awake()
     {
         AbilityManager Mng = gameObject.GetComponent<AbilityManager>();
-        Mng.ContainedAbilities.Add(this.Ability);
+        Mng.modifier.modifier[modType].Add(this.Ability);
         Mng.DescGrabber.Add(this.Text);
     }
 }
