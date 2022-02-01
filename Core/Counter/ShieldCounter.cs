@@ -34,10 +34,13 @@ public class ShieldCounter : BaseCounter
         {
             if (instant)
             {
-                this.Counter.color = 
-                new Color(this.Counter.color.r, this.Counter.color.g, this.Counter.color.b, 0f);
-                this.icon.color = 
-                new Color(this.icon.color.r, this.icon.color.g, this.icon.color.b, 0f); ;
+                Color c;
+                c = this.Counter.color;
+                c.a = 0;
+                this.Counter.color = c;
+                c = this.icon.color;
+                c.a = 0;
+                this.icon.color = c;
             }
             else if (!instant){ this.Counter.DOFade(0, 0.2f); this.icon.DOFade(0, 0.2f);}
             shown = false;
