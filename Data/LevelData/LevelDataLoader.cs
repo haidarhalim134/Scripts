@@ -77,7 +77,7 @@ namespace LevelManager
             StaminaC.transform.localPosition = new Vector2(0, height);
             HealthC.transform.localPosition = new Vector2(0, height *-1-padding);
             ShieldC.transform.localPosition = new Vector2(-35, height * -1-padding);
-            DebuffC.transform.localPosition = new Vector2(10, (height * -1)-7-padding);
+            DebuffC.transform.localPosition = new Vector2(10, (height * -1)-9-padding);
             // HealthC.GetComponent<HealthCounter>().Bar.GetComponent<SpriteRenderer>().bounds.size.x * -17
             HealthC.transform.SetParent(UI.transform);
             ShieldC.transform.SetParent(UI.transform);
