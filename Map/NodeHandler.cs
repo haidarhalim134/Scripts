@@ -28,27 +28,31 @@ namespace Map
                 foreach (NodeHandler parent in this.Parent)
                 {
                     parent.Child.Add(this);
-                    var lineRenderer = new GameObject("Line").AddComponent<LineRenderer>();
-                    lineRenderer.transform.SetParent(gameObject.transform.parent);
-                    // lineRenderer.startColor = Color.black;
-                    // lineRenderer.endColor = Color.black;
-                    lineRenderer.startWidth = 0.1f;
-                    lineRenderer.endWidth = 0.1f;
-                    lineRenderer.positionCount = 2;
-                    lineRenderer.useWorldSpace = true;
-                    lineRenderer.textureMode = LineTextureMode.Tile;
-                    // lineRenderer.useWorldSpace = false;
-                    Material material = mapHandler.LineMaterial;
-                    material.mainTextureScale = new Vector2(Vector3.Distance(transform.position,parent.transform.position), 1);
-                    lineRenderer.material = material;
-                    lineRenderer.gameObject.AddComponent<DotRenderer>();
-                    // lineRenderer.material.SetTextureScale("_MainTex", new Vector2(10f, 1));
-                    // lineRenderer.material.mainTextureScale = new Vector2(0.1f, 1f);
+                    GameObject Object = new GameObject("Line");
+                    Object.transform.SetParent(mapHandler.transform);
+                    DotGenerator.Generate(transform.position, parent.transform.position,
+                     mapHandler.DotPrefab, Object.transform,mapHandler.DotGap);
+                    // var lineRenderer = new GameObject("Line").AddComponent<LineRenderer>();
+                    // lineRenderer.transform.SetParent(gameObject.transform.parent);
+                    // // lineRenderer.startColor = Color.black;
+                    // // lineRenderer.endColor = Color.black;
+                    // lineRenderer.startWidth = 0.1f;
+                    // lineRenderer.endWidth = 0.1f;
+                    // lineRenderer.positionCount = 2;
+                    // lineRenderer.useWorldSpace = true;
+                    // lineRenderer.textureMode = LineTextureMode.Tile;
+                    // // lineRenderer.useWorldSpace = false;
+                    // Material material = mapHandler.LineMaterial;
+                    // material.mainTextureScale = new Vector2(Vector3.Distance(transform.position,parent.transform.position), 1);
+                    // lineRenderer.material = material;
+                    // lineRenderer.gameObject.AddComponent<DotRenderer>();
+                    // // lineRenderer.material.SetTextureScale("_MainTex", new Vector2(10f, 1));
+                    // // lineRenderer.material.mainTextureScale = new Vector2(0.1f, 1f);
 
-                    //For drawing line in the world space, provide the x,y,z values
-                    lineRenderer.SetPosition(0, transform.position); //x,y and z position of the starting point of the line
-                    lineRenderer.SetPosition(1, parent.transform.position); //x,y and z position of the end point of the line
-                    // DotRenderer.Lines.Add(new Line(){point1=transform.position,point2=parent.transform.position });
+                    // //For drawing line in the world space, provide the x,y,z values
+                    // lineRenderer.SetPosition(0, transform.position); //x,y and z position of the starting point of the line
+                    // lineRenderer.SetPosition(1, parent.transform.position); //x,y and z position of the end point of the line
+                    // // DotRenderer.Lines.Add(new Line(){point1=transform.position,point2=parent.transform.position });
                 }
             }
         }

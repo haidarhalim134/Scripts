@@ -14,7 +14,8 @@ namespace Map
         public float VerticalSep;
         public float HorizontalSep;
         public GameObject NodePrefab;
-        public Material LineMaterial;
+        public GameObject DotPrefab;
+        public float DotGap;
         public GameObject Character;
         NodeHandler InitializedMainTree;
         List<Tree> CurrentTree = null;
