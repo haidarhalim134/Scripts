@@ -11,7 +11,7 @@ public class DotGenerator
         while (progress<1)
         {
             Vector3 pos = Vector2.Lerp(point1,point2,progress);
-            // pos.z = 50;
+            pos.z = 50;
             GameObject Object = GameObject.Instantiate(prefab);
             Object.transform.position = pos;
             Object.transform.SetParent(parent);
