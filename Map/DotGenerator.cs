@@ -8,7 +8,7 @@ public class DotGenerator : MonoBehaviour
     public Vector2 point1;
     public Vector2 point2;
     public float gap;
-    void Generate(Vector2 point1, Vector2 point2)
+    public static void Generate(Vector2 point1, Vector2 point2, GameObject prefab, float gap = 15)
     {
         float progress = 0;
         float distance = Vector2.Distance(point1, point2);
@@ -18,9 +18,5 @@ public class DotGenerator : MonoBehaviour
             Instantiate(prefab, pos, new Quaternion());
             progress += gap / distance;
         }
-    }
-    public void onClick()
-    {
-        Generate(point1,point2);
     }
 }
