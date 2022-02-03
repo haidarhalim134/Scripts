@@ -29,8 +29,8 @@ namespace Map
         {
             {"pre_node", new Dictionary<string, int[]>(){
                 {"normal", new int[] {6}},
-                {"branch", new int[] {0}},
-                {"join", new int[] {0}}
+                {"branch", new int[] {3}},
+                {"join", new int[] {2}}
             }},
             {"node", new Dictionary<string, int[]>(){
                 {"Home", new int[] {2}},
