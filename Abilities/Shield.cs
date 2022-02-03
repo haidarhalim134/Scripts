@@ -8,13 +8,17 @@ namespace Attributes.Abilities
     public class Shield : MonoBehaviour
     {
         public int shield = 10;
+        public Targeting targeting;
         public ModType modType;
         public GameObject effect;
         static StatProcessor Calc = new StatProcessor();
         public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data = null)
         {
-            caster.shield.Update(this.shield + Data.Shield);
-            Animations.SpawnEffect(caster.gameObject, effect);
+            BaseCreature to;
+            if (targeting==Targeting.target)to = target;
+            else to = caster;
+            to.shield.Update(this.shield + Data.Shield);
+            Animations.SpawnEffect(to.gameObject, effect);
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {

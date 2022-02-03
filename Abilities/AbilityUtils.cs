@@ -55,4 +55,5 @@ namespace Attributes.Abilities
         }
     }
     public enum Debuffs{vulnerable, weakened}
+    public enum Targeting{caster,target}
 }
