@@ -9,17 +9,18 @@ using Control.Core;
 using Attributes.Abilities;
 
 namespace LevelManager
-{public class LevelDataLoader : MonoBehaviour
 {
-    /// <summary>default spreader : random</summary>
-    public static void LoadLevel(LevelDataContainer Level)
+    public class LevelDataLoader : MonoBehaviour
+    {
+        /// <summary>default spreader : random</summary>
+        public static void LoadLevel(LevelDataContainer Level)
         {
             // TODO: create a simpler version of this, use prefab with object named 1 through n, then replace each number with actual creature
             foreach (BotDataContainer Cont in Level.Creature)
             {
                 GameObject Creature = Instantiate(Level.CreaturePrefab, GameObject.Find("Team" + Cont.TeamId).transform) as GameObject;
                 Creature.AddComponent<BotController>();
-                SpawnCreature(Creature, Cont.CreatureAsset, Level, Cont);
+                InitCreature(Creature, Cont.CreatureAsset, Level, Cont);
             }
         }
         static float[] RandomXY(GameObject SpawnPlace)
@@ -37,7 +38,7 @@ namespace LevelManager
             }
             return new float[2] { Slot.localPosition.x, Slot.localPosition.y };
         }
-        private static void SpawnCreature(GameObject Object, CreatureDataContainer Data, LevelDataContainer LevelCont, BotDataContainer BotCont)
+        private static void InitCreature(GameObject Object, CreatureDataContainer Data, LevelDataContainer LevelCont, BotDataContainer BotCont)
         {
             BotController Script = Object.GetComponent<BotController>();
             int TeamId = BotCont.TeamId;
@@ -67,17 +68,17 @@ namespace LevelManager
             GameObject DebuffC = Instantiate(InGameContainer.GetInstance().debuffCounter, Object.transform);
             DebuffC.GetComponent<DebuffCounter>().Creature = Object.GetComponent<BaseCreature>();
             // float heights = RT.rect.height;
-            float height = SR.bounds.size.y/1.5f;//UI.GetComponent<RectTransform>().localScale.y;
+            float height = SR.bounds.size.y / 1.5f;//UI.GetComponent<RectTransform>().localScale.y;
             // Debug.Log(""+height+" "+heights);
             float padding = 0;
             StaminaC.transform.localPosition = new Vector2(0, height);
-            HealthC.transform.localPosition = new Vector2(0, height *-1-padding);
-            ShieldC.transform.localPosition = new Vector2(-35, height * -1-padding);
-            DebuffC.transform.localPosition = new Vector2(10, (height * -1)-9-padding);
+            HealthC.transform.localPosition = new Vector2(0, height * -1 - padding);
+            ShieldC.transform.localPosition = new Vector2(-35, height * -1 - padding);
+            DebuffC.transform.localPosition = new Vector2(10, (height * -1) - 9 - padding);
             // HealthC.GetComponent<HealthCounter>().Bar.GetComponent<SpriteRenderer>().bounds.size.x * -17
             HealthC.transform.SetParent(UI.transform);
             ShieldC.transform.SetParent(UI.transform);
-            ShieldC.transform.position+= new Vector3(0,0,-2);
+            ShieldC.transform.position += new Vector3(0, 0, -2);
             DebuffC.transform.SetParent(UI.transform);
             DebuffC.transform.SetAsFirstSibling();
             ShieldC.transform.SetAsFirstSibling();
