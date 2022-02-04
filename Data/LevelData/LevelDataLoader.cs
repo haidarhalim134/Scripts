@@ -27,9 +27,8 @@ namespace LevelManager
             Vector2 Rect = SpawnPlace.GetComponent<RectTransform>().sizeDelta;
             return new float[2] { Rect.x * Range(-0.4f, 0.4f), Rect.y * Range(-0.4f, 0.4f) };
         }
-        static float[] ReadCoord(LevelDataContainer LevelCont, BotDataContainer BotCont)
+        static float[] ReadCoord(GameObject SpreadPrefab, BotDataContainer BotCont)
         {
-            GameObject SpreadPrefab = LevelCont.SpreadPrefab;
             Transform Slot = SpreadPrefab.transform.Find(BotCont.SpreadPrefabPlace.ToString());
             if (Slot == null)
             {
@@ -52,7 +51,7 @@ namespace LevelManager
             Script.health.Fill();
             Script.TeamId = TeamId;
 
-            float[] Pos = ReadCoord(LevelCont, BotCont);
+            float[] Pos = ReadCoord(LevelCont.SpreadPrefab, BotCont);
             Object.transform.localPosition = new Vector3(Pos[0], Pos[1], -2835f);
             SpawnCounter(Object);
             Script.Skills.AddRange(Data.Abilities);
