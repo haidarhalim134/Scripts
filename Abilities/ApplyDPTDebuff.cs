@@ -22,7 +22,7 @@ namespace Attributes.Abilities
             }
             string desc(ActiveDebuff Data)
             {
-                return $" <b>{Mng.AbName}</b>\ndeal {this.DPT} damage when turn ends";
+                return $" <b>{Mng.AbName}</b>\ndeal {Calc.CalcDPT(this.DPT, caster, target)} damage when turn ends";
             }
             target.DebuffAddActive(target.buffDebuff.endTurnActivate, 
             new ActiveDebuff(Mng.AbName, charge, Data, caster, target, debuff, desc), debuffIcon);
