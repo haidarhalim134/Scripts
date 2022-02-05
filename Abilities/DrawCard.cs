@@ -10,6 +10,7 @@ public class DrawCard : MonoBehaviour
     public int card = 1;
     public ModType modType;
     static StatProcessor Calc = new StatProcessor();
+    AbilityManager Mng;
     public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data)
     {
         PlayerController control = caster.transform.GetComponent<PlayerController>();
@@ -29,7 +30,7 @@ public class DrawCard : MonoBehaviour
     }
     void Awake()
     {
-        AbilityManager Mng = gameObject.GetComponent<AbilityManager>();
+        Mng = gameObject.GetComponent<AbilityManager>();
         Mng.modifier.modifier[modType].Add(this.Ability);
         Mng.DescGrabber.Add(this.Text);
     }

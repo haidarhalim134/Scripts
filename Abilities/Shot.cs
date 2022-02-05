@@ -11,6 +11,7 @@ namespace Attributes.Abilities
         public int damage = 10;
         public GameObject effect;
         static StatProcessor Calc = new StatProcessor();
+        AbilityManager Mng;
         public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data)
         {
             void Hit()
@@ -20,7 +21,6 @@ namespace Attributes.Abilities
                 Animations.SpawnEffect(target.gameObject, effect);
             }
             StartCoroutine(Animations.AwayCenterShot(caster.gameObject, Hit, 0.3f, 10f));
-            
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
@@ -34,7 +34,7 @@ namespace Attributes.Abilities
         }
         void Awake()
         {
-            AbilityManager Mng = gameObject.GetComponent<AbilityManager>();
+            Mng = gameObject.GetComponent<AbilityManager>();
             Mng.ContainedAbilities.Add(this.Ability);
             Mng.DescGrabber.Add(this.Text);
         }
