@@ -58,6 +58,12 @@ namespace DataContainer
             if (result == null) Debug.Log("character not found");
             return result;
         }
+        public PassiveDebuffCont FindPassiveDebuff(Debuffs debuff)
+        {
+            PassiveDebuffCont result = Array.Find(this.PassiveDebuffPrefab, (cont) => cont.debuff == debuff);
+            if (result == null) Debug.Log("debuff not found");
+            return result;
+        }
         public void SpawnAbilityPrefab(string name)
         {
             GameObject prefab = GameObject.Find(name);
@@ -115,6 +121,7 @@ namespace DataContainer
         public Debuffs debuff;
         public GameObject prefab;
         public string description;
+        public bool reduceCharge;
         public string GetDesc()
         {
             return description.Replace("\\n", "\n");
