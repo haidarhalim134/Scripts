@@ -8,6 +8,7 @@ using Attributes.Abilities;
 
 public class InstantAModifier : MonoBehaviour
 {
+    [Tooltip("Apply modifier, instant")]
     static StatProcessor Calc = new StatProcessor();
     AbilityManager Mng;
     public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data)

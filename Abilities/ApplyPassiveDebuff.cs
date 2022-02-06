@@ -7,6 +7,7 @@ namespace Attributes.Abilities
 {
     public class ApplyPassiveDebuff : MonoBehaviour
     {
+        [Tooltip("modifier")]
         public Debuffs type;
         public int charge;
         public ModType modType;

@@ -8,6 +8,7 @@ namespace Attributes.Abilities
 {
     public class Attack : MonoBehaviour
     {
+        [Tooltip("Apply modifier, not instant")]
         public int damage = 10;
         public GameObject effect;
         AbilityManager Mng;

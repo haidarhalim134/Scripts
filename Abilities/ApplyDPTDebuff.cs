@@ -7,6 +7,7 @@ namespace Attributes.Abilities
 {
     public class ApplyDPTDebuff : MonoBehaviour
     {
+        [Tooltip("modifier")]
         public int DPT;
         public int charge;
         public ModType modType;

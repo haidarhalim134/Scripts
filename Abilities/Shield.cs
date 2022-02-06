@@ -7,6 +7,7 @@ namespace Attributes.Abilities
 {
     public class Shield : MonoBehaviour
     {
+        [Tooltip("modifier")]
         public int shield = 10;
         public Targeting targeting;
         public ModType modType;

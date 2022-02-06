@@ -7,6 +7,7 @@ using Attributes.Abilities;
 
 public class DrawCard : MonoBehaviour
 {
+    [Tooltip("modifier")]
     public int card = 1;
     public ModType modType;
     static StatProcessor Calc = new StatProcessor();

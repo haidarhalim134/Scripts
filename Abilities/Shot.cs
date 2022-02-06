@@ -8,6 +8,7 @@ namespace Attributes.Abilities
 {
     public class Shot : MonoBehaviour
     {
+        [Tooltip("Apply modifier, not instant")]
         public int damage = 10;
         public GameObject effect;
         static StatProcessor Calc = new StatProcessor();
