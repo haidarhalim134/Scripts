@@ -13,15 +13,22 @@ namespace Attributes.Abilities
         public GameObject effect;
         static StatProcessor Calc = new StatProcessor();
         AbilityManager Mng;
-        public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data)
+        public void Ability(BaseCreature caster, BaseCreature target, AbilityData data)
         {
             void Hit()
             {
-                target.TakeDamage(Calc.CalcAttack(this.damage + Data.Damage, caster, target), caster);
+                Mng.modifier.modifier[ModType.preDamage].ForEach((abil) => abil(caster, target, data));
+                target.TakeDamage(Calc.CalcAttack(this.damage + data.Damage, caster, target), caster);
+                Mng.modifier.modifier[ModType.postDamage].ForEach((abil) => abil(caster, target, data));
                 StartCoroutine(Animations.AwayCenterHit(target.gameObject, () => { }, 0.2f, 5f));
                 Animations.SpawnEffect(target.gameObject, effect);
             }
-            StartCoroutine(Animations.AwayCenterShot(caster.gameObject, Hit, 0.3f, 10f));
+            void postHit()
+            {
+                Mng.modifier.modifier[ModType.postAttack].ForEach((abil) => abil(caster, target, data));
+            }
+            Mng.modifier.modifier[ModType.preAttack].ForEach((abil) => abil(caster, target, data));
+            StartCoroutine(Animations.AwayCenterShot(caster.gameObject, Hit, postHit, 0.3f, 10f));
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
