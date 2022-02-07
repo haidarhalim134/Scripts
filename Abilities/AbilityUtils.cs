@@ -55,5 +55,6 @@ namespace Attributes.Abilities
         }
     }
     public enum Debuffs{vulnerable, weakened}
+    public enum Stance{rage, excited}
     public enum Targeting{caster,target}
 }

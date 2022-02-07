@@ -129,4 +129,12 @@ namespace DataContainer
             return description.Replace("\\n", "\n");
         }
     }
+    public class StanceCont
+    {
+        public Stance stance;
+        public GameObject prefab;
+        public string description;
+        [Tooltip("showing basic number")]
+        public int charge;
+    }
 }
