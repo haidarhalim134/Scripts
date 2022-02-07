@@ -65,6 +65,12 @@ namespace DataContainer
             if (result == null) Debug.Log("debuff not found");
             return result;
         }
+        public StanceCont FindStance(Stance stance)
+        {
+            StanceCont result = Array.Find(this.stance, (cont) => cont.stance == stance);
+            if (result == null) Debug.Log("stance not found");
+            return result;
+        }
         public void SpawnAbilityPrefab(string name)
         {
             GameObject prefab = GameObject.Find(name);
