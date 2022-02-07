@@ -7,16 +7,24 @@ namespace Attributes.Abilities
 {
     public class StatProcessor
     {
-        public int CalcAttack(int BaseDamage, BaseCreature Caster, BaseCreature Target)
+        public int CalcAttack(int BaseDamage, BaseCreature caster, BaseCreature target)
         {
-            if (Target.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.vulnerable) != null)
+            if (target.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.vulnerable) != null)
             {
                 BaseDamage = (int)Math.Floor(BaseDamage * 1.5f);
             };
-            if (Caster.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.weakened) != null)
+            if (caster.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.weakened) != null)
             {
                 BaseDamage = (int)Math.Floor(BaseDamage * 0.75f);
             };
+            if (caster.buffDebuff.stance.stance == Stance.rage)
+            {
+                BaseDamage*= 2;
+            }
+            if (target.buffDebuff.stance.stance == Stance.rage)
+            {
+                BaseDamage *= 2;
+            }
             return BaseDamage;
         }
         public int CalcDPT(int BaseDamage, BaseCreature Caster, BaseCreature Target)
