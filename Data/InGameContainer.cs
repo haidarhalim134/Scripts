@@ -19,6 +19,7 @@ namespace DataContainer
         public CharacterDataCont[] Characters;
         public GameObject[] Abilities;
         public PassiveDebuffCont[] PassiveDebuffPrefab;
+        public StanceCont[] stance;
         public ActContainer[] Acts;
         public AssetReferenceContainer[] LevelsTest;
         private AsyncOperationHandle<LevelDataContainer> LevelHandle;
@@ -122,13 +123,12 @@ namespace DataContainer
         public GameObject prefab;
         public string description;
         public bool reduceCharge;
-        [Tooltip("used by stance only")]
-        public int InitCharge;
         public string GetDesc()
         {
             return description.Replace("\\n", "\n");
         }
     }
+    [Serializable]
     public class StanceCont
     {
         public Stance stance;
