@@ -10,13 +10,22 @@ public class PassiveDebuffIndicator : MonoBehaviour
 {
     public TextMeshProUGUI charge;
     public GameObject icon;
+    public bool isPassive = true;
     public PassiveDebuff passive;
+    public StanceBuffCont stance;
     string description;
     EventTrigger trigger;
     TooltipManager tooltipManager;
-    void Awake()
+    public void Init()
     {
-        description = "<b>"+passive.debuff+"</b>\n"+ InGameContainer.GetInstance().FindPassiveDebuff(passive.debuff).GetDesc();
+        if (isPassive)
+            description = "<b>"+passive.debuff+"</b>\n"+ InGameContainer.GetInstance().FindPassiveDebuff(passive.debuff).GetDesc();
+        else
+        {
+            Debug.Log("not passive");
+            charge.text = stance.charge.ToString();
+            description = "<b>" + stance.stance + "</b>\n" + InGameContainer.GetInstance().FindStance(stance.stance).description;
+        }
         trigger = icon.GetComponent<EventTrigger>();
         tooltipManager = TooltipManager.GetInstance();
         EventTrigger.Entry entry = new EventTrigger.Entry();
@@ -35,13 +44,20 @@ public class PassiveDebuffIndicator : MonoBehaviour
     }
     void Update()
     {
-        if (passive != null)
+        if (isPassive)
         {
             charge.text = passive.charge.ToString();
+            if (passive.charge <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
-        if (passive.charge <= 0)
+        else
         {
-            Destroy(gameObject);
+            if (stance.charge <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
