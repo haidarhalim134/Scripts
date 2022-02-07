@@ -122,6 +122,8 @@ namespace DataContainer
         public GameObject prefab;
         public string description;
         public bool reduceCharge;
+        [Tooltip("used by stance only")]
+        public int InitCharge;
         public string GetDesc()
         {
             return description.Replace("\\n", "\n");
