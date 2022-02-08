@@ -22,7 +22,7 @@ namespace Attributes.Abilities
         }
         public string Text(AbilityData data, PlayerController caster, BaseCreature target)
         {
-            return $"Enter <b>{this.stance}</b>. ";
+            return stance == Stance.noStance?"Exit stance":$"Enter <b>{this.stance}</b>. ";
         }
         void Awake()
         {

@@ -9,6 +9,7 @@ namespace Attributes.Abilities
     {
         public static string g = "<color=#29b400>";
         public static string r = "<color=\"red\">";
+        public static string b = "<b>";
         public static string CalcColor(int basenumber, int calcnumber)
         {
             if (basenumber == calcnumber)return "";
