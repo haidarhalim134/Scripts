@@ -15,7 +15,7 @@ public class IfStance : MonoBehaviour
     {
         if (caster.buffDebuff.stance.stance == stance)
         {
-            StartCoroutine(abilityMng.Activate(caster, target, data));
+            yield return StartCoroutine(abilityMng.Activate(caster, target, data));
         }
         yield return new WaitForSeconds(0);
     }
