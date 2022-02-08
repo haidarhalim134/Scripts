@@ -49,6 +49,7 @@ namespace Attributes.Abilities
         public int Damage;
         public int Shield;
         public int Staminacost;
+        public int AttackRep;
         // TODO: either copy the container or create non serializable field called temp
         public AbilityData Copy()
         {

@@ -19,7 +19,7 @@ namespace Attributes.Abilities
         public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData data)
         {
             Mng.modifier.modifier[ModType.preAttack].ForEach((abil) => abil(caster, target, data));
-            for (var x = 0; x < repetition; x++)
+            for (var x = 0; x < repetition+ data.AttackRep; x++)
             {
                 yield return new WaitForSeconds(this.delay);
                 var to = CombatEngine.GetRandomTarget(target.TeamId);
@@ -32,14 +32,14 @@ namespace Attributes.Abilities
         }
         public string Text(AbilityData data, PlayerController caster, BaseCreature target)
         {
-            // TODO: refactor this
+            string rep = " " + repetition + data.AttackRep;
             if (caster != null)
             {
                 int calcdamage = Calc.CalcAttack(this.damage + data.Damage, caster, target);
                 string color = AbilityUtils.CalcColor(this.damage, calcdamage);
-                return $"deal {color}{calcdamage}</color> damage {(repetition>1?$"to {repetition} random target":"to random target")}. ";
+                return $"deal {color}{calcdamage}</color> damage to{(repetition>1?rep:" ")} random target. ";
             }
-            else return $"deal {this.damage + data.Damage} damage {(repetition > 1 ? $"to {repetition} random target" : "to random target")}. ";
+            else return $"deal {this.damage + data.Damage} damage to{(repetition > 1 ? rep : " ")} random target. ";
         }
         void Awake()
         {

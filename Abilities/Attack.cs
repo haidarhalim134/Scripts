@@ -25,14 +25,14 @@ namespace Attributes.Abilities
                 Animations.SpawnEffect(target.gameObject, effect);
             }
             Mng.modifier.modifier[ModType.preAttack].ForEach((abil) => abil(caster, target, data));
-            for (var i = 0; i< repetition;i++)
+            for (var i = 0; i< repetition+ data.AttackRep;i++)
             {
                 yield return StartCoroutine(Animations.TowardsCenterAttack(caster.gameObject, Hit, () => { }));
             }
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
-            string rep = $"{repetition} times";
+            string rep = $"{repetition+data.AttackRep} times";
             if (caster!=null)
             {
                 int calcdamage = Calc.CalcAttack(this.damage + data.Damage, caster, target);
