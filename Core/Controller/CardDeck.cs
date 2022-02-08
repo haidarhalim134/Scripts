@@ -90,10 +90,11 @@ namespace Control.Deck
             {
                 int RandIndex = Range(0, this.Owner.UsedDeck.Count);
                 Vector2 spawnPlace = (Vector2)this.UsedDeck.gameObject.transform.position;
+                spawnPlace.y -= 50;
                 Vector2 exitPlace = this.ReserveDeck.gameObject.transform.position;
                 exitPlace.y-= 50;
                 GameObject Card = Instantiate(this.CardPrefab, spawnPlace, new Quaternion(), gameObject.transform);
-                Card.transform.DOMove(exitPlace, 0.2f)
+                Card.transform.DOMove(exitPlace, 0.5f)
                 .OnComplete(()=>
                 {
                     Destroy(Card);
@@ -103,7 +104,7 @@ namespace Control.Deck
                 this.Owner.UsedDeck.RemoveAt(RandIndex);
                 yield return new WaitForSeconds(this.Owner.CardOutSpeed);
             }
-            yield return new WaitForSeconds(0.2f-this.Owner.CardOutSpeed);
+            yield return new WaitForSeconds(0.5f-this.Owner.CardOutSpeed);
         }
         public void RemoveActiveCard()
         {
