@@ -8,8 +8,8 @@ public class Animations
 {
     public static IEnumerator TowardsCenterAttack(GameObject target, Action onHit,Action postHit, float totalTime = 0.25f, float distance = 25f)
     {
-        float tohit = totalTime * 1/2f;
-        float toback = totalTime * 1/2f;
+        float tohit = totalTime * 2/3f;
+        float toback = totalTime * 1/3f;
         if (target.transform.position.x>0)
         {
             distance*= -1;
