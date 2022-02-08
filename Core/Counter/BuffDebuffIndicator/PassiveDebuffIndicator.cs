@@ -22,8 +22,7 @@ public class PassiveDebuffIndicator : MonoBehaviour
             description = "<b>"+passive.debuff+"</b>\n"+ InGameContainer.GetInstance().FindPassiveDebuff(passive.debuff).GetDesc();
         else
         {
-            Debug.Log("not passive");
-            charge.text = stance.charge.ToString();
+            charge.text = "<b>"+stance.charge.ToString();
             description = "<b>" + stance.stance + "</b>\n" + InGameContainer.GetInstance().FindStance(stance.stance).description;
         }
         trigger = icon.GetComponent<EventTrigger>();
@@ -46,7 +45,7 @@ public class PassiveDebuffIndicator : MonoBehaviour
     {
         if (isPassive)
         {
-            charge.text = passive.charge.ToString();
+            charge.text = "<b>"+passive.charge.ToString();
             if (passive.charge <= 0)
             {
                 Destroy(gameObject);
