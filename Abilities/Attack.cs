@@ -10,6 +10,7 @@ namespace Attributes.Abilities
     {
         [Tooltip("Apply modifier, not instant")]
         public int damage = 10;
+        public int repetition = 1;
         public GameObject effect;
         AbilityManager Mng;
         static StatProcessor Calc = new StatProcessor();
@@ -23,23 +24,22 @@ namespace Attributes.Abilities
                 StartCoroutine(Animations.AwayCenterHit(target.gameObject, () => { }, 0.2f, 5f));
                 Animations.SpawnEffect(target.gameObject, effect);
             }
-            void postHit()
-            {
-                Mng.modifier.modifier[ModType.postAttack].ForEach((abil) => abil(caster, target, data));
-            }
             Mng.modifier.modifier[ModType.preAttack].ForEach((abil) => abil(caster, target, data));
-            yield return StartCoroutine(Animations.TowardsCenterAttack(caster.gameObject, Hit,postHit));
-            
+            for (var i = 0; i< repetition;i++)
+            {
+                yield return StartCoroutine(Animations.TowardsCenterAttack(caster.gameObject, Hit, () => { }));
+            }
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
+            string rep = $"{repetition} times";
             if (caster!=null)
             {
                 int calcdamage = Calc.CalcAttack(this.damage + data.Damage, caster, target);
                 string color = AbilityUtils.CalcColor(this.damage, calcdamage);
-                return $"deal {color}{calcdamage}</color> damage. ";
+                return $"deal {color}{calcdamage}</color> damage {(repetition>1?rep:"")}. ";
             }
-            else return $"deal {this.damage + data.Damage} damage. ";
+            else return $"deal {this.damage + data.Damage} damage {(repetition > 1 ? rep : "")}. ";
         }
         void Awake()
         {
