@@ -19,7 +19,7 @@ namespace Control.Deck
         public GameObject ReserveDeck;
         [Tooltip("used as card exit route")]
         public GameObject UsedDeck;
-        CardHandler ActiveCard;
+        public CardHandler ActiveCard;
         /// <summary>auto refresh before highlighting</summary>
         public void HighlightCard(CardHandler Card)
         { 
