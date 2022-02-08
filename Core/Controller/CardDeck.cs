@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using Attributes.Abilities;
 using Control.Core;
 using Control.Combat;
+using static UnityEngine.Random;
+using DG.Tweening;
 
 namespace Control.Deck
 {
@@ -70,7 +73,7 @@ namespace Control.Deck
         public void AddCard(AbilityContainer Ability)
         {
             Vector2 spawnPlace = (Vector2)this.ReserveDeck.gameObject.transform.position - new Vector2(0f, 1f);
-            GameObject Card = Instantiate(this.CardPrefab, spawnPlace, new Quaternion(), gameObject.transform) as GameObject;
+            GameObject Card = Instantiate(this.CardPrefab, spawnPlace, new Quaternion(), gameObject.transform);
             CardHandler Script = Card.GetComponent<CardHandler>();
             Script.Ability = Ability;
             Script.UpdateText();
@@ -80,6 +83,24 @@ namespace Control.Deck
             Script.deck = this;
             this.ActiveDeck.Add(Script);
             this.RefreshCardPos();
+        }
+        public IEnumerator RefillReserve()
+        {
+            while (this.Owner.UsedDeck.Count>0)
+            {
+                int RandIndex = Range(0, this.Owner.UsedDeck.Count);
+                Vector2 spawnPlace = (Vector2)this.UsedDeck.gameObject.transform.position;
+                GameObject Card = Instantiate(this.CardPrefab, spawnPlace, new Quaternion(), gameObject.transform);
+                Card.transform.DOMove(this.ReserveDeck.gameObject.transform.position, 0.2f)
+                .OnComplete(()=>
+                {
+                    Destroy(Card);
+                    this.Owner.ReserveDeck.Add(this.Owner.UsedDeck[RandIndex]);
+                    this.Owner.UsedDeck.RemoveAt(RandIndex);
+                }).SetEase(Ease.Linear);
+                yield return new WaitForSeconds(this.Owner.CardOutSpeed);
+            }
+            yield return new WaitForSeconds(0.2f);
         }
         public void RemoveActiveCard()
         {

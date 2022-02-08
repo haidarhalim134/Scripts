@@ -49,7 +49,7 @@ namespace Control.Deck
         }
         public void SemiHighlight(bool to)
         {
-            if (deck.ActiveCard == null)
+            if (deck.ActiveCard == null&&!DOTween.IsTweening(transform, true))
             {
                 if (to)
                 {

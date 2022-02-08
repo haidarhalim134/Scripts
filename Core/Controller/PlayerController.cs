@@ -64,7 +64,7 @@ namespace Control.Core
             yield return new WaitForSeconds(this.CardOutSpeed);   
             if (this.ReserveDeck.Count==0)
             {
-                this.DeckRefillReservedCard();
+                yield return this.DeckRefillReservedCard();
             }
             DeckAddTo(0);
             if (Card<4)
@@ -90,14 +90,9 @@ namespace Control.Core
         {
             this.UsedDeck.Add(Ability);
         }
-        private void DeckRefillReservedCard()
+        private IEnumerator DeckRefillReservedCard()
         {
-            while (this.UsedDeck.Count>0)
-            {
-                int RandIndex = Range(0,this.UsedDeck.Count);
-                this.ReserveDeck.Add(this.UsedDeck[RandIndex]);
-                this.UsedDeck.RemoveAt(RandIndex);
-            }
+            yield return StartCoroutine(this.Deck.RefillReserve());
         }
         public void OnDeathPlayer()
         {
