@@ -35,7 +35,7 @@ public class SimpleActiveDebuffIndicator : MonoBehaviour
     {
         if (active != null)
         {
-            charge.text = active.charge.ToString();
+            charge.text = "<b>"+active.charge.ToString();
         }
         if (active.charge <= 0)
         {
