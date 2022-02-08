@@ -31,6 +31,7 @@ namespace Attributes.Abilities
         {
             foreach (var abil in ContainedAbilities)
             {
+                if (target.dead)break;
                 yield return StartCoroutine(abil(caster, target, Data));
             }
         }
