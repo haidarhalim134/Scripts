@@ -16,7 +16,7 @@ namespace Attributes.Abilities
         public GameObject effect;
         AbilityManager Mng;
         static StatProcessor Calc = new StatProcessor();
-        public void Ability(BaseCreature caster, BaseCreature target, AbilityData data)
+        public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData data)
         {
             IEnumerator hit()
             {
@@ -28,7 +28,7 @@ namespace Attributes.Abilities
                     Animations.SpawnEffect(to.gameObject, effect);
                 }
             }
-            StartCoroutine(hit());
+            yield return StartCoroutine(hit());
         }
         public string Text(AbilityData data, PlayerController caster, BaseCreature target)
         {

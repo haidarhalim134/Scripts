@@ -11,12 +11,13 @@ public class IfStance : MonoBehaviour
     public GameObject ability;
     AbilityManager abilityMng;
     AbilityManager Mng;
-    public void Ability(BaseCreature caster, BaseCreature target, AbilityData data)
+    public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData data)
     {
         if (caster.buffDebuff.stance.stance == stance)
         {
-            abilityMng.Activate(caster, target, data);
+            StartCoroutine(abilityMng.Activate(caster, target, data));
         }
+        yield return new WaitForSeconds(0);
     }
     public string Text(AbilityData data, PlayerController caster, BaseCreature target)
     {

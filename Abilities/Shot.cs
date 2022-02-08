@@ -13,7 +13,7 @@ namespace Attributes.Abilities
         public GameObject effect;
         static StatProcessor Calc = new StatProcessor();
         AbilityManager Mng;
-        public void Ability(BaseCreature caster, BaseCreature target, AbilityData data)
+        public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData data)
         {
             void Hit()
             {
@@ -28,7 +28,7 @@ namespace Attributes.Abilities
                 Mng.modifier.modifier[ModType.postAttack].ForEach((abil) => abil(caster, target, data));
             }
             Mng.modifier.modifier[ModType.preAttack].ForEach((abil) => abil(caster, target, data));
-            StartCoroutine(Animations.AwayCenterShot(caster.gameObject, Hit, postHit, 0.3f, 10f));
+            yield return StartCoroutine(Animations.AwayCenterShot(caster.gameObject, Hit, postHit, 0.3f, 10f));
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {

@@ -27,11 +27,11 @@ namespace Attributes.Abilities
         {
             return this.cost+Data.Staminacost;
         }
-        public void Activate(BaseCreature caster, BaseCreature target, AbilityData Data)
+        public IEnumerator Activate(BaseCreature caster, BaseCreature target, AbilityData Data)
         {
             foreach (var abil in ContainedAbilities)
             {
-                abil(caster, target, Data);
+                yield return StartCoroutine(abil(caster, target, Data));
             }
         }
         void Awake()
@@ -43,11 +43,15 @@ namespace Attributes.Abilities
     public enum ModType{preAttack,preDamage,postDamage,postAttack}
     public class Modifier
     {
-        public Dictionary<ModType, ListAbil> modifier = new Dictionary<ModType, ListAbil>()
-        {{ModType.preAttack, new ListAbil()},{ModType.preDamage, new ListAbil()},
-        {ModType.postDamage, new ListAbil()},{ModType.postAttack, new ListAbil()}};
+        public Dictionary<ModType, ListMod> modifier = new Dictionary<ModType, ListMod>()
+        {{ModType.preAttack, new ListMod()},{ModType.preDamage, new ListMod()},
+        {ModType.postDamage, new ListMod()},{ModType.postAttack, new ListMod()}};
     }
-    public class ListAbil : List<Action<BaseCreature, BaseCreature, AbilityData>>
+    public class ListAbil : List<Func<BaseCreature, BaseCreature, AbilityData, IEnumerator>>
+    {
+
+    }
+    public class ListMod : List<Action<BaseCreature, BaseCreature, AbilityData>>
     {
 
     }
