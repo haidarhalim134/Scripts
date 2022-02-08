@@ -95,12 +95,13 @@ namespace Control.Deck
                 .OnComplete(()=>
                 {
                     Destroy(Card);
-                    this.Owner.ReserveDeck.Add(this.Owner.UsedDeck[RandIndex]);
-                    this.Owner.UsedDeck.RemoveAt(RandIndex);
                 }).SetEase(Ease.Linear);
+
+                this.Owner.ReserveDeck.Add(this.Owner.UsedDeck[RandIndex]);
+                this.Owner.UsedDeck.RemoveAt(RandIndex);
                 yield return new WaitForSeconds(this.Owner.CardOutSpeed);
             }
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.2f-this.Owner.CardOutSpeed);
         }
         public void RemoveActiveCard()
         {
