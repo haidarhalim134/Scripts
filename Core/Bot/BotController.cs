@@ -43,7 +43,7 @@ namespace Control.Core
             yield return new WaitForSeconds(this.ActionDelay);
             var EnoughMana = this.Skills.Where((cont)=> cont.Ability.GetComponent<AbilityManager>().GetStaminaCost(cont.Data)<=this.stamina.Curr);
             var Cont = EnoughMana.ToList()[Range(0, EnoughMana.Count())];
-            AbilityManager Mng = InGameContainer.GetInstance().SpawnAbilityPrefab(Cont.Ability).GetComponent<AbilityManager>();
+            AbilityManager Mng = InGameContainer.GetInstance().SpawnAbilityPrefab(Cont.Ability);
             var listoftarget = CombatEngine.GetTarget(Mng);
             CombatEngine.RequestCast(Mng, this,listoftarget[
                 Range(0,listoftarget.Count)],Cont.Data);

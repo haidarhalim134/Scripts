@@ -81,7 +81,7 @@ namespace DataContainer
                 Object.name = name;
             }
         }
-        public GameObject SpawnAbilityPrefab(GameObject name)
+        public AbilityManager SpawnAbilityPrefab(GameObject name)
         {
             // AsyncOperationHandle<GameObject> handle = name.InstantiateAsync();
             // GameObject prefab = handle.Result;
@@ -92,11 +92,11 @@ namespace DataContainer
                 Debug.Log("spawned"+abname);
                 GameObject Object = Instantiate(name);
                 Object.name = abname;
-                return Object;
+                return Object.GetComponent<AbilityManager>();
             }
             else
             {
-                return find;
+                return find.GetComponent<AbilityManager>();
             }
         }
         public static InGameContainer GetInstance()
