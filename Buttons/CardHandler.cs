@@ -35,29 +35,29 @@ namespace Control.Deck
                 this.Active = true;
                 // this.animator.SetBool("Active", true);
                 this.Magnify(true);
-                this.gameObject.transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0.1f);
-                this.gameObject.transform.DOLocalMoveY(10 - this.GetComponent<RectTransform>().rect.height / 2, 0.1f);
-                this.gameObject.transform.SetAsLastSibling();
+                this.transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0.1f);
+                this.transform.DOLocalMoveY(10 - this.GetComponent<RectTransform>().rect.height / 2, 0.1f);
+                this.transform.SetAsLastSibling();
             }else
             {
                 this.Active = false;
                 // this.animator.SetBool("Active", false);
                 this.Magnify(false);
-                this.gameObject.transform.SetAsLastSibling();
+                this.transform.SetAsLastSibling();
                 this.UpdateText();
             }
         }
         public void SemiHighlight(bool to)
         {
-            if (deck.ActiveCard == null&&!DOTween.IsTweening(transform, true))
+            if (deck.ActiveCard == null&&enableHover)
             {
                 if (to)
                 {
                     // this.animator.SetBool("Active", true);
                     this.Magnify(true);
                     deck.SemiHighlightCard(this);
-                    this.gameObject.transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0.1f);
-                    this.gameObject.transform.DOLocalMoveY(10 - this.GetComponent<RectTransform>().rect.height / 2, 0.1f);
+                    this.transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0.1f);
+                    this.transform.DOLocalMoveY(10 - this.GetComponent<RectTransform>().rect.height / 2, 0.1f);
                     this.gameObject.transform.SetAsLastSibling();
                 }
                 else if (!this.Active)
@@ -65,7 +65,7 @@ namespace Control.Deck
                     // this.animator.SetBool("Active", false);
                     this.Magnify(false);
                     this.UpdateText();
-                    this.gameObject.transform.SetAsLastSibling();
+                    this.transform.SetAsLastSibling();
                     deck.RefreshCardPos();
                 }
             }
