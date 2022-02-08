@@ -90,8 +90,10 @@ namespace Control.Deck
             {
                 int RandIndex = Range(0, this.Owner.UsedDeck.Count);
                 Vector2 spawnPlace = (Vector2)this.UsedDeck.gameObject.transform.position;
+                Vector2 exitPlace = this.ReserveDeck.gameObject.transform.position;
+                exitPlace.y-= 50;
                 GameObject Card = Instantiate(this.CardPrefab, spawnPlace, new Quaternion(), gameObject.transform);
-                Card.transform.DOMove(this.ReserveDeck.gameObject.transform.position, 0.2f)
+                Card.transform.DOMove(exitPlace, 0.2f)
                 .OnComplete(()=>
                 {
                     Destroy(Card);
