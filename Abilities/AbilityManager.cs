@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Control.Core;
@@ -28,10 +29,14 @@ namespace Attributes.Abilities
         }
         public void Activate(BaseCreature caster, BaseCreature target, AbilityData Data)
         {
-            foreach(Action<BaseCreature, BaseCreature, AbilityData> abil in ContainedAbilities)
+            foreach (var abil in ContainedAbilities)
             {
                 abil(caster, target, Data);
             }
+        }
+        void Awake()
+        {
+            GetDesc(new AbilityData());
         }
     }
     public enum AbTarget{self, allies, enemy}
