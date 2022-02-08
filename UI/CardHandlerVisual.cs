@@ -29,15 +29,25 @@ namespace Control.UI
                    this.gameObject.transform.Find("Cost"+i).gameObject.SetActive(true);
                }
                this.NameTXT.text = this.Ability.name;
-            //    txtlist[1].text = Mng.GetDesc(Ability.Data);
-            if (caster != null)
-            {
-                this.desctxt.text = this.Ability.GetManager().GetDesc(this.Ability.Data, caster, target);
-            }else
-            {
-                this.desctxt.text = this.Ability.GetManager().GetDesc(this.Ability.Data);
+                //    txtlist[1].text = Mng.GetDesc(Ability.Data);
+                if (caster != null)
+                {
+                    this.desctxt.text = this.Ability.GetManager().GetDesc(this.Ability.Data, caster, target);
+                }else
+                {
+                    this.desctxt.text = this.Ability.GetManager().GetDesc(this.Ability.Data);
+                }
             }
-        }
+            public void Magnify(bool to)
+            {
+                if (to)
+                {
+                    this.transform.DOScale(1.3f,0.05f);
+                }else
+                {
+                    this.transform.DOScale(1,0.05f);
+                }
+            }
             public void Destroy(RemoveStatus type) 
             {
                 if (type == RemoveStatus.used||type == RemoveStatus.discard)

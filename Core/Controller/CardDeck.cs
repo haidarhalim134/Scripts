@@ -27,6 +27,11 @@ namespace Control.Deck
             int Index = this.ActiveDeck.IndexOf(Card);
             this.ActiveCard = Card;
             this.RefreshCardPos(Index, PosX[Index]);
+        }public void SemiHighlightCard(CardHandler Card)
+        {
+            List<float> PosX = this.CalcCardsXPos(this.ActiveDeck.Count);
+            int Index = this.ActiveDeck.IndexOf(Card);
+            this.RefreshCardPos(Index, PosX[Index]);
         }
         public void updateActiveCardText(PlayerController caster = null, BaseCreature target = null)
         {
@@ -72,7 +77,7 @@ namespace Control.Deck
             Script.TargetOwner = Owner.gameObject;
             Script.InitOwner();
             Script.Exit = this.UsedDeck.transform.position;
-            Script.Deck = this;
+            Script.deck = this;
             this.ActiveDeck.Add(Script);
             this.RefreshCardPos();
         }
