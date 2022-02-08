@@ -18,17 +18,13 @@ namespace Attributes.Abilities
         static StatProcessor Calc = new StatProcessor();
         public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData data)
         {
-            IEnumerator hit()
+            for (var x = 0; x < repetition; x++)
             {
-                for (var x = 0;x<repetition;x++)
-                {
-                    yield return new WaitForSeconds(this.delay);
-                    var to = CombatEngine.GetRandomTarget(target.TeamId);
-                    to.TakeDamage(Calc.CalcAttack(this.damage + data.Damage, caster, target), caster);
-                    Animations.SpawnEffect(to.gameObject, effect);
-                }
+                yield return new WaitForSeconds(this.delay);
+                var to = CombatEngine.GetRandomTarget(target.TeamId);
+                to.TakeDamage(Calc.CalcAttack(this.damage + data.Damage, caster, target), caster);
+                Animations.SpawnEffect(to.gameObject, effect);
             }
-            yield return StartCoroutine(hit());
         }
         public string Text(AbilityData data, PlayerController caster, BaseCreature target)
         {
