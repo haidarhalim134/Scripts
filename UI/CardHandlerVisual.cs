@@ -13,7 +13,7 @@ namespace Control.UI
     {
         /// <summary>call UpdateText after assigning</summary>
             public AbilityContainer Ability;
-            protected bool MouseOnCard;
+            protected bool enableHover;
             private TextMeshProUGUI NameTXT;
             public TextMeshProUGUI desctxt;
             Sequence sequence;
@@ -55,6 +55,7 @@ namespace Control.UI
             }
             public void Destroy(RemoveStatus type) 
             {
+                enableHover = false;
                 if (type == RemoveStatus.used||type == RemoveStatus.discard)
                 {
                     // this.transform.DOMove((Vector2)this.transform.position+new Vector2(0,5), 0.5f)
