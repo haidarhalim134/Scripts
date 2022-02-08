@@ -48,6 +48,11 @@ namespace Control.UI
                     this.transform.DOScale(1,0.05f);
                 }
             }
+            void OnEnable()
+            {
+                this.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                this.transform.DOScale(1f, 0.1f);
+            }
             public void Destroy(RemoveStatus type) 
             {
                 if (type == RemoveStatus.used||type == RemoveStatus.discard)
@@ -55,7 +60,7 @@ namespace Control.UI
                     // this.transform.DOMove((Vector2)this.transform.position+new Vector2(0,5), 0.5f)
                     // .OnComplete(()=>this.transform.DOMove(this.Exit, 0.2f).SetEase(Ease.Linear)
                     // .SetDelay(0.2f).OnComplete(()=>Destroy(this.gameObject)));
-
+                    this.transform.DOScale(0.5f,0.1f);
                     this.transform.DOMove(this.Exit- new Vector2(0f, 3f), 0.1f).SetEase(Ease.Linear)
                     .OnComplete(()=>Destroy(this.gameObject));
                     // Destroy(this.gameObject);
