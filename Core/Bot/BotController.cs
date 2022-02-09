@@ -25,7 +25,6 @@ namespace Control.Core
             this.BaseInit();
             this.Acted = false;
             this.IsPlayer = false;
-            this.OnDeath = this.OnDeathBot;
         }
         private void AssignTeam(int Id)
         {
@@ -56,7 +55,7 @@ namespace Control.Core
                  if (CombatEngine.GameGoing)StartCoroutine(Decide());
             }
         }
-        public void OnDeathBot()
+        override public void OnDeath()
         {
             if (CombatEngine.RegisteredCreature[this.TeamId].Count == 0) CombatEngine.EndGame(true);
         }

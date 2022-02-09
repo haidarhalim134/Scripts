@@ -52,7 +52,7 @@ namespace Control.Core
                 }
             }
         }
-        public void SetupUI(bool T = false)
+        override public void Setup(bool T = false)
         {
             if (T)
             {
@@ -94,7 +94,7 @@ namespace Control.Core
         {
             yield return StartCoroutine(this.Deck.RefillReserve());
         }
-        public void OnDeathPlayer()
+        override public void OnDeath()
         {
             CombatEngine.EndGame(false);
         }
@@ -108,8 +108,6 @@ namespace Control.Core
             this.ReserveDeck = new List<AbilityContainer>(this.PlayerStats.FullDeck);
             this.TeamId = 0;
             this.EnemyId = 1;
-            this.Setup = this.SetupUI;
-            this.OnDeath = this.OnDeathPlayer;
             CombatEngine.RegisterCreature(this, true);
             this.health.Fill();
             this.Deck = this.TEMP.GetComponent<CardDeck>();
