@@ -13,13 +13,10 @@ namespace Control.Core
         List<AbilityContainer> Cards;
         public GameObject Prefab;
         public GameObject Grid;
-        void Awake()
-        {
-            
-        }
         /// <summary>pass an on click method if there is any</summary>
-        public void Enable(List<AbilityContainer> Abilities)
+        public void Enable(List<AbilityContainer> Abilities, bool ordered = false)
         {
+            if (!ordered)Abilities = CardSorter.SortByWord(Abilities);
             GameObject Prefab = new GameObject("box");
             Prefab.AddComponent<RectTransform>();
             foreach (AbilityContainer cont in Abilities)
