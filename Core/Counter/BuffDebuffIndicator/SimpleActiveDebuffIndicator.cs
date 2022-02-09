@@ -17,6 +17,7 @@ public class SimpleActiveDebuffIndicator : MonoBehaviour
     {
         trigger = icon.GetComponent<EventTrigger>();
         tooltipManager = TooltipManager.GetInstance();
+        if (active.charge<0)charge.text = "";
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerEnter;
         entry.callback.AddListener((eventData) => { showDesc(); });
@@ -34,11 +35,11 @@ public class SimpleActiveDebuffIndicator : MonoBehaviour
     }
     void Update()
     {
-        if (active != null)
+        if (active != null&&active.charge>0)
         {
             charge.text = "<b>"+active.charge.ToString();
         }
-        if (active.charge <= 0)
+        if (active.charge == 0)
         {
             Destroy(gameObject);
         }
