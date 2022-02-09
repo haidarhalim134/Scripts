@@ -35,6 +35,7 @@ public class PassiveDebuffIndicator : MonoBehaviour
         entry.eventID = EventTriggerType.PointerExit;
         entry.callback.AddListener((eventData) => { tooltipManager.Hide(); });
         trigger.triggers.Add(entry);
+        Animations.ShakySoulEffect(icon);
     }
     void showDesc()
     {

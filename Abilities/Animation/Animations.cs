@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class Animations
@@ -53,5 +54,23 @@ public class Animations
     public static void SpawnEffect(GameObject target, GameObject effect)
     {
         if (effect!=null)GameObject.Instantiate(effect, target.transform).transform.localPosition = new Vector2();
+    }
+    public static void ShakySoulEffect(GameObject target, float duration = 2)
+    {
+        var Object = GameObject.Instantiate(target, target.transform);
+        Object.transform.localPosition = new Vector2();
+        var color = Object.GetComponent<Image>().color;
+        color.a = 0.5f;
+        Object.GetComponent<Image>().color = color;
+        Object.transform.localScale = new Vector3(1.3f, 1.3f, 1);
+        // target.transform.DOShakePosition(duration- 0.5f);
+        Object.transform.DOScale(new Vector3(1, 1, 1), duration).OnComplete(() => GameObject.Destroy(Object));
+        for (var i = 0;i<5;i++)
+        {
+            var ObjectS = GameObject.Instantiate(Object, target.transform);
+            ObjectS.transform.localPosition = new Vector2();
+            ObjectS.transform.DOShakePosition(duration-0.5f);
+            ObjectS.transform.DOScale(new Vector3(1,1,1), duration).OnComplete(()=>{});
+        }
     }
 }
