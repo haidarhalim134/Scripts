@@ -18,6 +18,7 @@ namespace Control.Core
     public class SaveFile
     {
         public PlayerDataContainer Player;
+        public Character CharacterId;
         public int Gold = 500;
         public bool LastLevelWin;
         public QueuedLevel QueuedLevel = new QueuedLevel();
@@ -62,6 +63,7 @@ namespace Control.Core
         }
         public void InitCharacter(CharacterDataCont cont)
         {
+            this.CharacterId = cont.Name;
             this.Player = new PlayerDataContainer();
             this.Player.MaxHealth = cont.StartingHealth;
             this.Player.FullDeck = new List<AbilityContainer>(cont.StartingAbilitiy.Select((cont)=>cont.ToNormalContainer()));

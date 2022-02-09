@@ -14,7 +14,8 @@ namespace Control.Core
         {
             LoadedSave.Loaded = SaveFile.Load();
             ActDataLoader.onClick(LoadedSave.Loaded.currAct);
-            ToActMap.LoadScene();
+            if (LoadedSave.Loaded.CharacterId != Character.Nocharacter) ChangeScene.LoadActMap();
+            else ChangeScene.LoadCharacteChoose();
         }
     }
 }

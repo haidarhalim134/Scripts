@@ -12,7 +12,7 @@ namespace Control.Core
         {
             LoadedActData.loadedActData = InGameContainer.GetInstance().FindAct(act);
             LoadedActData.CurrAct = act;
-            ToActMap.LoadScene();
+            ChangeScene.LoadActMap();
             LoadedSave.Loaded.QueuedLevel.FillQueue();
         }
     }

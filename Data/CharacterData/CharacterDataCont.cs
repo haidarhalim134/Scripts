@@ -6,8 +6,9 @@ using Attributes.Abilities;
 [CreateAssetMenu(fileName = "LevelData", menuName = "new Character")]
 public class CharacterDataCont : ScriptableObject
 {
-    public string Name;
+    public Character Name;
     public BotAbilityCont[] StartingAbilitiy;
     public int StartingHealth;
     public BotAbilityCont[] AvailableAbility;
 }
+public enum Character{Nocharacter,Ironclad}

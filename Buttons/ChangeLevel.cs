@@ -9,7 +9,7 @@ public class ChangeLevel : MonoBehaviour
 {
     public string target;
     public string SceneId;
-    public string CharacterName;
+    public Character CharacterName;
     private void OnMouseDown() 
     {
         LoadedSave.Loaded.InitCharacter(InGameContainer.GetInstance().FindCharacter(CharacterName));

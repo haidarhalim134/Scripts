@@ -53,7 +53,7 @@ namespace DataContainer
             if (result == null) Debug.Log("act not found");
             return result;
         }
-        public CharacterDataCont FindCharacter(string name)
+        public CharacterDataCont FindCharacter(Character name)
         {
             CharacterDataCont result = Array.Find(this.Characters, (cont) => cont.Name == name);
             if (result == null) Debug.Log("character not found");
