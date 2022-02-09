@@ -8,17 +8,10 @@ namespace Control.Core
 {
     public class ActDataLoader : MonoBehaviour
     {
-        public Act act;
-        public bool HaveRequirements;
-        public Act Requirements;
-        public void onClick()
+        public static void onClick(Act act)
         {
-            if (HaveRequirements)
-            {
-                if (!LoadedSave.Loaded.act[this.Requirements].finished) return;
-            }
-            LoadedActData.loadedActData = InGameContainer.GetInstance().FindAct(this.act);
-            LoadedActData.CurrAct = this.act;
+            LoadedActData.loadedActData = InGameContainer.GetInstance().FindAct(act);
+            LoadedActData.CurrAct = act;
             ToActMap.LoadScene();
             LoadedSave.Loaded.QueuedLevel.FillQueue();
         }

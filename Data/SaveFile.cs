@@ -21,6 +21,7 @@ namespace Control.Core
         public int Gold = 500;
         public bool LastLevelWin;
         public QueuedLevel QueuedLevel = new QueuedLevel();
+        public Act currAct = Act.Act1;
         // TODO: add every new arc to the initialization
         public Dictionary<Act,ActCont> act = new Dictionary<Act, ActCont>(){
             {Act.Act1,new ActCont()},{Act.Act2,new ActCont()}

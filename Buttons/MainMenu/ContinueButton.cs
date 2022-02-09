@@ -13,7 +13,8 @@ namespace Control.Core
         public void onClick()
         {
             LoadedSave.Loaded = SaveFile.Load();
-            ToActChooseScreen.LoadScene();
+            ActDataLoader.onClick(LoadedSave.Loaded.currAct);
+            ToActMap.LoadScene();
         }
     }
 }
