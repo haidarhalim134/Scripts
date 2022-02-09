@@ -86,6 +86,7 @@ namespace Control.Deck
         }
         public IEnumerator RefillReserve()
         {
+            float totalTime = 0.5f;
             while (this.Owner.UsedDeck.Count>0)
             {
                 int RandIndex = Range(0, this.Owner.UsedDeck.Count);
@@ -94,12 +95,14 @@ namespace Control.Deck
                 Vector2 exitPlace = this.ReserveDeck.gameObject.transform.position;
                 exitPlace.y-= 50;
                 GameObject Card = Instantiate(this.CardPrefab, spawnPlace, new Quaternion(), gameObject.transform);
-                Card.transform.DOMove(exitPlace, 0.5f)
+                Card.GetComponent<CardHandler>().enableHover = false;
+                Card.transform.DOMoveX(exitPlace.x, totalTime)
                 .OnComplete(()=>
                 {
                     Destroy(Card);
                 }).SetEase(Ease.Linear);
-
+                // Card.transform.DOMoveY(exitPlace.y + 50, totalTime);
+                // Card.transform.DOMoveY(exitPlace.y, totalTime / 2f).SetDelay(totalTime/2f);
                 this.Owner.ReserveDeck.Add(this.Owner.UsedDeck[RandIndex]);
                 this.Owner.UsedDeck.RemoveAt(RandIndex);
                 yield return new WaitForSeconds(this.Owner.CardOutSpeed);
