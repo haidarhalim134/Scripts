@@ -89,7 +89,6 @@ namespace DataContainer
             GameObject find = GameObject.Find(abname);
             if (find == null)
             {
-                Debug.Log("spawned"+abname);
                 GameObject Object = Instantiate(name);
                 Object.name = abname;
                 return Object.GetComponent<AbilityManager>();
