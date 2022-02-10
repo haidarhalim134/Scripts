@@ -43,6 +43,8 @@ namespace Attributes.Abilities
         }
         void Awake()
         {
+            Mng.intentionData.Damage = damage;
+            Mng.intentionData.AttackRep = repetition;
             Mng = gameObject.GetComponent<AbilityManager>();
             Mng.ContainedAbilities.Add(this.Ability);
             Mng.DescGrabber.Add(this.Text);

@@ -17,6 +17,9 @@ namespace Attributes.Abilities
         public int cost;
         public int GoldCost;
         public AbTarget target;
+        [Tooltip("used for bot intention system")]
+        public SpellType[] types;
+        public AbilityData intentionData;
         public string Desc;
         public string GetDesc(AbilityData data, PlayerController caster=null, BaseCreature target=null)
         {
