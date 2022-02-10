@@ -11,4 +11,4 @@ public class CharacterDataCont : ScriptableObject
     public int StartingHealth;
     public BotAbilityCont[] AvailableAbility;
 }
-public enum Character{Nocharacter,Ironclad}
+public enum Character{Nocharacter,Ironclad, Watcher}
