@@ -50,12 +50,15 @@ namespace LevelManager
             Script.stamina.Max = Data.MaxStamina;
             Script.ChanceForTwo = Data.ChanceForTwo;
             Script.health.Fill();
+            Script.stamina.Fill();
             Script.TeamId = TeamId;
 
             float[] Pos = ReadCoord(LevelCont.SpreadPrefab, BotCont);
             Object.transform.localPosition = new Vector3(Pos[0], Pos[1], -2835f);
             SpawnCounter(Object);
             Script.Skills.AddRange(Data.Abilities);
+
+            Script.nextAction = Script.GetRandomAbil();
         }
         public static void SpawnCounter(GameObject Object)
         {

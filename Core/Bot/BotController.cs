@@ -13,6 +13,7 @@ namespace Control.Core
     public class BotController : BaseCreature
     {
         public List<BotAbilityCont> Skills = new List<BotAbilityCont>();
+        public BotAbilityCont nextAction;
         private float ActionDelay = 1f;
         /// <summary>please call on start</summary>
         private void Awake() 
@@ -40,30 +41,38 @@ namespace Control.Core
         private IEnumerator Decide()
         {
             yield return new WaitForSeconds(this.ActionDelay);
-            var EnoughMana = this.Skills.Where((cont)=> cont.Ability.GetComponent<AbilityManager>().GetStaminaCost(cont.Data)<=this.stamina.Curr);
-            var Cont = EnoughMana.ToList()[Range(0, EnoughMana.Count())];
-            AbilityManager Mng = InGameContainer.GetInstance().SpawnAbilityPrefab(Cont.Ability);
+            var cont = GetQAbil();
+            AbilityManager Mng = GetMng(cont);
             var listoftarget = CombatEngine.GetTarget(Mng);
-            CombatEngine.RequestCast(Mng, this,listoftarget[
-                Range(0,listoftarget.Count)],Cont.Data);
-            if (this.stamina.Curr<1)
-            {
-                this.DebuffReduceCharge();
-                CombatEngine.ActionFinished();
-                this.Control = false;
-            } else {
-                 if (CombatEngine.GameGoing)StartCoroutine(Decide());
-            }
+            CombatEngine.RequestCast(Mng, this,listoftarget[Range(0,listoftarget.Count)],cont.Data);
+            this.DebuffReduceCharge();
+            CombatEngine.ActionFinished();
+            this.Control = false;
         }
-        override public void OnDeath()
+        public BotAbilityCont GetQAbil()
+        {
+            var abil = nextAction;
+            nextAction = GetRandomAbil();
+            return abil;
+        }
+        public BotAbilityCont GetRandomAbil()
+        {
+            var EnoughMana = this.Skills.Where((cont) => 
+            cont.Ability.GetComponent<AbilityManager>().GetStaminaCost(cont.Data) <= this.stamina.Curr);
+            var Cont = EnoughMana.ToList()[Range(0, EnoughMana.Count())];
+            return Cont;
+        }
+        public AbilityManager GetMng(BotAbilityCont cont)
+        {
+            return InGameContainer.GetInstance().SpawnAbilityPrefab(cont.Ability);
+        }
+        public override void OnDeath()
         {
             if (CombatEngine.RegisteredCreature[this.TeamId].Count == 0) CombatEngine.EndGame(true);
         }
         // Start is called before the first frame update
         void Start()
         {
-            // TODO: call moved
-            // this.InitStats();
             this.health.Update(0);
             this.stamina.Update(0);
         }
