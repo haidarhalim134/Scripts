@@ -16,6 +16,7 @@ namespace Control.Deck
         public List<CardHandler> ActiveDeck = new List<CardHandler>();
         public GameObject CardPrefab;
         public PlayerController Owner;
+        public CardHandler isCardHovered;
         public int CardSep = 20;
         public int DeckCurve = 1000;
         [Tooltip("used as card enter route")]
@@ -61,10 +62,10 @@ namespace Control.Deck
                 float Angle = CalcCardAngle(PosX[i], PosY);
                 // get component => set target
                 CardHandler Script = ActiveDeck[i];
-                RectTransform rect = this.ActiveDeck[i].GetComponent<RectTransform>();
-                Script.AddMoveTarget(new Vector2(PosX[i] - rect.rect.width/2,PosY-this.DeckCurve - rect.rect.height/2));        
+                RectTransform rect = this.ActiveDeck[i].GetComponent<RectTransform>();      
                 if (i != ClickedCard)
                 {
+                    Script.AddMoveTarget(new Vector2(PosX[i], PosY - this.DeckCurve));
                     Script.Highlight(false);
                     this.ActiveDeck[i].transform.rotation = Quaternion.Euler(0, 0, Angle);
                 }
@@ -87,14 +88,14 @@ namespace Control.Deck
         }
         public IEnumerator RefillReserve()
         {
-            float totalTime = 0.5f;
+            float totalTime = 5f;
             while (this.Owner.UsedDeck.Count>0)
             {
                 int RandIndex = Range(0, this.Owner.UsedDeck.Count);
                 Vector2 spawnPlace = (Vector2)this.UsedDeck.gameObject.transform.position;
-                spawnPlace.y -= 50;
+                // spawnPlace.y += 50;
                 Vector2 exitPlace = this.ReserveDeck.gameObject.transform.position;
-                exitPlace.y-= 50;
+                // exitPlace.y-= 50;
                 GameObject Card = Instantiate(this.CardPrefab, spawnPlace, new Quaternion(), gameObject.transform);
                 Card.GetComponent<CardHandler>().enableHover = false;
                 Card.transform.DOMoveX(exitPlace.x, totalTime)
@@ -104,6 +105,9 @@ namespace Control.Deck
                 }).SetEase(Ease.Linear);
                 // Card.transform.DOMoveY(exitPlace.y + 50, totalTime);
                 // Card.transform.DOMoveY(exitPlace.y, totalTime / 2f).SetDelay(totalTime/2f);
+                Card.transform.localScale = new Vector3(0.1f,0.1f,0.1f);
+                Card.transform.DOScale(1, totalTime);
+                Card.transform.DOScale(0.1f, totalTime / 2f).SetDelay(totalTime/2f);
                 this.Owner.ReserveDeck.Add(this.Owner.UsedDeck[RandIndex]);
                 this.Owner.UsedDeck.RemoveAt(RandIndex);
                 yield return new WaitForSeconds(this.Owner.CardOutSpeed);

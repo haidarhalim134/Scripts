@@ -36,7 +36,7 @@ namespace Control.Deck
                 // this.animator.SetBool("Active", true);
                 this.Magnify(true);
                 this.transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0.1f);
-                this.transform.DOLocalMoveY(10 - this.GetComponent<RectTransform>().rect.height / 2, 0.1f);
+                this.MoveY(25, 0.1f);
                 this.transform.SetAsLastSibling();
             }else
             {
@@ -47,33 +47,51 @@ namespace Control.Deck
                 this.UpdateText();
             }
         }
+        // TODO: fix this
         public void SemiHighlight(bool to)
         {
             if (deck.ActiveCard == null&&enableHover)
             {
                 if (to)
                 {
+                    Debug.Log("enter");
+                    deck.isCardHovered = this;
                     // this.animator.SetBool("Active", true);
                     this.Magnify(true);
                     deck.SemiHighlightCard(this);
                     this.transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0.1f);
-                    this.transform.DOLocalMoveY(10 - this.GetComponent<RectTransform>().rect.height / 2, 0.1f);
+                    this.MoveY(25, 0.1f);
                     this.gameObject.transform.SetAsLastSibling();
                 }
-                else if (!this.Active)
+                else if (!this.Active&&!currMove)
                 {
+                    Debug.Log("exit");
+                    if (deck.isCardHovered == this)deck.isCardHovered = null;
                     // this.animator.SetBool("Active", false);
                     this.Magnify(false);
                     this.UpdateText();
                     this.transform.SetAsLastSibling();
-                    deck.RefreshCardPos();
+                    transform.DOScaleX(1,0.1f).OnComplete(()=>{if (deck.isCardHovered == null) deck.RefreshCardPos();});
+                    
                 }
             }
         }
-        public void AddMoveTarget(Vector2 to, float duration = 0.5f,bool overrideTarget = false)
+        public void AddMoveTarget(Vector2 to, float duration = 0.1f,bool overrideTarget = false)
         {
             this.transform.DOLocalMove(to, duration).OnComplete(()=>enableHover = true);
-            // this.MoveTarget.Add(new Move(gameObject.transform.localPosition, to, duration));
+        }
+        public void MoveY(float y, float duration)
+        {
+            if (!currMove)
+            {
+                currMove = true;
+                var pos = this.transform.localPosition;
+                pos.y = y;
+                this.transform.DOLocalMove(pos, duration).OnComplete(()=>currMove = false);
+                // var pos = this.transform.localPosition;
+                // pos.y = y;
+                // this.transform.localPosition = pos;
+            }
         }
         public void InitOwner()
         {

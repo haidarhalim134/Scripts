@@ -14,6 +14,7 @@ namespace Control.UI
         /// <summary>call UpdateText after assigning</summary>
             public AbilityContainer Ability;
             public bool enableHover;
+            public bool currMove = false;
             private TextMeshProUGUI NameTXT;
             public TextMeshProUGUI desctxt;
             Sequence sequence;
