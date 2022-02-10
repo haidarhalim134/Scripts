@@ -88,7 +88,7 @@ namespace Control.Deck
         }
         public IEnumerator RefillReserve()
         {
-            float totalTime = 5f;
+            float totalTime = 1f;
             while (this.Owner.UsedDeck.Count>0)
             {
                 int RandIndex = Range(0, this.Owner.UsedDeck.Count);
@@ -199,7 +199,7 @@ namespace Control.Deck
                 int Median = Convert.ToInt32(Math.Floor(Count/2));
                 int StartPoint = Math.Abs(-1 * ClickedCard + TargetCard);
                 float SepMlt = (float)(1/Math.Pow(StartPoint,1/1.1));
-                return Math.Max(BaseSep,BaseSep * SepMlt * 1.3f);
+                return Math.Max(BaseSep*0.9f,BaseSep * SepMlt * 1.3f);
             }
             return BaseSep;
         }
