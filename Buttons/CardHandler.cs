@@ -54,7 +54,6 @@ namespace Control.Deck
             {
                 if (to)
                 {
-                    Debug.Log("enter");
                     deck.isCardHovered = this;
                     // this.animator.SetBool("Active", true);
                     this.Magnify(true);
@@ -65,7 +64,6 @@ namespace Control.Deck
                 }
                 else if (!this.Active&&!currMove)
                 {
-                    Debug.Log("exit");
                     if (deck.isCardHovered == this)deck.isCardHovered = null;
                     // this.animator.SetBool("Active", false);
                     this.Magnify(false);
