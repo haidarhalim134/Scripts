@@ -40,6 +40,7 @@ namespace Control.UI
             }
             public void Magnify(bool to)
             {
+                if (!enableHover)return;
                 if (to)
                 {
                     this.transform.DOScale(1.3f,0.05f);
@@ -48,10 +49,11 @@ namespace Control.UI
                     this.transform.DOScale(1,0.05f);
                 }
             }
-            void OnEnable()
+            public void SmallToBig()
             {
+                enableHover = false;
                 this.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                this.transform.DOScale(1f, 0.1f);
+                this.transform.DOScale(1f, 0.5f).OnComplete(()=> enableHover = true);
             }
             public void Destroy(RemoveStatus type) 
             {

@@ -70,7 +70,7 @@ namespace Control.Deck
                 }
             }
         }
-        public void AddMoveTarget(Vector2 to, float duration = 0.1f,bool overrideTarget = false)
+        public void AddMoveTarget(Vector2 to, float duration = 0.5f,bool overrideTarget = false)
         {
             this.transform.DOLocalMove(to, duration).OnComplete(()=>enableHover = true);
             // this.MoveTarget.Add(new Move(gameObject.transform.localPosition, to, duration));

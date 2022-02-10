@@ -75,6 +75,7 @@ namespace Control.Deck
             Vector2 spawnPlace = (Vector2)this.ReserveDeck.gameObject.transform.position - new Vector2(0f, 1f);
             GameObject Card = Instantiate(this.CardPrefab, spawnPlace, new Quaternion(), gameObject.transform);
             CardHandler Script = Card.GetComponent<CardHandler>();
+            Script.SmallToBig();
             Script.Ability = Ability;
             Script.UpdateText();
             Script.TargetOwner = Owner.gameObject;
