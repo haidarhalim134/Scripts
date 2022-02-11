@@ -26,11 +26,11 @@ namespace Control.UI
             var trigger = this.GetComponent<EventTrigger>();
             EventTrigger.Entry entry = new EventTrigger.Entry();
             entry.eventID = EventTriggerType.PointerEnter;
-            entry.callback.AddListener((eventData) => { Magnify(true,true); });
+            entry.callback.AddListener((eventData) => { if (enableHover) Magnify(true,true); });
             trigger.triggers.Add(entry);
             entry = new EventTrigger.Entry();
             entry.eventID = EventTriggerType.PointerExit;
-            entry.callback.AddListener((eventData) => { Magnify(false,true); });
+            entry.callback.AddListener((eventData) => { if(enableHover)Magnify(false,true); });
             trigger.triggers.Add(entry);
             }
             public void UpdateText(PlayerController caster = null, BaseCreature target = null)
