@@ -78,8 +78,8 @@ namespace Control.UI
                     // this.transform.DOMove((Vector2)this.transform.position+new Vector2(0,5), 0.5f)
                     // .OnComplete(()=>this.transform.DOMove(this.Exit, 0.2f).SetEase(Ease.Linear)
                     // .SetDelay(0.2f).OnComplete(()=>Destroy(this.gameObject)));
-                    this.transform.DOScale(0.3f,0.3f);
-                    this.transform.DOMove(this.Exit- new Vector2(0f, 3f), 0.3f).SetEase(Ease.Linear)
+                    this.transform.DOScale(0.3f,0.5f);
+                    this.transform.DOMove(this.Exit- new Vector2(0f, 3f), 0.5f).SetEase(Ease.Linear)
                     .OnComplete(()=>Destroy(this.gameObject));
                     // Destroy(this.gameObject);
                 } else
