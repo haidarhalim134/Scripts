@@ -14,7 +14,7 @@ namespace Control.Core
             SaveFile newsafe = new SaveFile();
             SaveFile.Save(newsafe);
             LoadedSave.Loaded = newsafe;
-            ActDataLoader.onClick(LoadedSave.Loaded.currAct);
+            ActDataLoader.firstLoadAct(LoadedSave.Loaded.currAct);
             ChangeScene.LoadCharacteChoose();
         }
     }

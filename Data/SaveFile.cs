@@ -74,7 +74,6 @@ namespace Control.Core
     [Serializable]
     public class ActCont
     {
-        public bool finished = false;
         public List<Tree> tree = null;
     }
     [Serializable]
@@ -92,7 +91,7 @@ namespace Control.Core
         {
             TypeLevelIdCont cont = Queue.Find(cont => cont.Type == type);
             string result = cont.Levelid;
-            cont.Levelid = LoadedActData.loadedActData
+            cont.Levelid = ActDataLoader.loadedActData
             .GetRandomLevel(cont.Type).LevelId;
             return result;
         }
@@ -103,11 +102,16 @@ namespace Control.Core
                 TypeLevelIdCont cont = Queue.Find(cont => cont.Type == type);
                 if (cont == null)
                 {
-                   string level = LoadedActData.loadedActData
+                   string level = ActDataLoader.loadedActData
                     .GetRandomLevel(type).LevelId;
                     Queue.Add(new TypeLevelIdCont(){Type=type,Levelid=level});
                 } 
             }
+        }
+        public void ClearQueue(NodeType type)
+        {
+            var clear = Queue.FindAll((cont)=>cont.Type == type);
+            clear.ForEach((cont)=>Queue.Remove(cont));
         }
     }
     [Serializable]

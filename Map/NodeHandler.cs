@@ -63,7 +63,7 @@ namespace Map
                 return;
             }else if (this.tree.CurrentPlayerPos)
             {
-                LevelDataContainer cont = LoadedActData.loadedActData
+                LevelDataContainer cont = ActDataLoader.loadedActData
                 .GetLevel(this.Type, LoadedSave.Loaded.QueuedLevel.GetQueued(this.Type));
                 LevelLoader.LoadLevel(cont);
             }else{

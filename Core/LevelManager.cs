@@ -26,7 +26,7 @@ namespace LevelManager
         {
             testing = false;
             ToLoad = cont;
-            SceneManager.LoadScene("CombatScene");
+            ChangeScene.LoadCombatScene();
         }
     }
 }

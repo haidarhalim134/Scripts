@@ -13,7 +13,7 @@ namespace Control.Core
         public void onClick()
         {
             LoadedSave.Loaded = SaveFile.Load();
-            ActDataLoader.onClick(LoadedSave.Loaded.currAct);
+            ActDataLoader.firstLoadAct(LoadedSave.Loaded.currAct);
             if (LoadedSave.Loaded.CharacterId != Character.Nocharacter) ChangeScene.LoadActMap();
             else ChangeScene.LoadCharacteChoose();
         }

@@ -30,21 +30,24 @@ namespace Map
         }
         void Awake()
         {
-            if (LoadedSave.Loaded.act[LoadedActData.CurrAct].tree == null)
+            if (LoadedSave.Loaded.act[LoadedSave.Loaded.currAct].tree == null)
             {
                 this.Spawn();
-                LoadedSave.Loaded.act[LoadedActData.CurrAct].tree = this.CurrentTree;
+                LoadedSave.Loaded.act[LoadedSave.Loaded.currAct].tree = this.CurrentTree;
                 SaveFile.Save(LoadedSave.Loaded);
             }else
             {
-                this.Spawn(LoadedSave.Loaded.act[LoadedActData.CurrAct].tree);
+                this.Spawn(LoadedSave.Loaded.act[LoadedSave.Loaded.currAct].tree);
                 if (LoadedSave.Loaded.LastLevelWin)
                 {
                     this.CurrentPlayerPos.ProceedNode();
                     if (this.CurrentPlayerPos.Child.Count == 0)
                     {
-                        LoadedSave.Loaded.act[LoadedActData.CurrAct].finished = true;
-                        ToActChooseScreen.LoadScene();
+                        // LoadedSave.Loaded.act[LoadedActData.CurrAct].finished = true;
+                        // ToActChooseScreen.LoadScene();
+                        ActDataLoader.nextAct();
+                        ChangeScene.LoadActMap();
+                        LoadedSave.Loaded.LastLevelWin = false;
                     }
                 }
             }
@@ -53,9 +56,9 @@ namespace Map
         {
             if (tree == null)
             {
-                this.CurrentTree = TreeGenerator.Generate(TargetLenp:LoadedActData.loadedActData.Length+1);
+                this.CurrentTree = TreeGenerator.Generate(TargetLenp:ActDataLoader.loadedActData.Length);
                 this.CurrentTree[0].CurrentPlayerPos = true;
-                LoadedSave.Loaded.act[LoadedActData.CurrAct].tree = this.CurrentTree;
+                LoadedSave.Loaded.act[LoadedSave.Loaded.currAct].tree = this.CurrentTree;
                 Debug.Log("generated len:" + this.CurrentTree[this.CurrentTree.Count-1].point.x.ToString());
             } else
             {

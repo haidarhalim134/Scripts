@@ -8,10 +8,14 @@ public class ChangeScene
 {
     public static void LoadActMap()
     {
-        SceneManager.LoadScene("ActMap");
+        SceneManager.LoadSceneAsync("ActMap");
     }
     public static void LoadCharacteChoose()
     {
-        SceneManager.LoadScene("CharacterChooseScreen");
+        SceneManager.LoadSceneAsync("CharacterChooseScreen");
+    }
+    public static void LoadCombatScene()
+    {
+        SceneManager.LoadSceneAsync("CombatScene");
     }
 }
