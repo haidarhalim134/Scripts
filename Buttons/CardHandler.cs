@@ -56,7 +56,7 @@ namespace Control.Deck
                 {
                     deck.isCardHovered = this;
                     // this.animator.SetBool("Active", true);
-                    this.Magnify(true);
+                    // this.Magnify(true);
                     deck.SemiHighlightCard(this);
                     this.transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0.1f);
                     this.MoveY(25, 0.1f);
@@ -66,10 +66,10 @@ namespace Control.Deck
                 {
                     if (deck.isCardHovered == this)deck.isCardHovered = null;
                     // this.animator.SetBool("Active", false);
-                    this.Magnify(false);
+                    // this.Magnify(false);
                     this.UpdateText();
                     this.transform.SetAsLastSibling();
-                    transform.DOScaleX(1,0.1f).OnComplete(()=>{if (deck.isCardHovered == null) deck.RefreshCardPos();});
+                    transform.DOScaleX(1,0f).OnComplete(()=>{if (deck.isCardHovered == null) deck.RefreshCardPos();});
                     
                 }
             }

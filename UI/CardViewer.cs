@@ -23,6 +23,7 @@ namespace Control.Core
             {
                 GameObject Parent = Instantiate(Prefab,this.Grid.transform);
                 GameObject Object = Instantiate(this.Prefab, Parent.transform);
+                Object.transform.localPosition = new Vector3();
                 CardHandlerVisual Script = Object.GetComponent<CardHandlerVisual>();
                 Script.Ability = cont;
                 Script.UpdateText();

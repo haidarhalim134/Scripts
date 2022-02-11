@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using TMPro;
 using Control.Deck;
 using Attributes.Abilities;
@@ -19,6 +20,19 @@ namespace Control.UI
             public TextMeshProUGUI desctxt;
             Sequence sequence;
             public Vector2 Exit;
+            void Awake()
+            {
+                
+            var trigger = this.GetComponent<EventTrigger>();
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerEnter;
+            entry.callback.AddListener((eventData) => { Magnify(true,true); });
+            trigger.triggers.Add(entry);
+            entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerExit;
+            entry.callback.AddListener((eventData) => { Magnify(false,true); });
+            trigger.triggers.Add(entry);
+            }
             public void UpdateText(PlayerController caster = null, BaseCreature target = null)
             {
                AbilityManager Mng = this.Ability.GetManager();
@@ -39,9 +53,9 @@ namespace Control.UI
                     this.desctxt.text = this.Ability.GetManager().GetDesc(this.Ability.Data);
                 }
             }
-            public void Magnify(bool to)
+            public void Magnify(bool to, bool ignoreHover = false)
             {
-                if (!enableHover)return;
+                if (!enableHover&&!ignoreHover)return;
                 if (to)
                 {
                     this.transform.DOScale(1.3f,0.05f);
@@ -64,8 +78,8 @@ namespace Control.UI
                     // this.transform.DOMove((Vector2)this.transform.position+new Vector2(0,5), 0.5f)
                     // .OnComplete(()=>this.transform.DOMove(this.Exit, 0.2f).SetEase(Ease.Linear)
                     // .SetDelay(0.2f).OnComplete(()=>Destroy(this.gameObject)));
-                    this.transform.DOScale(0.5f,0.1f);
-                    this.transform.DOMove(this.Exit- new Vector2(0f, 3f), 0.1f).SetEase(Ease.Linear)
+                    this.transform.DOScale(0.3f,0.3f);
+                    this.transform.DOMove(this.Exit- new Vector2(0f, 3f), 0.3f).SetEase(Ease.Linear)
                     .OnComplete(()=>Destroy(this.gameObject));
                     // Destroy(this.gameObject);
                 } else

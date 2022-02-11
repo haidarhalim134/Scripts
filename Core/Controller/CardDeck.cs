@@ -88,10 +88,9 @@ namespace Control.Deck
         }
         public IEnumerator RefillReserve()
         {
-            float totalTime = 1f;
-            while (this.Owner.UsedDeck.Count>0)
+            float totalTime = 2f;
+            for (var i = 0;i<this.Owner.UsedDeck.Count;i++)
             {
-                int RandIndex = Range(0, this.Owner.UsedDeck.Count);
                 Vector2 spawnPlace = (Vector2)this.UsedDeck.gameObject.transform.position;
                 // spawnPlace.y += 50;
                 Vector2 exitPlace = this.ReserveDeck.gameObject.transform.position;
@@ -103,16 +102,21 @@ namespace Control.Deck
                 {
                     Destroy(Card);
                 }).SetEase(Ease.Linear);
-                // Card.transform.DOMoveY(exitPlace.y + 50, totalTime);
-                // Card.transform.DOMoveY(exitPlace.y, totalTime / 2f).SetDelay(totalTime/2f);
-                Card.transform.localScale = new Vector3(0.1f,0.1f,0.1f);
+                Card.transform.DOMoveY(exitPlace.y + 50, totalTime).SetEase(Ease.OutQuad);
+                Card.transform.DOMoveY(exitPlace.y, totalTime / 2f).SetDelay(totalTime/2f).SetEase(Ease.InQuad);
+                Card.transform.localScale = new Vector3(0.3f,0.3f,0.3f);
                 Card.transform.DOScale(1, totalTime);
-                Card.transform.DOScale(0.1f, totalTime / 2f).SetDelay(totalTime/2f);
+                Card.transform.DOScale(0.3f, totalTime / 2f).SetDelay(totalTime/2f);
+                totalTime+= this.Owner.CardOutSpeed*3;
+            }
+            while (this.Owner.UsedDeck.Count>0)
+            {
+                int RandIndex = Range(0, this.Owner.UsedDeck.Count);
                 this.Owner.ReserveDeck.Add(this.Owner.UsedDeck[RandIndex]);
                 this.Owner.UsedDeck.RemoveAt(RandIndex);
                 yield return new WaitForSeconds(this.Owner.CardOutSpeed);
             }
-            yield return new WaitForSeconds(0.5f-this.Owner.CardOutSpeed);
+            yield return new WaitForSeconds(totalTime-this.Owner.CardOutSpeed*50);
         }
         public void RemoveActiveCard()
         {
