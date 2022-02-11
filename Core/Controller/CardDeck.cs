@@ -88,7 +88,7 @@ namespace Control.Deck
         }
         public IEnumerator RefillReserve()
         {
-            float totalTime = 2f;
+            float totalTime = 1f;
             for (var i = 0;i<this.Owner.UsedDeck.Count;i++)
             {
                 Vector2 spawnPlace = (Vector2)this.UsedDeck.gameObject.transform.position;
@@ -102,13 +102,14 @@ namespace Control.Deck
                 {
                     Destroy(Card);
                 }).SetEase(Ease.Linear);
-                // Card.transform.DOMoveY(exitPlace.y + 50, totalTime).SetEase(Ease.OutQuad);
-                // Card.transform.DOMoveY(exitPlace.y, totalTime / 2f).SetDelay(totalTime/2f).SetEase(Ease.InQuad);
+                Card.transform.DOMoveY(exitPlace.y + 50, totalTime).SetEase(Ease.OutQuad);
+                Card.transform.DOMoveY(exitPlace.y, totalTime / 2f).SetDelay(totalTime/2f).SetEase(Ease.InQuad);
                 Card.transform.localScale = new Vector3(0.3f,0.3f,0.3f);
                 Card.transform.DOScale(1, totalTime);
                 Card.transform.DOScale(0.3f, totalTime / 2f).SetDelay(totalTime/2f);
                 totalTime+= this.Owner.CardOutSpeed;
             }
+            yield return new WaitForSeconds(totalTime-Owner.CardOutSpeed);
             while (this.Owner.UsedDeck.Count>0)
             {
                 int RandIndex = Range(0, this.Owner.UsedDeck.Count);
@@ -116,7 +117,6 @@ namespace Control.Deck
                 this.Owner.UsedDeck.RemoveAt(RandIndex);
                 yield return new WaitForSeconds(this.Owner.CardOutSpeed);
             }
-            yield return new WaitForSeconds(totalTime-this.Owner.CardOutSpeed*50);
         }
         public void RemoveActiveCard()
         {

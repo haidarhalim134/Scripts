@@ -73,13 +73,16 @@ namespace Control.UI
             public void Destroy(RemoveStatus type) 
             {
                 enableHover = false;
+                float totaltime = 0.3f;
                 if (type == RemoveStatus.used||type == RemoveStatus.discard)
                 {
                     // this.transform.DOMove((Vector2)this.transform.position+new Vector2(0,5), 0.5f)
                     // .OnComplete(()=>this.transform.DOMove(this.Exit, 0.2f).SetEase(Ease.Linear)
                     // .SetDelay(0.2f).OnComplete(()=>Destroy(this.gameObject)));
-                    this.transform.DOScale(0.3f,0.5f);
-                    this.transform.DOMove(this.Exit- new Vector2(0f, 3f), 0.5f).SetEase(Ease.Linear)
+                    this.transform.DOScale(0.3f,totaltime);
+                    this.transform.DORotate(new Vector3(), totaltime);
+                    this.transform.DOMoveY(this.Exit.y,totaltime);
+                    this.transform.DOMove(this.Exit- new Vector2(0f, 3f), totaltime).SetEase(Ease.Linear)
                     .OnComplete(()=>Destroy(this.gameObject));
                     // Destroy(this.gameObject);
                 } else
