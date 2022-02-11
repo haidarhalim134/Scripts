@@ -22,7 +22,6 @@ namespace Control.UI
             public Vector2 Exit;
             void Awake()
             {
-                
             var trigger = this.GetComponent<EventTrigger>();
             EventTrigger.Entry entry = new EventTrigger.Entry();
             entry.eventID = EventTriggerType.PointerEnter;
@@ -30,7 +29,10 @@ namespace Control.UI
             trigger.triggers.Add(entry);
             entry = new EventTrigger.Entry();
             entry.eventID = EventTriggerType.PointerExit;
-            entry.callback.AddListener((eventData) => { if(enableHover)Magnify(false,true); });
+            entry.callback.AddListener((eventData) => { 
+                if(enableHover&&(transform.GetComponent<CardHandler>()==null||!transform.GetComponent<CardHandler>().Active))
+                Magnify(false,true); 
+            });
             trigger.triggers.Add(entry);
             }
             public void UpdateText(PlayerController caster = null, BaseCreature target = null)
