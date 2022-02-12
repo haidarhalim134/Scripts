@@ -70,7 +70,7 @@ public class Animations
             var ObjectS = GameObject.Instantiate(Object, target.transform);
             ObjectS.transform.localPosition = new Vector2();
             ObjectS.transform.DOShakePosition(duration-0.5f);
-            ObjectS.transform.DOScale(new Vector3(1,1,1), duration).OnComplete(()=>{});
+            ObjectS.transform.DOScale(new Vector3(1,1,1), duration).OnComplete(()=>GameObject.Destroy(ObjectS));
         }
     }
 }
