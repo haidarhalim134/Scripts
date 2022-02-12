@@ -21,6 +21,10 @@ namespace Control.Core
         // TODO: removing this hardcoded assignment is preferred, can assign the instance directly
         public GameObject TEMP;
         public CardDeck Deck;
+        public override void onTurn(bool to)
+        {
+            if (to)CombatEngine.SetupIntent();
+        }
         /// <returns>true if order accepted else false</returns>
         public bool OrderAbility(AbilityContainer name)
         {

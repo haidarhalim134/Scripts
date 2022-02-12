@@ -69,7 +69,9 @@ namespace LevelManager
             GameObject HealthC = SpawnCounterPrefab(InGameContainer.GetInstance().HealthCounter, Object);
             GameObject ShieldC = SpawnCounterPrefab(InGameContainer.GetInstance().ShieldCounter, Object);
             GameObject DebuffC = Instantiate(InGameContainer.GetInstance().debuffCounter, Object.transform);
+            GameObject IntentC = Instantiate(InGameContainer.GetInstance().intentCounter, Object.transform);
             DebuffC.GetComponent<DebuffCounter>().Creature = Object.GetComponent<BaseCreature>();
+            Object.GetComponent<BotController>().intentCounter = IntentC.GetComponent<IntentsCounter>();
             // float heights = RT.rect.height;
             float height = SR.bounds.size.y / 1.5f;//UI.GetComponent<RectTransform>().localScale.y;
             // Debug.Log(""+height+" "+heights);
@@ -78,14 +80,17 @@ namespace LevelManager
             HealthC.transform.localPosition = new Vector2(0, height * -1 - padding);
             ShieldC.transform.localPosition = new Vector2(-35, height * -1 - padding);
             DebuffC.transform.localPosition = new Vector2(10, (height * -1) - 9 - padding);
+            IntentC.transform.localPosition = new Vector2(0, height+padding+20);
             // HealthC.GetComponent<HealthCounter>().Bar.GetComponent<SpriteRenderer>().bounds.size.x * -17
             HealthC.transform.SetParent(UI.transform);
             ShieldC.transform.SetParent(UI.transform);
+            IntentC.transform.SetParent(UI.transform);
             ShieldC.transform.position += new Vector3(0, 0, -2);
             DebuffC.transform.SetParent(UI.transform);
             DebuffC.transform.SetAsFirstSibling();
             ShieldC.transform.SetAsFirstSibling();
             HealthC.transform.SetAsFirstSibling();
+            IntentC.transform.SetAsFirstSibling();
         }
         public static GameObject SpawnCounterPrefab(GameObject Prefab, GameObject Parent)
         {

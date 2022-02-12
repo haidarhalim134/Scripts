@@ -15,6 +15,8 @@ namespace DataContainer
         public GameObject HealthCounter;
         public GameObject ShieldCounter;
         public GameObject debuffCounter;
+        public GameObject intentCounter;
+        public IntentCont[] intentCont;
         public LevelDataContainer[] Levels;
         public CharacterDataCont[] Characters;
         public GameObject[] Abilities;
@@ -70,6 +72,16 @@ namespace DataContainer
             StanceCont result = Array.Find(this.stance, (cont) => cont.stance == stance);
             if (result == null) Debug.Log("stance not found");
             return result;
+        }
+        public GameObject FindIntent(List<AbilityType> types)
+        {
+            var len = Array.FindAll(intentCont, (cont)=>cont.type.Length==types.Count).ToList();
+            GameObject res = len.Find((cont)=>
+            {
+                return types.All(type=>cont.type.Any(typi=>typi == type));
+            }).prefab;
+            if (res==null)Debug.Log("intent not found");
+            return res;
         }
         public void SpawnAbilityPrefab(string name)
         {
@@ -141,5 +153,11 @@ namespace DataContainer
         public string description;
         [Tooltip("showing basic number")]
         public int charge;
+    }
+    [Serializable]
+    public class IntentCont
+    {
+        public AbilityType[] type;
+        public GameObject prefab;
     }
 }

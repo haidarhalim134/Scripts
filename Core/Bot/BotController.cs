@@ -14,6 +14,7 @@ namespace Control.Core
     {
         public List<BotAbilityCont> Skills = new List<BotAbilityCont>();
         public BotAbilityCont nextAction;
+        public IntentsCounter intentCounter;
         private float ActionDelay = 1f;
         /// <summary>please call on start</summary>
         private void Awake() 
@@ -60,6 +61,7 @@ namespace Control.Core
             var EnoughMana = this.Skills.Where((cont) => 
             cont.Ability.GetComponent<AbilityManager>().GetStaminaCost(cont.Data) <= this.stamina.Curr);
             var Cont = EnoughMana.ToList()[Range(0, EnoughMana.Count())];
+            intentCounter.Spawn(InGameContainer.GetInstance().SpawnAbilityPrefab(Cont.Ability), Cont.Data);
             return Cont;
         }
         public AbilityManager GetMng(BotAbilityCont cont)
