@@ -41,7 +41,6 @@ namespace LevelManager
         private static void InitCreature(GameObject Object, CreatureDataContainer Data, LevelDataContainer LevelCont, BotDataContainer BotCont)
         {
             BotController Script = Object.GetComponent<BotController>();
-            Script.targetMarker = Object.transform.Find("Target").gameObject;
             int TeamId = BotCont.TeamId;
             Object.GetComponent<SpriteRenderer>().sprite = Data.Skin;
             // initiate gameobject's stamina and health container
