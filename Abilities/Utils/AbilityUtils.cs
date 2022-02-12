@@ -50,14 +50,20 @@ namespace Attributes.Abilities
         public int Shield;
         public int Staminacost;
         public int AttackRep;
-        // TODO: either copy the container or create non serializable field called temp
-        public AbilityData Copy()
+        public AbilityData Add(AbilityData data)
         {
-            return new AbilityData(){ Level=Level, Damage=Damage, Shield=Shield };
+            var res = new AbilityData(){
+                Level = this.Level + data.Level,
+                Damage = this.Damage + data.Damage,
+                Shield = this.Shield + data.Shield,
+                Staminacost = this.Staminacost + data.Staminacost,
+                AttackRep = this.AttackRep + data.AttackRep
+            };
+            return res;
         }
     }
     public enum Debuffs{vulnerable, weakened}
     public enum Stance{rage, excited, noStance}
     public enum Targeting{caster,target}
-    public enum SpellType{attack,buff,debuff,shield}
+    public enum AbilityType{attack,buff,debuff,shield}
 }

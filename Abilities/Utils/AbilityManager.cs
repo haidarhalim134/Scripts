@@ -18,7 +18,7 @@ namespace Attributes.Abilities
         public int GoldCost;
         public AbTarget target;
         [Tooltip("used for bot intention system")]
-        public SpellType[] types;
+        public AbilityType[] types;
         public AbilityData intentionData;
         public string Desc;
         public string GetDesc(AbilityData data, PlayerController caster=null, BaseCreature target=null)
@@ -30,6 +30,10 @@ namespace Attributes.Abilities
         public int GetStaminaCost(AbilityData Data)
         {
             return this.cost+Data.Staminacost;
+        }
+        public AbilityData GetData(AbilityData data)
+        {
+            return intentionData.Add(data);
         }
         public IEnumerator Activate(BaseCreature caster, BaseCreature target, AbilityData Data)
         {
