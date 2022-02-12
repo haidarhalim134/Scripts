@@ -48,6 +48,7 @@ namespace Control.Core
                 if (Success)
                 {
                     this.DeckRemoveActive(this.OrderedAbility);
+                    CombatEngine.ClearTarget();
                     this.OrderedAbility = null;
                 }
             }

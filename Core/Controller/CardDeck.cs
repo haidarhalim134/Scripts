@@ -222,6 +222,7 @@ namespace Control.Deck
             if (Input.GetKeyDown(KeyCode.Mouse1))
             {
                 this.ClearHighlight();
+                CombatEngine.ClearTarget();
             }
         }
     }
