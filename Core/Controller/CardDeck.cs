@@ -88,7 +88,7 @@ namespace Control.Deck
         }
         public IEnumerator RefillReserve()
         {
-            float totalTime = 1f;
+            float totalTime = 0.75f;
             float cardNum = this.Owner.UsedDeck.Count;
             Tween spawn()
             {

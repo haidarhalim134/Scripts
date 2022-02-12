@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using Control.Deck;
@@ -82,9 +83,9 @@ namespace Control.UI
                     // .OnComplete(()=>this.transform.DOMove(this.Exit, 0.2f).SetEase(Ease.Linear)
                     // .SetDelay(0.2f).OnComplete(()=>Destroy(this.gameObject)));
                     this.transform.DOScale(0.3f,totaltime);
-                    this.transform.DORotate(new Vector3(), totaltime);
-                    this.transform.DOMoveY(this.Exit.y,totaltime);
-                    this.transform.DOMove(this.Exit- new Vector2(0f, 3f), totaltime).SetEase(Ease.Linear)
+                    this.transform.DORotate(new Vector3(), totaltime/2f);
+                    this.transform.DOMoveY(this.Exit.y,totaltime/2f);
+                    this.transform.DOMoveX(this.Exit.x, totaltime).SetEase(Ease.Linear)
                     .OnComplete(()=>Destroy(this.gameObject));
                     // Destroy(this.gameObject);
                 } else
