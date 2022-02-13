@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using Attributes.Abilities;
 using DataContainer;
+using DG.Tweening;
 
 public class IntentsCounter : MonoBehaviour
 {
@@ -29,5 +30,10 @@ public class IntentsCounter : MonoBehaviour
     public void Activate()
     {
         currentIndicator.SetActive(true);
+    }
+    void Awake()
+    {
+        transform.DOMoveY(transform.position.y+50, 1f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutQuad);
+        Debug.Log(transform.localPosition.y);
     }
 }
