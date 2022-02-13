@@ -71,6 +71,7 @@ public class Animations
             ObjectS.transform.localPosition = new Vector2();
             ObjectS.transform.DOShakePosition(duration-0.5f,strength);
             ObjectS.transform.DOScale(new Vector3(1,1,1), duration).OnComplete(()=>GameObject.Destroy(ObjectS));
+            ObjectS.GetComponent<Image>().DOFade(0,duration/4f);
         }
     }
 }
