@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using DataContainer;
 
 public class IntentIndicator : MonoBehaviour
 {
@@ -11,9 +12,10 @@ public class IntentIndicator : MonoBehaviour
     public Image icon;
     public IEnumerator Destroy()
     {
-        Animations.ShakySoulEffect(icon.gameObject,1f,8);
-        yield return new WaitForSeconds(0.5f);
-        icon.DOFade(0,0.5f).OnComplete(()=>Destroy(gameObject));
+        float time = InGameContainer.GetInstance().delayBetweenTurn;
+        Animations.ShakySoulEffect(icon.gameObject,time,8);
+        yield return new WaitForSeconds(time / 2f);
+        icon.DOFade(0,time/2f).OnComplete(()=>Destroy(gameObject));
     }
     void OnEnable()
     {

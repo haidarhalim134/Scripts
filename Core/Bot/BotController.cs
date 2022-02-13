@@ -15,7 +15,6 @@ namespace Control.Core
         public List<BotAbilityCont> Skills = new List<BotAbilityCont>();
         public BotAbilityCont nextAction;
         public IntentsCounter intentCounter;
-        private float ActionDelay = 1f;
         /// <summary>please call on start</summary>
         private void Awake() 
         {
@@ -41,8 +40,8 @@ namespace Control.Core
         }
         private IEnumerator Decide()
         {
-            yield return new WaitForSeconds(this.ActionDelay);
             var cont = GetQAbil();
+            yield return new WaitForSeconds(InGameContainer.GetInstance().delayBetweenTurn);
             AbilityManager Mng = GetMng(cont);
             var listoftarget = CombatEngine.GetTarget(Mng);
             CombatEngine.RequestCast(Mng, this,listoftarget[Range(0,listoftarget.Count)],cont.Data);
