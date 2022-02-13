@@ -55,7 +55,7 @@ public class Animations
     {
         if (effect!=null)GameObject.Instantiate(effect, target.transform).transform.localPosition = new Vector2();
     }
-    public static void ShakySoulEffect(GameObject target, float duration = 2)
+    public static void ShakySoulEffect(GameObject target, float duration = 2, float strength = 1)
     {
         var Object = GameObject.Instantiate(target, target.transform);
         Object.transform.localPosition = new Vector2();
@@ -69,7 +69,7 @@ public class Animations
         {
             var ObjectS = GameObject.Instantiate(Object, target.transform);
             ObjectS.transform.localPosition = new Vector2();
-            ObjectS.transform.DOShakePosition(duration-0.5f);
+            ObjectS.transform.DOShakePosition(duration-0.5f,strength);
             ObjectS.transform.DOScale(new Vector3(1,1,1), duration).OnComplete(()=>GameObject.Destroy(ObjectS));
         }
     }
