@@ -12,7 +12,8 @@ public class IntentsCounter : MonoBehaviour
     GameObject currentIndicator;
     public void Spawn(AbilityManager Mng, AbilityData data)
     {
-        if (currentIndicator!=null)Destroy(currentIndicator);
+        if (currentIndicator!=null)StartCoroutine(currentIndicator.GetComponent<IntentIndicator>().Destroy());
+        // if (currentIndicator!=null)Destroy(currentIndicator);
         var prefab = InGameContainer.GetInstance().FindIntent(Mng.types.ToList());
         currentIndicator = Instantiate(prefab, transform);
         currentIndicator.transform.localPosition = new Vector3();
