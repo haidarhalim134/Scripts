@@ -106,8 +106,8 @@ namespace Control.Deck
                     this.Owner.UsedDeck.RemoveAt(RandIndex);
                     Destroy(Card);
                 }).SetEase(Ease.Linear);
-                Card.transform.DOMoveY(exitPlace.y + 50, totalTime).SetEase(Ease.OutQuad);
-                Card.transform.DOMoveY(exitPlace.y, totalTime / 2f).SetDelay(totalTime / 2f).SetEase(Ease.InQuad);
+                // Card.transform.DOMoveY(exitPlace.y + 50, totalTime).SetEase(Ease.OutQuad);
+                // Card.transform.DOMoveY(exitPlace.y, totalTime / 2f).SetDelay(totalTime / 2f).SetEase(Ease.InQuad);
                 Card.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
                 Card.transform.DOScale(1, totalTime);
                 Card.transform.DOScale(0.3f, totalTime / 2f).SetDelay(totalTime / 2f);
