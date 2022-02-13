@@ -11,7 +11,7 @@ public class IntentIndicator : MonoBehaviour
     public Image icon;
     public IEnumerator Destroy()
     {
-        Animations.ShakySoulEffect(icon.gameObject,1f,4);
+        Animations.ShakySoulEffect(icon.gameObject,1f,8);
         yield return new WaitForSeconds(0.5f);
         icon.DOFade(0,0.5f).OnComplete(()=>Destroy(gameObject));
     }
