@@ -3,7 +3,8 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Random;
+using Random = System.Random;
+using Map;
 using Control.Combat;
 using Attributes.Abilities;
 using DataContainer;
@@ -12,9 +13,10 @@ namespace Control.Core
 {
     public class BotController : BaseCreature
     {
-        public List<BotAbilityCont> Skills = new List<BotAbilityCont>();
+        public List<AttackPatternCont> Skills = new List<AttackPatternCont>();
         public BotAbilityCont nextAction;
         public IntentsCounter intentCounter;
+        public LoopingIndex attackPLoop;
         /// <summary>please call on start</summary>
         private void Awake() 
         {
@@ -26,6 +28,10 @@ namespace Control.Core
             this.BaseInit();
             this.Acted = false;
             this.IsPlayer = false;
+        }
+        public void initAbilLoop()
+        {
+            attackPLoop = new LoopingIndex(Skills.Count());
         }
         private void AssignTeam(int Id)
         {
@@ -40,12 +46,13 @@ namespace Control.Core
         }
         private IEnumerator Decide()
         {
+            var rnd = new Random();
             yield return new WaitForSeconds(InGameContainer.GetInstance().delayBetweenTurn/2f);
             var cont = GetQAbil();
             yield return new WaitForSeconds(InGameContainer.GetInstance().delayBetweenTurn);
             AbilityManager Mng = GetMng(cont);
             var listoftarget = CombatEngine.GetTarget(Mng);
-            CombatEngine.RequestCast(Mng, this,listoftarget[Range(0,listoftarget.Count)],cont.Data);
+            CombatEngine.RequestCast(Mng, this,listoftarget[rnd.Next(0,listoftarget.Count)],cont.Data);
             this.DebuffReduceCharge();
             CombatEngine.ActionFinished();
             this.Control = false;
@@ -58,9 +65,12 @@ namespace Control.Core
         }
         public BotAbilityCont GetRandomAbil()
         {
-            var EnoughMana = this.Skills.Where((cont) => 
+            var rnd  = new Random();
+            int index = attackPLoop.Next();
+            var EnoughMana = this.Skills[index].abilities.Where((cont) => 
             cont.Ability.GetComponent<AbilityManager>().GetStaminaCost(cont.Data) <= this.stamina.Curr);
-            var Cont = EnoughMana.ToList()[Range(0, EnoughMana.Count())];
+            // var Cont = EnoughMana.ToList()[rnd.Next(0, EnoughMana.Count())];
+            var Cont = rnd.Choice(EnoughMana.ToList(), EnoughMana.Select((cont)=>cont.weight).ToList())[0];
             intentCounter.Spawn(InGameContainer.GetInstance().SpawnAbilityPrefab(Cont.Ability), Cont.Data);
             return Cont;
         }
@@ -87,6 +97,21 @@ namespace Control.Core
                 StartCoroutine(this.Decide());
                 this.Acted = true;
             }
+        }
+    }
+    public class LoopingIndex
+    {
+        int index = 0;
+        int maxIndex;
+        public LoopingIndex(int count)
+        {
+            maxIndex = count;
+        }
+        public int Next()
+        {
+            int res = index;
+            index = index+1>=maxIndex?0:index+1;
+            return res;
         }
     }
 }

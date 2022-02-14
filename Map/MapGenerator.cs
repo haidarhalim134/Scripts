@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using Random = System.Random;
 using Control.Core;
 using UnityEngine;
+using DataContainer;
 
 namespace Map
 {
@@ -184,6 +185,37 @@ namespace Map
                     if (choice < cumulativeWeight[i])
                     {
                         Console.WriteLine("o "+cur.ToString());
+                        choices.Remove(cur);
+                        weights.RemoveAt(i);
+                        result.Add(cur);
+                        break;
+                    }
+                    i++;
+                }
+            }
+            return result;
+        }
+        public static List<BotAbContWeight> Choice(this Random rnd, List<BotAbContWeight> choices, List<int> weights, int k = 1)
+        {
+            List<BotAbContWeight> result = new List<BotAbContWeight>();
+            for (int j = 0; j < k; j++)
+            {
+                var cumulativeWeight = new List<int>();
+                int last = 0;
+                foreach (var cur in weights)
+                {
+                    last += cur;
+                    cumulativeWeight.Add(last);
+                }
+
+                int choice = rnd.Next(last);
+                int i = 0;
+                Console.WriteLine(choice.ToString(), cumulativeWeight.ToString());
+                foreach (var cur in choices)
+                {
+                    if (choice < cumulativeWeight[i])
+                    {
+                        Console.WriteLine("o " + cur.ToString());
                         choices.Remove(cur);
                         weights.RemoveAt(i);
                         result.Add(cur);
