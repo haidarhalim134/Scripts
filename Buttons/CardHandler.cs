@@ -76,15 +76,18 @@ namespace Control.Deck
         }
         public void AddMoveTarget(Vector2 to, float duration = 0.3f,bool overrideTarget = false)
         {
-            this.transform.DOLocalMove(to, duration).OnComplete(()=>enableHover = true);
+            Debug.Log(Ability.name+to.y);
+            this.transform.DOLocalMove(to, duration).OnComplete(()=>enableHover = true).SetId(this);
         }
         public void MoveY(float y, float duration)
         {
             if (!currMove)
             {
+                Debug.Log(Ability.name + y);
                 currMove = true;
                 var pos = this.transform.localPosition;
                 pos.y = y;
+                this.DOKill(this);
                 this.transform.DOLocalMove(pos, duration).OnComplete(()=>currMove = false);
                 // var pos = this.transform.localPosition;
                 // pos.y = y;
