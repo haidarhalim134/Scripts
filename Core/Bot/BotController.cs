@@ -40,6 +40,7 @@ namespace Control.Core
         }
         private IEnumerator Decide()
         {
+            yield return new WaitForSeconds(InGameContainer.GetInstance().delayBetweenTurn/2f);
             var cont = GetQAbil();
             yield return new WaitForSeconds(InGameContainer.GetInstance().delayBetweenTurn);
             AbilityManager Mng = GetMng(cont);

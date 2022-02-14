@@ -5,6 +5,7 @@ using Control.Combat;
 using Control.Deck;
 using Attributes.Abilities;
 using Attributes.Player;
+using DataContainer;
 using static UnityEngine.Random;
 
 namespace Control.Core
@@ -21,10 +22,6 @@ namespace Control.Core
         // TODO: removing this hardcoded assignment is preferred, can assign the instance directly
         public GameObject TEMP;
         public CardDeck Deck;
-        public override void onTurn(bool to)
-        {
-            if (to)CombatEngine.SetupIntent();
-        }
         /// <returns>true if order accepted else false</returns>
         public bool OrderAbility(AbilityContainer name)
         {
@@ -55,13 +52,6 @@ namespace Control.Core
                     CombatEngine.ClearTarget();
                     this.OrderedAbility = null;
                 }
-            }
-        }
-        override public void Setup(bool T = false)
-        {
-            if (T)
-            {
-            StartCoroutine(this.DeckInit());
             }
         }
         public IEnumerator DeckInit(int Card = 0)
@@ -98,6 +88,20 @@ namespace Control.Core
         private IEnumerator DeckRefillReservedCard()
         {
             yield return StartCoroutine(this.Deck.RefillReserve());
+        }
+        override public void Setup(bool T = false)
+        {
+            if (T)
+            {
+                StartCoroutine(setup());
+            }
+
+            IEnumerator setup()
+            {
+                yield return new WaitForSeconds(InGameContainer.GetInstance().delayBetweenTurn/2);
+                StartCoroutine(this.DeckInit());
+                CombatEngine.SetupIntent();
+            }
         }
         override public void OnDeath()
         {

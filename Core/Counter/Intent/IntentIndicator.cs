@@ -12,7 +12,7 @@ public class IntentIndicator : MonoBehaviour
     public Image icon;
     public IEnumerator Destroy()
     {
-        float time = InGameContainer.GetInstance().delayBetweenTurn;
+        float time = InGameContainer.GetInstance().delayBetweenTurn*4/3f;
         Animations.ShakySoulEffect(icon.gameObject,time,8);
         yield return new WaitForSeconds(time / 2f);
         icon.DOFade(0,time/2f).OnComplete(()=>Destroy(gameObject));
