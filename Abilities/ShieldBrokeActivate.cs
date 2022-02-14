@@ -19,7 +19,6 @@ public class ShieldBrokeActivate : MonoBehaviour
     {
         void debuff(ActiveDebuff Data)
         {
-            Debug.Log("activated");
             if (targeting == Targeting.caster)StartCoroutine(abilityMng.Activate(caster, target, data));
             else StartCoroutine(abilityMng.Activate(caster, CombatEngine.GetRandomTarget(caster.EnemyId), data));
             Data.charge -= 1;

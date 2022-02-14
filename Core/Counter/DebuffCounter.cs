@@ -16,7 +16,6 @@ public class DebuffCounter : MonoBehaviour
     }
     public void AddPassiveDebuff(PassiveDebuff debuff)
     {
-        Debug.Log("added "+debuff.debuff);
         this.SpawnPassive(debuff);
     }
     // void Enable()

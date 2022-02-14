@@ -34,6 +34,5 @@ public class IntentsCounter : MonoBehaviour
     void Awake()
     {
         transform.DOMoveY(transform.position.y+50, 1f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutQuad);
-        Debug.Log(transform.localPosition.y);
     }
 }
