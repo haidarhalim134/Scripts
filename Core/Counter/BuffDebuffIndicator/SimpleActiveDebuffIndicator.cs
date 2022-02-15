@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using Control.Core;
@@ -26,7 +27,8 @@ public class SimpleActiveDebuffIndicator : MonoBehaviour
         entry.eventID = EventTriggerType.PointerExit;
         entry.callback.AddListener((eventData) => { tooltipManager.Hide(); });
         trigger.triggers.Add(entry);
-        Animations.ShakySoulEffect(icon);
+        Animations.FadingEffect<Image>(icon, 0, 1, 0.5f);
+        // Animations.ShakySoulEffect(icon);
     }
     void showDesc()
     {

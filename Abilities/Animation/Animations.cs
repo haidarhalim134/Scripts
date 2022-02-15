@@ -74,4 +74,12 @@ public class Animations
             ObjectS.GetComponent<Image>().DOFade(0,duration/4f);
         }
     }
+    public static void FadingEffect<T>(GameObject obj, float from, float to, float time) where T : Image
+    {
+        T comp = obj.GetComponent<T>();
+        Color color = comp.color;
+        color.a = from;
+        comp.color = color;
+        comp.DOFade(to, time);
+    }
 }
