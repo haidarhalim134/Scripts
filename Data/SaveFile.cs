@@ -66,7 +66,9 @@ namespace Control.Core
             this.CharacterId = cont.Name;
             this.Player = new PlayerDataContainer();
             this.Player.MaxHealth = cont.StartingHealth;
+            this.Player.MaxStamina = cont.MaxStamina;
             this.Player.FullDeck = new List<AbilityContainer>(cont.StartingAbilitiy.Select((cont)=>cont.ToNormalContainer()));
+            this.Player.initialCardNumber = cont.initialCardNumber;
             this.Player.DeckShuffle();
         }
     }
