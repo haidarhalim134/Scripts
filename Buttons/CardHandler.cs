@@ -62,7 +62,7 @@ namespace Control.Deck
                     this.MoveY(25, 0.1f);
                     this.gameObject.transform.SetAsLastSibling();
                 }
-                else if (!this.Active&&!currMove)
+                else if (!this.Active)
                 {
                     if (deck.isCardHovered == this)deck.isCardHovered = null;
                     // this.animator.SetBool("Active", false);
@@ -70,6 +70,7 @@ namespace Control.Deck
                     this.UpdateText();
                     this.transform.SetAsLastSibling();
                     transform.DOScaleX(1,0f).OnComplete(()=>{if (deck.isCardHovered == null) deck.RefreshCardPos();});
+                    deck.RefreshCardPos();
                     
                 }
             }
@@ -80,17 +81,10 @@ namespace Control.Deck
         }
         public void MoveY(float y, float duration)
         {
-            if (!currMove)
-            {
-                currMove = true;
-                var pos = this.transform.localPosition;
-                pos.y = y;
-                this.DOKill(this);
-                this.transform.DOLocalMove(pos, duration).OnComplete(()=>currMove = false);
-                // var pos = this.transform.localPosition;
-                // pos.y = y;
-                // this.transform.localPosition = pos;
-            }
+            var pos = this.transform.localPosition;
+            pos.y = y;
+            if (deck.isCardHovered == this) this.DOKill(this);
+            this.transform.DOLocalMove(pos, duration);
         }
         public void InitOwner()
         {
