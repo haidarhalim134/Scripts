@@ -54,7 +54,7 @@ namespace LevelManager
             Script.TeamId = TeamId;
 
             float[] Pos = ReadCoord(LevelCont.SpreadPrefab, BotCont);
-            Object.transform.localPosition = new Vector3(Pos[0], Pos[1], -2835f);
+            Object.transform.localPosition = new Vector3(Pos[0], Pos[1], 0);
             SpawnCounter(Object);
             Script.Skills.AddRange(Data.attackPattern);
             Script.initAbilLoop();
