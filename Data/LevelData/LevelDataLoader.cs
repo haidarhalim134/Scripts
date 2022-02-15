@@ -18,25 +18,12 @@ namespace LevelManager
             // TODO: create a simpler version of this, use prefab with object named 1 through n, then replace each number with actual creature
             foreach (BotDataContainer Cont in Level.Creature)
             {
-                GameObject Creature = Instantiate(Level.CreaturePrefab, GameObject.Find("Team" + Cont.TeamId).transform) as GameObject;
+                GameObject parent = new GameObject("cont");
+                parent.transform.SetParent(GameObject.Find("Team" + Cont.TeamId).transform);
+                GameObject Creature = Instantiate(Level.CreaturePrefab, parent.transform) as GameObject;
                 Creature.AddComponent<BotController>();
                 InitCreature(Creature, Cont.CreatureAsset, Level, Cont);
             }
-        }
-        static float[] RandomXY(GameObject SpawnPlace)
-        {
-            Vector2 Rect = SpawnPlace.GetComponent<RectTransform>().sizeDelta;
-            return new float[2] { Rect.x * Range(-0.4f, 0.4f), Rect.y * Range(-0.4f, 0.4f) };
-        }
-        static float[] ReadCoord(GameObject SpreadPrefab, BotDataContainer BotCont)
-        {
-            Transform Slot = SpreadPrefab.transform.Find(BotCont.SpreadPrefabPlace.ToString());
-            if (Slot == null)
-            {
-                Debug.Log("randomized, no spot");
-                return RandomXY(SpreadPrefab);
-            }
-            return new float[2] { Slot.localPosition.x, Slot.localPosition.y };
         }
         private static void InitCreature(GameObject Object, CreatureDataContainer Data, LevelDataContainer LevelCont, BotDataContainer BotCont)
         {
@@ -54,7 +41,7 @@ namespace LevelManager
             Script.TeamId = TeamId;
 
             float[] Pos = ReadCoord(LevelCont.SpreadPrefab, BotCont);
-            Object.transform.localPosition = new Vector3(Pos[0], Pos[1], 0);
+            Object.transform.parent.transform.localPosition = new Vector3(Pos[0], Pos[1], 0);
             SpawnCounter(Object);
             Script.Skills.AddRange(Data.attackPattern);
             Script.initAbilLoop();
@@ -63,6 +50,13 @@ namespace LevelManager
         }
         public static void SpawnCounter(GameObject Object)
         {
+            GameObject parent = new GameObject("counter cont");
+            parent.transform.SetParent(Object.transform.parent.transform);
+            parent.transform.localPosition = new Vector2();
+            Canvas canvas = parent.AddComponent<Canvas>();
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = 1;
+
             RectTransform RT = Object.GetComponent<RectTransform>();
             SpriteRenderer SR = Object.GetComponent<SpriteRenderer>();
             GameObject UI = GameObject.Find("UI");
@@ -83,9 +77,9 @@ namespace LevelManager
             DebuffC.transform.localPosition = new Vector2(10, (height * -1) - 9 - padding);
             IntentC.transform.localPosition = new Vector2(0, height+padding+20);
             // HealthC.GetComponent<HealthCounter>().Bar.GetComponent<SpriteRenderer>().bounds.size.x * -17
-            HealthC.transform.SetParent(UI.transform);
-            ShieldC.transform.SetParent(UI.transform);
-            IntentC.transform.SetParent(UI.transform);
+            HealthC.transform.SetParent(parent.transform);
+            ShieldC.transform.SetParent(parent.transform);
+            IntentC.transform.SetParent(parent.transform);
             ShieldC.transform.position += new Vector3(0, 0, -2);
             DebuffC.transform.SetParent(UI.transform);
             DebuffC.transform.SetAsFirstSibling();
@@ -99,6 +93,21 @@ namespace LevelManager
             Obj.GetComponent<BaseCounter>().Target = Parent;
             Obj.transform.SetAsFirstSibling();
             return Obj;
+        }
+        static float[] RandomXY(GameObject SpawnPlace)
+        {
+            Vector2 Rect = SpawnPlace.GetComponent<RectTransform>().sizeDelta;
+            return new float[2] { Rect.x * Range(-0.4f, 0.4f), Rect.y * Range(-0.4f, 0.4f) };
+        }
+        static float[] ReadCoord(GameObject SpreadPrefab, BotDataContainer BotCont)
+        {
+            Transform Slot = SpreadPrefab.transform.Find(BotCont.SpreadPrefabPlace.ToString());
+            if (Slot == null)
+            {
+                Debug.Log("randomized, no spot");
+                return RandomXY(SpreadPrefab);
+            }
+            return new float[2] { Slot.localPosition.x, Slot.localPosition.y };
         }
     }
 }
