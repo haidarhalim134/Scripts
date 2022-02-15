@@ -17,8 +17,10 @@ namespace Control.Deck
         public GameObject CardPrefab;
         public PlayerController Owner;
         public CardHandler isCardHovered;
-        public int CardSep = 20;
-        public int DeckCurve = 1000;
+        public int CardSep;
+        public int DeckCurve;
+        public int maxCardSep;
+        public int maxDeckCurve;
         [Tooltip("used as card enter route")]
         public GameObject ReserveDeck;
         [Tooltip("used as card exit route")]
@@ -27,13 +29,15 @@ namespace Control.Deck
         /// <summary>auto refresh before highlighting</summary>
         public void HighlightCard(CardHandler Card)
         { 
-            List<float> PosX = this.CalcCardsXPos(this.ActiveDeck.Count);
+            int deckSep = CalcBetweenNumber(ActiveDeck.Count, 10, maxCardSep, CardSep);
+            List<float> PosX = this.CalcCardsXPos(deckSep, this.ActiveDeck.Count);
             int Index = this.ActiveDeck.IndexOf(Card);
             this.ActiveCard = Card;
             this.RefreshCardPos(Index, PosX[Index]);
         }public void SemiHighlightCard(CardHandler Card)
         {
-            List<float> PosX = this.CalcCardsXPos(this.ActiveDeck.Count);
+            int deckSep = CalcBetweenNumber(ActiveDeck.Count, 10, maxCardSep, CardSep);
+            List<float> PosX = this.CalcCardsXPos(deckSep, this.ActiveDeck.Count);
             int Index = this.ActiveDeck.IndexOf(Card);
             this.RefreshCardPos(Index, PosX[Index]);
         }
@@ -55,17 +59,20 @@ namespace Control.Deck
         /// <summary>ClickedCardInit refer to x position</summary>
         public void RefreshCardPos(int ClickedCard = -1, float ClickedCardInit = -1f)
         {
-            List<float> PosX = this.CalcCardsXPos(this.ActiveDeck.Count, ClickedCard, ClickedCardInit);
+            int deckCurve = CalcBetweenNumber(ActiveDeck.Count, 10, DeckCurve, maxDeckCurve);
+            int deckSep = CalcBetweenNumber(ActiveDeck.Count, 10, maxCardSep, CardSep);
+            Debug.Log($"{deckCurve}-{deckSep}");
+            List<float> PosX = this.CalcCardsXPos(deckSep, this.ActiveDeck.Count, ClickedCard, ClickedCardInit);
             for (int i = 0; i < PosX.Count;i++)
             {
-                float PosY = CalcCardsYPos(PosX[i]);
-                float Angle = CalcCardAngle(PosX[i], PosY);
+                float PosY = CalcCardsYPos(deckCurve, PosX[i]);
+                float Angle = CalcCardAngle(deckCurve, PosX[i], PosY);
                 // get component => set target
                 CardHandler Script = ActiveDeck[i];
                 RectTransform rect = this.ActiveDeck[i].GetComponent<RectTransform>();      
                 if (i != ClickedCard)
                 {
-                    Script.AddMoveTarget(new Vector2(PosX[i], PosY - this.DeckCurve));
+                    Script.AddMoveTarget(new Vector2(PosX[i], PosY - deckCurve));
                     Script.Highlight(false);
                     this.ActiveDeck[i].transform.rotation = Quaternion.Euler(0, 0, Angle);
                 }
@@ -142,17 +149,22 @@ namespace Control.Deck
             }
             this.ActiveDeck.Clear();
         }
-        private float CalcCardsYPos(float X)
+        int CalcBetweenNumber(int currCard, int cardMax, int min, int max)
         {
-            int Curve = this.DeckCurve*this.DeckCurve;
+            int res = (int)Math.Floor((currCard/(float)cardMax)*(max-min)+min);
+            return res;
+        }
+        private float CalcCardsYPos(int DeckCurve, float X)
+        {
+            int Curve = DeckCurve*DeckCurve;
             return (float)Math.Sqrt(Curve-X*X);
         }
-        private float CalcCardAngle(float x, float y)
+        private float CalcCardAngle(int DeckCurve, float x, float y)
         {
-            return (float)(Math.Asin(x/this.DeckCurve)*(180 / Math.PI))*-0.5f;
+            return (float)(Math.Asin(x/DeckCurve)*(180 / Math.PI))*-0.5f;
         }
         /// <summary>Clicked card order(start from 0), make sure CardCount not 0</summary>
-        private List<float> CalcCardsXPos(int CardCount, int ClickedCard = -1, float ClickedCardInit = -1, float MidPoint = 0)
+        private List<float> CalcCardsXPos(int CardSep, int CardCount, int ClickedCard = -1, float ClickedCardInit = -1, float MidPoint = 0)
         {
             List<float> Positions = new List<float>();
             float point;
@@ -161,13 +173,13 @@ namespace Control.Deck
                 Positions.Add(ClickedCardInit);
                 for (int i = ClickedCard - 1;i>= 0;i--)
                 {
-                    point = Positions[0] - CalcSep(this.CardSep,
+                    point = Positions[0] - CalcSep(CardSep,
                      Convert.ToInt32(i), CardCount, ClickedCard);
                     Positions.Insert(0, point);
                 }
                 for (int i = ClickedCard + 1;i < CardCount;i++)
                 {
-                    point = Positions[Positions.Count-1] + CalcSep(this.CardSep,
+                    point = Positions[Positions.Count-1] + CalcSep(CardSep,
                      Convert.ToInt32(i), CardCount, ClickedCard);
                     Positions.Add(point);
                 }
@@ -178,21 +190,21 @@ namespace Control.Deck
                 decimal length = (CardCount+1)/2;
                 for (int i = 1;i<Math.Floor(length);i++)
                 {
-                    point = Positions[Positions.Count-1] + this.CardSep;
+                    point = Positions[Positions.Count-1] + CardSep;
                     Positions.Add(point);
-                    point = Positions[0] - this.CardSep;
+                    point = Positions[0] - CardSep;
                     Positions.Insert(0, point);
                 }
             } 
             else 
             {
-                Positions.Add(MidPoint-this.CardSep/2);Positions.Add(MidPoint+this.CardSep/2);
+                Positions.Add(MidPoint-CardSep/2);Positions.Add(MidPoint+CardSep/2);
                 decimal length = (CardCount+1)/2;
                 for (int i = 1;i<Math.Floor(length);i++)
                 {
-                    point = Positions[Positions.Count-1] + this.CardSep;
+                    point = Positions[Positions.Count-1] + CardSep;
                     Positions.Add(point);
-                    point = Positions[0] - this.CardSep;
+                    point = Positions[0] - CardSep;
                     Positions.Insert(0, point);
                 }
             }
@@ -207,7 +219,7 @@ namespace Control.Deck
                 int Median = Convert.ToInt32(Math.Floor(Count/2));
                 int StartPoint = Math.Abs(-1 * ClickedCard + TargetCard);
                 float SepMlt = (float)(1/Math.Pow(StartPoint,1/1.1));
-                return Math.Max(BaseSep*0.9f,BaseSep * SepMlt * 1.3f);
+                return Math.Max(BaseSep*0.99f,BaseSep * SepMlt * 1.3f);
             }
             return BaseSep;
         }
