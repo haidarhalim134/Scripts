@@ -22,6 +22,7 @@ namespace Control.Core
         // TODO: removing this hardcoded assignment is preferred, can assign the instance directly
         public GameObject TEMP;
         public CardDeck Deck;
+        public EndTurnButton endturnButton;
         /// <returns>true if order accepted else false</returns>
         public bool OrderAbility(AbilityContainer name)
         {
@@ -54,21 +55,21 @@ namespace Control.Core
                 }
             }
         }
-        public IEnumerator DeckInit(int Card = 0)
+        public IEnumerator DeckInit(int howMany)
         {
-            yield return new WaitForSeconds(this.CardOutSpeed);   
-            if (this.ReserveDeck.Count==0)
+            int card = 0;
+            endturnButton.Disable();
+            while (card<howMany)
             {
-                yield return this.DeckRefillReservedCard();
+                yield return StartCoroutine(DeckAddTo(0));
+                yield return new WaitForSeconds(this.CardOutSpeed); 
+                card+= 1;
             }
-            DeckAddTo(0);
-            if (Card<4)
-            {
-                StartCoroutine(DeckInit(Card+1));
-            }
+            endturnButton.Enable();
         }
-        public void DeckAddTo(int index)
+        public IEnumerator DeckAddTo(int index)
         {
+            if (ReserveDeck.Count<=0)yield return StartCoroutine(DeckRefillReservedCard());
             if (this.Deck.ActiveDeck.Count<MaxDeckSize)
             {
                 this.Deck.AddCard(this.ReserveDeck[index]);
@@ -99,7 +100,7 @@ namespace Control.Core
             IEnumerator setup()
             {
                 yield return new WaitForSeconds(InGameContainer.GetInstance().delayBetweenTurn/2);
-                StartCoroutine(this.DeckInit());
+                StartCoroutine(this.DeckInit(PlayerStats.initialCardNumber));
                 CombatEngine.SetupIntent();
             }
         }

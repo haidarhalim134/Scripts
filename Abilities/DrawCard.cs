@@ -19,7 +19,7 @@ public class DrawCard : MonoBehaviour
         {
             for (var x = 0;x<this.card;x++)
             {
-                control.DeckAddTo(0);
+                yield return StartCoroutine(control.DeckAddTo(0));
                 yield return new WaitForSeconds(control.CardOutSpeed);
             }
         }
