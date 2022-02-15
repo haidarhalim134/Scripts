@@ -14,10 +14,6 @@ public class DebuffCounter : MonoBehaviour
     {
         Creature.debuffCounter = this;
     }
-    public void AddPassiveDebuff(PassiveDebuff debuff)
-    {
-        this.SpawnPassive(debuff);
-    }
     // void Enable()
     // {
     //     this.Creature.buffDebuff.passiveDebuffs.ForEach((debuff) => {
@@ -31,13 +27,14 @@ public class DebuffCounter : MonoBehaviour
     //         Destroy(child.gameObject);
     //     }
     // }
-    void SpawnPassive(PassiveDebuff debuff)
+    public PassiveDebuffIndicator AddPassiveDebuff(PassiveDebuff debuff)
     {
         GameObject prefab = InGameContainer.GetInstance().FindPassiveDebuff(debuff.debuff).prefab;
         GameObject Object = Instantiate(prefab, this.transform);
         PassiveDebuffIndicator indicator = Object.GetComponent<PassiveDebuffIndicator>();
         indicator.passive = debuff;
         indicator.Init();
+        return indicator;
     }
     public void SpawnStance(StanceBuffCont stance)
     {

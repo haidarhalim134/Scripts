@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using Control.Core;
 using DataContainer;
+using DG.Tweening;
 
 public class PassiveDebuffIndicator : MonoBehaviour
 {
@@ -42,17 +44,27 @@ public class PassiveDebuffIndicator : MonoBehaviour
         tooltipManager.SpawnTooltip(description, (Vector2)this.transform.position+
         new Vector2(0,this.icon.GetComponent<RectTransform>().rect.height/2));
     }
-    void Update()
+    public void update()
     {
         if (isPassive)
         {
-            charge.text = "<b>"+passive.charge.ToString();
+            charge.text = "<b>" + passive.charge.ToString();
             if (passive.charge <= 0)
             {
-                Destroy(gameObject);
+                charge.gameObject.transform.localScale = new Vector3(2, 2, 1);
+                charge.gameObject.transform.DOScale(1, 0.5f);
+                charge.DOFade(0,0.5f);
+                icon.GetComponent<Image>().DOFade(0,0.5f).OnComplete(()=>Destroy(gameObject));
+            }else
+            {
+                charge.gameObject.transform.localScale = new Vector3(2,2,1);
+                charge.gameObject.transform.DOScale(1, 0.5f);
             }
         }
-        else
+    }
+    void Update()
+    {
+        if (!isPassive)
         {
             if (stance.charge <= 0)
             {
