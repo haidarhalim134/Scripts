@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -49,17 +50,24 @@ public class PassiveDebuffIndicator : MonoBehaviour
         if (isPassive)
         {
             charge.text = "<b>" + passive.charge.ToString();
+            charge.gameObject.transform.localScale = new Vector3(2, 2, 1);
             if (passive.charge <= 0)
             {
-                charge.gameObject.transform.localScale = new Vector3(2, 2, 1);
-                charge.gameObject.transform.DOScale(1, 0.5f);
-                charge.DOFade(0,0.5f);
-                icon.GetComponent<Image>().DOFade(0,0.5f).OnComplete(()=>Destroy(gameObject));
-            }else
+                StartCoroutine(NewMethod());
+            }
+            else
             {
-                charge.gameObject.transform.localScale = new Vector3(2,2,1);
                 charge.gameObject.transform.DOScale(1, 0.5f);
             }
+        }
+
+        IEnumerator NewMethod()
+        {
+            charge.gameObject.transform.DOScale(1, 0.5f);
+            charge.DOFade(0, 0.5f);
+            icon.GetComponent<Image>().DOFade(0, 0.5f);
+            yield return new WaitForSeconds(0.5f);
+            Destroy(gameObject);
         }
     }
     void Update()
