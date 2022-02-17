@@ -62,7 +62,6 @@ namespace Control.Deck
         {
             int deckCurve = CalcBetweenNumber(ActiveDeck.Count, 10, DeckCurve, maxDeckCurve);
             int deckSep = CalcBetweenNumber(ActiveDeck.Count, 10, maxCardSep, CardSep);
-            Debug.Log($"{deckCurve}-{deckSep}");
             List<float> PosX = this.CalcCardsXPos(deckSep, this.ActiveDeck.Count, ClickedCard, ClickedCardInit);
             for (int i = 0; i < PosX.Count;i++)
             {
