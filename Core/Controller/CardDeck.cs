@@ -8,6 +8,7 @@ using Control.Core;
 using Control.Combat;
 using static UnityEngine.Random;
 using DG.Tweening;
+using DataContainer;
 
 namespace Control.Deck
 {
@@ -72,7 +73,7 @@ namespace Control.Deck
                 RectTransform rect = this.ActiveDeck[i].GetComponent<RectTransform>();      
                 if (i != ClickedCard)
                 {
-                    Script.AddMoveTarget(new Vector2(PosX[i], PosY - deckCurve));
+                    Script.AddMoveTarget(new Vector2(PosX[i], PosY - deckCurve),InGameContainer.GetInstance().delayBetweenTurn*0.3f);
                     Script.Highlight(false);
                     this.ActiveDeck[i].transform.rotation = Quaternion.Euler(0, 0, Angle);
                 }
@@ -95,7 +96,7 @@ namespace Control.Deck
         }
         public IEnumerator RefillReserve()
         {
-            float totalTime = 0.75f;
+            float totalTime = InGameContainer.GetInstance().delayBetweenTurn*0.75f;
             float cardNum = this.Owner.UsedDeck.Count;
             Tween spawn()
             {

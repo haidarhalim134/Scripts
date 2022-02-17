@@ -8,6 +8,7 @@ using Control.Deck;
 using Attributes.Abilities;
 using DG.Tweening;
 using Control.Core;
+using DataContainer;
 
 namespace Control.UI
 {
@@ -70,12 +71,12 @@ namespace Control.UI
             {
                 enableHover = false;
                 this.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                this.transform.DOScale(1f, 0.5f).OnComplete(()=> enableHover = true);
+                this.transform.DOScale(1f, InGameContainer.GetInstance().delayBetweenTurn*0.5f).OnComplete(()=> enableHover = true);
             }
             public void Destroy(RemoveStatus type) 
             {
                 enableHover = false;
-                float totaltime = 0.3f;
+                float totaltime = InGameContainer.GetInstance().delayBetweenTurn*0.3f;
                 if (type == RemoveStatus.used||type == RemoveStatus.discard)
                 {
                     // this.transform.DOMove((Vector2)this.transform.position+new Vector2(0,5), 0.5f)
