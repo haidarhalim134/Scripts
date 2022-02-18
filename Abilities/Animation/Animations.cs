@@ -1,9 +1,11 @@
 using System;
+using Random = System.Random;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class Animations
 {
@@ -81,5 +83,18 @@ public class Animations
         color.a = from;
         comp.color = color;
         comp.DOFade(to, time);
+    }
+    public static void ArcEffect(GameObject obj, Vector2 to, float height, float speed, Action onEnd = null)
+    {
+        obj.transform.DOMoveX(to.x, speed).SetSpeedBased(true);
+        obj.transform.DOMoveY(obj.transform.position.y+height, speed).SetEase(Ease.Linear).SetSpeedBased(true)
+        .OnComplete(()=>obj.transform.DOMoveY(to.y, speed).SetEase(Ease.Linear).OnComplete(()=>onEnd())).SetSpeedBased(true);
+    }
+    public static void BigAndUp(GameObject gameObject, float height, float time)
+    {
+        gameObject.transform.DOMoveY(gameObject.transform.position.y+height, time);
+        gameObject.transform.DOScale(1.5f, 0.1f).OnComplete(()=>gameObject.transform.DOScale(1, 0.1f));
+        gameObject.GetComponent<TextMeshProUGUI>().DOFade(0, time/3).SetDelay(time*2/3f).OnComplete(()=>GameObject.Destroy(gameObject));
+
     }
 }
