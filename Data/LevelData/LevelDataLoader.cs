@@ -61,6 +61,7 @@ namespace LevelManager
             SpriteRenderer SR = Object.GetComponent<SpriteRenderer>();
             GameObject UI = GameObject.Find("UI");
             GameObject StaminaC = SpawnCounterPrefab(InGameContainer.GetInstance().StaminaCounter, Object);
+            StaminaC.SetActive(false);
             GameObject HealthC = SpawnCounterPrefab(InGameContainer.GetInstance().HealthCounter, Object);
             GameObject ShieldC = SpawnCounterPrefab(InGameContainer.GetInstance().ShieldCounter, Object);
             GameObject DebuffC = Instantiate(InGameContainer.GetInstance().debuffCounter, Object.transform);
