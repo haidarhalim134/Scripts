@@ -92,9 +92,14 @@ public class Animations
         .OnComplete(()=>obj.transform.DOMoveY(to.y, speed).SetEase(Ease.Linear).OnComplete(()=>onEnd())).SetSpeedBased(true);
     }
     /// <summary>for tmprougui component only</summary>
-    public static void BigAndUp(GameObject gameObject, float height, float time)
+    public static void BigAndUp(GameObject gameObject, float height, float time, bool randomAngle = true)
     {
-        gameObject.transform.DOMoveY(gameObject.transform.position.y+height, time);
+        gameObject.transform.DOMoveY(gameObject.transform.position.y + height, time);
+        if (randomAngle)
+        {
+            Random rnd = new Random();
+            gameObject.transform.DOMoveX(gameObject.transform.position.x+rnd.Next(-20,20), time);
+        }
         gameObject.transform.DOScale(1.5f, 0.1f).OnComplete(()=>gameObject.transform.DOScale(1, 0.1f));
         gameObject.GetComponent<TextMeshProUGUI>().DOFade(0, time/3).SetDelay(time*2/3f).OnComplete(()=>GameObject.Destroy(gameObject));
     }
