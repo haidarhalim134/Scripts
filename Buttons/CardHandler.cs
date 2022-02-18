@@ -74,6 +74,12 @@ namespace Control.Deck
                     
                 }
             }
+            else if (deck.ActiveCard == this)
+            {
+                transform.DOLocalMoveX(0,0.1f);
+                transform.DOLocalMoveY(10, 0.1f);
+                Magnify(false);
+            }
         }
         public void AddMoveTarget(Vector2 to, float duration = 0.3f,bool overrideTarget = false)
         {
