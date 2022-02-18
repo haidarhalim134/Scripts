@@ -35,12 +35,17 @@ namespace Control.Deck
             int Index = this.ActiveDeck.IndexOf(Card);
             this.ActiveCard = Card;
             this.RefreshCardPos(Index, PosX[Index]);
+            ChangeCardRaycast(false);
         }public void SemiHighlightCard(CardHandler Card)
         {
             int deckSep = CalcBetweenNumber(ActiveDeck.Count, 10, maxCardSep, CardSep);
             List<float> PosX = this.CalcCardsXPos(deckSep, this.ActiveDeck.Count);
             int Index = this.ActiveDeck.IndexOf(Card);
             this.RefreshCardPos(Index, PosX[Index]);
+        }
+        public void ChangeCardRaycast(bool to)
+        {
+            ActiveDeck.ForEach((card)=>card.GetComponent<Image>().raycastTarget = to);
         }
         public void updateActiveCardText(PlayerController caster = null, BaseCreature target = null)
         {
@@ -55,6 +60,7 @@ namespace Control.Deck
         {
             this.Owner.AbilityClearOrder();
             this.ActiveCard = null;
+            this.ChangeCardRaycast(true);
             this.RefreshCardPos();
         }
         /// <summary>ClickedCardInit refer to x position</summary>
@@ -138,6 +144,7 @@ namespace Control.Deck
             // Destroy(this.ActiveCard);
             this.RefreshCardPos();
             this.ActiveCard = null;
+            ChangeCardRaycast(true);
         }
         public void ClearDeck()
         {
