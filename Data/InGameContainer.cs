@@ -17,6 +17,7 @@ namespace DataContainer
         public GameObject ShieldCounter;
         public GameObject debuffCounter;
         public GameObject intentCounter;
+        public GameObject damageIndicator;
         public IntentCont[] intentCont;
         public LevelDataContainer[] Levels;
         public CharacterDataCont[] Characters;
