@@ -76,9 +76,10 @@ public class Animations
             ObjectS.GetComponent<Image>().DOFade(0,duration/4f);
         }
     }
-    public static void FadingEffect<T>(GameObject obj, float from, float to, float time) where T : Image
+    /// <summary>for image component only</summary>
+    public static void FadingEffect(GameObject obj, float from, float to, float time)
     {
-        T comp = obj.GetComponent<T>();
+        Image comp = obj.GetComponent<Image>();
         Color color = comp.color;
         color.a = from;
         comp.color = color;
@@ -90,11 +91,11 @@ public class Animations
         obj.transform.DOMoveY(obj.transform.position.y+height, speed).SetEase(Ease.Linear).SetSpeedBased(true)
         .OnComplete(()=>obj.transform.DOMoveY(to.y, speed).SetEase(Ease.Linear).OnComplete(()=>onEnd())).SetSpeedBased(true);
     }
+    /// <summary>for tmprougui component only</summary>
     public static void BigAndUp(GameObject gameObject, float height, float time)
     {
         gameObject.transform.DOMoveY(gameObject.transform.position.y+height, time);
         gameObject.transform.DOScale(1.5f, 0.1f).OnComplete(()=>gameObject.transform.DOScale(1, 0.1f));
         gameObject.GetComponent<TextMeshProUGUI>().DOFade(0, time/3).SetDelay(time*2/3f).OnComplete(()=>GameObject.Destroy(gameObject));
-
     }
 }
