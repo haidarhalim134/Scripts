@@ -85,7 +85,7 @@ namespace DataContainer
             if (res==null)Debug.Log("intent not found");
             return res;
         }
-        public void SpawnAbilityPrefab(string name)
+        public AbilityManager SpawnAbilityPrefab(string name)
         {
             GameObject prefab = GameObject.Find(name);
             if (prefab == null)
@@ -93,7 +93,9 @@ namespace DataContainer
                 GameObject fab = Array.Find(this.Abilities, (prefab)=> prefab.GetComponent<AbilityManager>().AbName == name);
                 GameObject Object = Instantiate(fab);
                 Object.name = name;
+                return Object.GetComponent<AbilityManager>();
             }
+            return prefab.GetComponent<AbilityManager>();
         }
         public AbilityManager SpawnAbilityPrefab(GameObject name)
         {
