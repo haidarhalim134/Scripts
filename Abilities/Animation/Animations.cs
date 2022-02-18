@@ -85,11 +85,11 @@ public class Animations
         comp.color = color;
         comp.DOFade(to, time);
     }
-    public static void ArcEffect(GameObject obj, Vector2 to, float height, float speed, Action onEnd = null)
+    public static void ArcEffect(GameObject obj, Vector2 to, float height, float totalTime, Action onEnd = null)
     {
-        obj.transform.DOMoveX(to.x, speed).SetSpeedBased(true);
-        obj.transform.DOMoveY(obj.transform.position.y+height, speed).SetEase(Ease.Linear).SetSpeedBased(true)
-        .OnComplete(()=>obj.transform.DOMoveY(to.y, speed).SetEase(Ease.Linear).OnComplete(()=>onEnd())).SetSpeedBased(true);
+        obj.transform.DOMoveX(to.x, totalTime).SetEase(Ease.Linear);
+        obj.transform.DOMoveY(to.y, totalTime).SetEase(Ease.InQuad);
+        obj.GetComponent<TextMeshProUGUI>().DOFade(0, totalTime/3).SetDelay(totalTime*2/3f);
     }
     /// <summary>for tmprougui component only</summary>
     public static void BigAndUp(GameObject gameObject, float height, float time, bool randomAngle = true)
