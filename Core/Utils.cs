@@ -23,7 +23,8 @@ public class Utils
     public static T FindRayCastContaining<T>(List<RaycastResult> result)
     {
         if (result.Count==0)return default(T);
-        T res = result.Find((obj)=>obj.gameObject.GetComponent<T>()!=null).gameObject.GetComponent<T>();
-        return res;
+        var res = result.Find((obj)=>obj.gameObject.GetComponent<T>()!=null).gameObject;
+        if (res == null)return default(T);
+        return res.gameObject.GetComponent<T>();
     }
 }
