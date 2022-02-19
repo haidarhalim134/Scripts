@@ -66,6 +66,7 @@ namespace Control.Deck
         /// <summary>ClickedCardInit refer to x position</summary>
         public void RefreshCardPos(int ClickedCard = -1, float ClickedCardInit = -1f)
         {
+            Debug.Log("refresh");
             int deckCurve = CalcBetweenNumber(ActiveDeck.Count, 10, DeckCurve, maxDeckCurve);
             int deckSep = CalcBetweenNumber(ActiveDeck.Count, 10, maxCardSep, CardSep);
             List<float> PosX = this.CalcCardsXPos(deckSep, this.ActiveDeck.Count, ClickedCard, ClickedCardInit);
@@ -141,7 +142,7 @@ namespace Control.Deck
             CardHandler handler = this.ActiveCard;
             handler.Destroy(RemoveStatus.used);
             // Destroy(this.ActiveCard);
-            this.RefreshCardPos();
+            if (ActiveDeck.Count>0)this.RefreshCardPos();
             this.ActiveCard = null;
             ChangeCardRaycast(true);
         }
