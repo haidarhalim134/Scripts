@@ -12,13 +12,13 @@ using Control.Combat;
 
 namespace Control.Deck
 {
-    public class CardHandler : CardHandlerVisual, IDragHandler, IEndDragHandler
+    public class CardHandler : CardHandlerVisual, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerExitHandler, IPointerUpHandler
     {
         public GameObject TargetOwner;
         PlayerController Owner;
         public CardDeck deck;
         public bool Active = false;
-        public Animator animator;
+        public bool stillDown;
         public List<AbTarget> draggableAbil = new List<AbTarget>(){AbTarget.self, AbTarget.allEnemy};
         public void OnClick() 
         {
@@ -72,7 +72,6 @@ namespace Control.Deck
                     this.transform.SetAsLastSibling();
                     transform.DOScaleX(1,0f).OnComplete(()=>{if (deck.isCardHovered == null) deck.RefreshCardPos();});
                     deck.RefreshCardPos();
-                    
                 }
             }
             else if (deck.ActiveCard == this)
@@ -100,6 +99,7 @@ namespace Control.Deck
         public void OnEndDrag(PointerEventData eventData)
         {
             var abil = InGameContainer.GetInstance().SpawnAbilityPrefab(Ability.name);
+            if (draggableAbil.IndexOf(abil.target) == -1)return;
             if (transform.position.y < -10||Owner.stamina.Curr < abil.GetStaminaCost(Ability.Data))
             {
                 Owner.AbilityClearOrder();
@@ -116,6 +116,36 @@ namespace Control.Deck
             {
                 Owner.AbilitySendOrdered(CombatEngine.GetRandomTarget(Owner.EnemyId));
             }
+        }
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            var abil = InGameContainer.GetInstance().SpawnAbilityPrefab(Ability.name);
+            if (draggableAbil.IndexOf(abil.target) != -1) return;
+            var raycastRes = Utils.RaycastMouse();
+            var ifCreature = Utils.FindRayCastContaining<BaseCreature>(raycastRes);
+            if (ifCreature == null) 
+            {
+                stillDown = false;
+                return;
+            }
+            else
+            {
+                CombatEngine.SendTargetToPlayer(ifCreature);
+            }
+        }
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            var abil = InGameContainer.GetInstance().SpawnAbilityPrefab(Ability.name);
+            if (draggableAbil.IndexOf(abil.target) != -1)return;
+            stillDown = true;
+            Debug.Log("down");
+        }
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            var abil = InGameContainer.GetInstance().SpawnAbilityPrefab(Ability.name);
+            if (draggableAbil.IndexOf(abil.target) != -1) return;
+            if (stillDown)OnClick();
+            Debug.Log("exit");
         }
         public void AddMoveTarget(Vector2 to, float duration = 0.3f,bool overrideTarget = false)
         {
