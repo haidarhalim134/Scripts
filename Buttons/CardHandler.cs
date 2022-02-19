@@ -22,7 +22,7 @@ namespace Control.Deck
         public List<AbTarget> draggableAbil = new List<AbTarget>(){AbTarget.self, AbTarget.allEnemy};
         public void OnClick() 
         {
-            bool Sucess = this.Owner.OrderAbility(this.Ability);
+            bool Sucess = this.Owner.OrderAbility(this.Ability, false);
             var abil = InGameContainer.GetInstance().SpawnAbilityPrefab(Ability.name);
             if (Sucess)
             {
@@ -30,6 +30,7 @@ namespace Control.Deck
                 {
                     this.deck.HighlightCard(this);
                     this.Highlight(true);
+                    CombatEngine.SetupTarget(abil);
                 }
             } else
             {
@@ -138,14 +139,12 @@ namespace Control.Deck
             var abil = InGameContainer.GetInstance().SpawnAbilityPrefab(Ability.name);
             if (draggableAbil.IndexOf(abil.target) != -1)return;
             stillDown = true;
-            Debug.Log("down");
         }
         public void OnPointerExit(PointerEventData eventData)
         {
             var abil = InGameContainer.GetInstance().SpawnAbilityPrefab(Ability.name);
             if (draggableAbil.IndexOf(abil.target) != -1) return;
             if (stillDown)OnClick();
-            Debug.Log("exit");
         }
         public void AddMoveTarget(Vector2 to, float duration = 0.3f,bool overrideTarget = false)
         {
