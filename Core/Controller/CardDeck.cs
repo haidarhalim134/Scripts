@@ -139,7 +139,6 @@ namespace Control.Deck
         {
             this.ActiveDeck.Remove(this.ActiveCard);
             CardHandler handler = this.ActiveCard;
-            handler.animator.SetBool("Active", false);
             handler.Destroy(RemoveStatus.used);
             // Destroy(this.ActiveCard);
             this.RefreshCardPos();

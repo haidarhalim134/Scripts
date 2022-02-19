@@ -16,7 +16,7 @@ namespace Control.Core
         public List<AbilityContainer> FullDeck = new List<AbilityContainer>();
         public List<AbilityContainer> ReserveDeck = new List<AbilityContainer>();
         public List<AbilityContainer> UsedDeck = new List<AbilityContainer>();
-        private AbilityContainer OrderedAbility;
+        public AbilityContainer OrderedAbility;
         public float CardOutSpeed = 0.1f;
         public int MaxDeckSize = 10;
         // TODO: removing this hardcoded assignment is preferred, can assign the instance directly
