@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,23 +7,30 @@ using Control.Core;
 using Control.UI;
 using DG.Tweening;
 using Attributes.Abilities;
+using DataContainer;
+using Control.Combat;
 
 namespace Control.Deck
 {
-    public class CardHandler : CardHandlerVisual
+    public class CardHandler : CardHandlerVisual, IDragHandler, IEndDragHandler
     {
         public GameObject TargetOwner;
         PlayerController Owner;
         public CardDeck deck;
         public bool Active = false;
         public Animator animator;
+        public List<AbTarget> draggableAbil = new List<AbTarget>(){AbTarget.self, AbTarget.allEnemy};
         public void OnClick() 
         {
             bool Sucess = this.Owner.OrderAbility(this.Ability);
+            var abil = InGameContainer.GetInstance().SpawnAbilityPrefab(Ability.name);
             if (Sucess)
             {
-                this.deck.HighlightCard(this);
-                this.Highlight(true);
+                if (draggableAbil.IndexOf(abil.target) == -1)
+                {
+                    this.deck.HighlightCard(this);
+                    this.Highlight(true);
+                }
             } else
             {
                 
@@ -33,7 +41,6 @@ namespace Control.Deck
             if (to)
             {
                 this.Active = true;
-                // this.animator.SetBool("Active", true);
                 this.Magnify(true);
                 this.transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0.1f);
                 this.MoveY(25, 0.1f);
@@ -41,13 +48,11 @@ namespace Control.Deck
             }else
             {
                 this.Active = false;
-                // this.animator.SetBool("Active", false);
                 this.Magnify(false);
                 this.transform.SetAsLastSibling();
                 this.UpdateText();
             }
         }
-        // TODO: fix this
         public void SemiHighlight(bool to)
         {
             if (deck.ActiveCard == null&&enableHover)
@@ -55,8 +60,6 @@ namespace Control.Deck
                 if (to)
                 {
                     deck.isCardHovered = this;
-                    // this.animator.SetBool("Active", true);
-                    // this.Magnify(true);
                     deck.SemiHighlightCard(this);
                     this.transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0.1f);
                     this.MoveY(25, 0.1f);
@@ -65,8 +68,6 @@ namespace Control.Deck
                 else if (!this.Active)
                 {
                     if (deck.isCardHovered == this)deck.isCardHovered = null;
-                    // this.animator.SetBool("Active", false);
-                    // this.Magnify(false);
                     this.UpdateText();
                     this.transform.SetAsLastSibling();
                     transform.DOScaleX(1,0f).OnComplete(()=>{if (deck.isCardHovered == null) deck.RefreshCardPos();});
@@ -79,6 +80,41 @@ namespace Control.Deck
                 transform.DOLocalMoveX(0,0.1f);
                 transform.DOLocalMoveY(10, 0.1f);
                 Magnify(false);
+            }
+        }
+        public void OnDrag(PointerEventData eventData) 
+        {
+            var abil = InGameContainer.GetInstance().SpawnAbilityPrefab(Ability.name);
+            if (Owner.stamina.Curr < abil.GetStaminaCost(Ability.Data))return;
+            if (draggableAbil.IndexOf(abil.target) != -1)
+            {
+                var UI = GameObject.Find("UI").GetComponent<RectTransform>();
+                transform.position+= (Vector3)eventData.delta;
+                if (Owner.OrderedAbility != Ability)
+                {
+                    Owner.OrderAbility(Ability);
+                    deck.ActiveCard = this;
+                };
+            }
+        }
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            var abil = InGameContainer.GetInstance().SpawnAbilityPrefab(Ability.name);
+            if (transform.position.y < -10||Owner.stamina.Curr < abil.GetStaminaCost(Ability.Data))
+            {
+                Owner.AbilityClearOrder();
+                deck.ActiveCard = null;
+                deck.RefreshCardPos();
+                CombatEngine.ClearTarget();
+                return;
+            }
+            if (abil.target == AbTarget.self)
+            {
+                Owner.AbilitySendOrdered(Owner);
+            }
+            else if (abil.target == AbTarget.allEnemy)
+            {
+                Owner.AbilitySendOrdered(CombatEngine.GetRandomTarget(Owner.EnemyId));
             }
         }
         public void AddMoveTarget(Vector2 to, float duration = 0.3f,bool overrideTarget = false)
