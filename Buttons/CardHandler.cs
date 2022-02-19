@@ -19,6 +19,7 @@ namespace Control.Deck
         public CardDeck deck;
         public bool Active = false;
         public bool stillDown;
+        public bool beingDragged;
         public List<AbTarget> draggableAbil = new List<AbTarget>(){AbTarget.self, AbTarget.allEnemy};
         public void OnClick() 
         {
@@ -75,7 +76,7 @@ namespace Control.Deck
                     deck.RefreshCardPos();
                 }
             }
-            else if (deck.ActiveCard == this)
+            else if (deck.ActiveCard == this&&!beingDragged)
             {
                 transform.DOLocalMoveX(0,0.1f);
                 transform.DOLocalMoveY(10, 0.1f);
@@ -89,11 +90,13 @@ namespace Control.Deck
             if (draggableAbil.IndexOf(abil.target) != -1)
             {
                 var UI = GameObject.Find("UI").GetComponent<RectTransform>();
-                transform.position+= (Vector3)eventData.delta;
+                // Debug.Log(transform.position+"-"+eventData.position);
+                transform.position+= (Vector3)eventData.delta*572/Screen.width;
                 if (Owner.OrderedAbility != Ability)
                 {
                     Owner.OrderAbility(Ability);
                     deck.ActiveCard = this;
+                    beingDragged = true;
                 };
             }
         }
@@ -101,6 +104,7 @@ namespace Control.Deck
         {
             var abil = InGameContainer.GetInstance().SpawnAbilityPrefab(Ability.name);
             if (draggableAbil.IndexOf(abil.target) == -1)return;
+            beingDragged = false;
             if (transform.position.y < -10||Owner.stamina.Curr < abil.GetStaminaCost(Ability.Data))
             {
                 Owner.AbilityClearOrder();
