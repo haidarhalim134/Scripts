@@ -48,8 +48,6 @@ namespace Attributes.Abilities
             GetDesc(new AbilityData());
         }
     }
-    public enum AbTarget{self, allies, enemy}
-    public enum ModType{preAttack,preDamage,postDamage,postAttack}
     public class Modifier
     {
         public Dictionary<ModType, ListMod> modifier = new Dictionary<ModType, ListMod>()

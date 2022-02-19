@@ -66,4 +66,6 @@ namespace Attributes.Abilities
     public enum Stance{rage, excited, noStance}
     public enum Targeting{caster,target}
     public enum AbilityType{attack,buff,debuff,shield}
+    public enum AbTarget{self, allies, enemy, allEnemy}
+    public enum ModType{preAttack,preDamage,postDamage,postAttack}
 }
