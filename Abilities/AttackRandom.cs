@@ -18,17 +18,17 @@ namespace Attributes.Abilities
         static StatProcessor Calc = new StatProcessor();
         public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData data)
         {
-            Mng.modifier.modifier[ModType.preAttack].ForEach((abil) => abil(caster, target, data));
+            var to = CombatEngine.GetRandomTarget(target.TeamId);
+            Mng.modifier.modifier[ModType.preAttack].ForEach((abil) => abil(caster, to, data));
             for (var x = 0; x < repetition+ data.AttackRep; x++)
             {
                 yield return new WaitForSeconds(this.delay);
-                var to = CombatEngine.GetRandomTarget(target.TeamId);
-                Mng.modifier.modifier[ModType.preDamage].ForEach((abil) => abil(caster, target, data));
-                to.TakeDamage(Calc.CalcAttack(this.damage + data.Damage, caster, target), caster);
-                Mng.modifier.modifier[ModType.postDamage].ForEach((abil) => abil(caster, target, data));
+                Mng.modifier.modifier[ModType.preDamage].ForEach((abil) => abil(caster, to, data));
+                to.TakeDamage(Calc.CalcAttack(this.damage + data.Damage, caster, to), caster);
+                Mng.modifier.modifier[ModType.postDamage].ForEach((abil) => abil(caster, to, data));
                 Animations.SpawnEffect(to.gameObject, effect);
             }
-            Mng.modifier.modifier[ModType.postAttack].ForEach((abil) => abil(caster, target, data));
+            Mng.modifier.modifier[ModType.postAttack].ForEach((abil) => abil(caster, to, data));
         }
         public string Text(AbilityData data, PlayerController caster, BaseCreature target)
         {
