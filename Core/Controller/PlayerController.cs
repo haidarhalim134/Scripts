@@ -24,13 +24,13 @@ namespace Control.Core
         public CardDeck Deck;
         public EndTurnButton endturnButton;
         /// <returns>true if order accepted else false</returns>
-        public bool OrderAbility(AbilityContainer name)
+        public bool OrderAbility(AbilityContainer name, bool setupTarget = true)
         {
             AbilityManager Mng = name.GetManager();
             if (this.stamina.Enough(Mng.GetStaminaCost(name.Data)))
             {
-                CombatEngine.SetupTarget(Mng);
                 this.OrderedAbility = name;
+                if (setupTarget) CombatEngine.SetupTarget(Mng);
                 return true;
             } else
             {

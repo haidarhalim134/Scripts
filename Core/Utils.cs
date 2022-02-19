@@ -18,15 +18,12 @@ public class Utils
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointerData, results);
 
-        Debug.Log(results.Count);
-
         return results;
     }
     public static T FindRayCastContaining<T>(List<RaycastResult> result)
     {
         if (result.Count==0)return default(T);
         T res = result.Find((obj)=>obj.gameObject.GetComponent<T>()!=null).gameObject.GetComponent<T>();
-        if (res==null)Debug.Log("no containing");
         return res;
     }
 }
