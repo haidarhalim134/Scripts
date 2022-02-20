@@ -91,7 +91,7 @@ namespace Control.Deck
             {
                 var UI = GameObject.Find("UI").GetComponent<RectTransform>();
                 // Debug.Log(transform.position+"-"+eventData.position);
-                transform.position+= (Vector3)eventData.delta*572/Screen.width;
+                transform.position+= (Vector3)eventData.delta*InGameContainer.defaultScreenWidth/Screen.width;
                 if (Owner.OrderedAbility != Ability)
                 {
                     Owner.OrderAbility(Ability);
@@ -105,7 +105,7 @@ namespace Control.Deck
             var abil = InGameContainer.GetInstance().SpawnAbilityPrefab(Ability.name);
             if (draggableAbil.IndexOf(abil.target) == -1)return;
             beingDragged = false;
-            if (transform.position.y < -10||Owner.stamina.Curr < abil.GetStaminaCost(Ability.Data))
+            if (transform.position.y < -20||Owner.stamina.Curr < abil.GetStaminaCost(Ability.Data))
             {
                 Owner.AbilityClearOrder();
                 deck.ActiveCard = null;

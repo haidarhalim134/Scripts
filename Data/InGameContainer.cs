@@ -27,6 +27,7 @@ namespace DataContainer
         public ActContainer[] Acts;
         public AssetReferenceContainer[] LevelsTest;
         private AsyncOperationHandle<LevelDataContainer> LevelHandle;
+        public static float defaultScreenWidth = 572;
         /// <summary>for testing purpose only</summary>
         public LevelDataContainer FindLevel(string name)
         {
