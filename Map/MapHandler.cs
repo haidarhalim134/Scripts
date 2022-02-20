@@ -78,8 +78,10 @@ namespace Map
         public void ProgressPosition(NodeHandler Caller)
         {
             Character.GetComponent<CharacterController>().AddMove(Character.transform.position, this.moveDuration);
-            float delta = Caller.transform.position.x - Character.transform.position.x;
-            this.transform.DOMoveX(this.transform.position.x - delta, this.moveDuration).OnComplete(()=>Caller.Active = true);
+            float deltax = Caller.transform.position.x - Character.transform.position.x;
+            float deltay = Caller.transform.position.y - Character.transform.position.y;
+            // this.transform.DOMoveX(this.transform.position.x - deltax, this.moveDuration).OnComplete(()=>Caller.Active = true);
+            transform.DOMove(this.transform.position - new Vector3(deltax, deltay) - Character.GetComponent<CharacterController>().GetDeltaY(), this.moveDuration).OnComplete(()=>Caller.Active = true);
         }
         public void DrawTree(List<Tree> tree)
         {
