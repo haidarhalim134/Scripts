@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
@@ -27,6 +28,7 @@ namespace Control.Deck
         [Tooltip("used as card exit route")]
         public GameObject UsedDeck;
         public CardHandler ActiveCard;
+        LineRenderer lineRenderer;
         /// <summary>auto refresh before highlighting</summary>
         public void HighlightCard(CardHandler Card)
         { 
@@ -35,6 +37,9 @@ namespace Control.Deck
             int Index = this.ActiveDeck.IndexOf(Card);
             this.ActiveCard = Card;
             this.RefreshCardPos(Index, PosX[Index]);
+            var pos = Input.mousePosition;
+            pos.z = 20;
+            lineRenderer =  Effect.GenerateLine(Card.transform.position, Camera.main.ScreenToWorldPoint(pos));//*InGameContainer.defaultScreenWidth/Screen.width);
             ChangeCardRaycast(false);
         }public void SemiHighlightCard(CardHandler Card)
         {
@@ -60,8 +65,19 @@ namespace Control.Deck
         {
             this.Owner.AbilityClearOrder();
             this.ActiveCard = null;
+            DestroyLine();
             this.ChangeCardRaycast(true);
             this.RefreshCardPos();
+        }
+        void DestroyLine()
+        {
+            if (lineRenderer == null)return;
+            Destroy(lineRenderer.gameObject);
+            lineRenderer = null;
+        }
+        public bool AnyCardTweening()
+        {
+            return ActiveDeck.Any((card)=>DOTween.IsTweening(card.transform));
         }
         /// <summary>ClickedCardInit refer to x position</summary>
         public void RefreshCardPos(int ClickedCard = -1, float ClickedCardInit = -1f)
@@ -143,10 +159,12 @@ namespace Control.Deck
             // Destroy(this.ActiveCard);
             if (ActiveDeck.Count>0)this.RefreshCardPos();
             this.ActiveCard = null;
+            DestroyLine();
             ChangeCardRaycast(true);
         }
         public void ClearDeck()
         {
+            DestroyLine();
             foreach (CardHandler Card in this.ActiveDeck)
             {
                 this.Owner.DeckMoveToUsed(Card.Ability);
@@ -241,6 +259,12 @@ namespace Control.Deck
             {
                 this.ClearHighlight();
                 CombatEngine.ClearTarget();
+            }
+            if (lineRenderer != null)
+            {
+                var pos = Input.mousePosition;
+                pos.z = 20;
+                Effect.SetLineRenderer(lineRenderer, ActiveCard.transform.position, Camera.main.ScreenToWorldPoint(pos));
             }
         }
     }
