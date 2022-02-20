@@ -19,6 +19,10 @@ public class EndTurnButton : MonoBehaviour
         this.Clickable = true;
         this.GetComponent<Image>().DOColor(new Color32(255, 255, 255, 255), 0.1f);
     }
+    void Awake()
+    {
+        Disable();
+    }
     public void onClick()
     {
         if (this.Clickable) this.Owner.FinishTurn();
