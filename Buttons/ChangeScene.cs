@@ -2,20 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using DataContainer;
 
 
 public class ChangeScene
 {
     public static void LoadActMap()
     {
-        SceneManager.LoadSceneAsync("ActMap");
+        InGameContainer.GetInstance().StartCoroutine(CloseTransition("ActMap"));
     }
     public static void LoadCharacteChoose()
     {
-        SceneManager.LoadSceneAsync("CharacterChooseScreen");
+        InGameContainer.GetInstance().StartCoroutine(CloseTransition("CharacterChooseScreen"));
     }
     public static void LoadCombatScene()
     {
-        SceneManager.LoadSceneAsync("CombatScene");
+        InGameContainer.GetInstance().StartCoroutine(CloseTransition("CombatScene"));
+    }
+    public static IEnumerator CloseTransition(string scene)
+    {
+        Transition.Close();
+        yield return new WaitForSeconds(Transition.animDuration);
+        SceneManager.LoadSceneAsync(scene);
     }
 }
