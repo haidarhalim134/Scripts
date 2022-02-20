@@ -26,6 +26,7 @@ namespace Control.Core
                 Object.transform.localPosition = new Vector3();
                 CardHandlerVisual Script = Object.GetComponent<CardHandlerVisual>();
                 Script.Ability = cont;
+                Script.enableHover = true;
                 Script.UpdateText();
             }
             Destroy(Prefab);
