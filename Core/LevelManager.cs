@@ -15,7 +15,7 @@ namespace LevelManager
         /// <summary>for testing purpose only</summary>
         public static void LoadLevel(string target, string SceneId = null)
         {
-            SceneManager.LoadScene(target);
+            ChangeScene.LoadCombatScene();
             if (SceneId!= null&&SceneId!= "")
             {
                 LevelDataContainer Data = InGameContainer.GetInstance().FindLevel(SceneId);
