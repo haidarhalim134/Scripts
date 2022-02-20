@@ -65,7 +65,16 @@ namespace Control.Core
                 yield return new WaitForSeconds(this.CardOutSpeed); 
                 card+= 1;
             }
-            endturnButton.Enable();
+            StartCoroutine(FinishedTweening());
+            IEnumerator FinishedTweening()
+            {
+                while (true)
+                {
+                    if (!Deck.AnyCardTweening())break;
+                    yield return new WaitForSeconds(0.25f);
+                }
+                endturnButton.Enable();
+            }
         }
         public IEnumerator DeckAddTo(int index)
         {
@@ -95,8 +104,10 @@ namespace Control.Core
             if (T)
             {
                 StartCoroutine(setup());
+            }else
+            {
+                endturnButton.Disable();
             }
-
             IEnumerator setup()
             {
                 yield return new WaitForSeconds(InGameContainer.GetInstance().delayBetweenTurn/2);
