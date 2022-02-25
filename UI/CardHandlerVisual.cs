@@ -77,7 +77,7 @@ namespace Control.UI
             {
                 enableHover = false;
                 float totaltime = InGameContainer.GetInstance().delayBetweenTurn*0.3f;
-                if (type == RemoveStatus.used||type == RemoveStatus.discard)
+                if (type == RemoveStatus.discard)
                 {
                     // this.transform.DOMove((Vector2)this.transform.position+new Vector2(0,5), 0.5f)
                     // .OnComplete(()=>this.transform.DOMove(this.Exit, 0.2f).SetEase(Ease.Linear)
@@ -88,6 +88,14 @@ namespace Control.UI
                     this.transform.DOMoveX(this.Exit.x, totaltime).SetEase(Ease.Linear)
                     .OnComplete(()=>Destroy(this.gameObject));
                     // Destroy(this.gameObject);
+                }
+                else if (type == RemoveStatus.used)
+                {
+                    this.transform.DOScale(0.3f, totaltime);
+                    this.transform.DORotate(new Vector3(), totaltime / 2f);
+                    this.transform.DOMoveY(this.Exit.y, totaltime / 2f);
+                    this.transform.DOMoveX(this.Exit.x, totaltime).SetEase(Ease.Linear)
+                    .OnComplete(() => Destroy(this.gameObject));
                 } else
                 {
                     this.DOKill();
