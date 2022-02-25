@@ -99,19 +99,4 @@ namespace Control.Core
             }
         }
     }
-    public class LoopingIndex
-    {
-        int index = 0;
-        int maxIndex;
-        public LoopingIndex(int count)
-        {
-            maxIndex = count;
-        }
-        public int Next()
-        {
-            int res = index;
-            index = index+1>=maxIndex?0:index+1;
-            return res;
-        }
-    }
 }
