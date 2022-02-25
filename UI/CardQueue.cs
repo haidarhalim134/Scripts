@@ -54,7 +54,9 @@ public class CardQueue : MonoBehaviour
             owner.Owner.OrderAbility(queue[0].ability.Ability, false);
             owner.Owner.AbilitySendOrdered(queue[0].target);
             queue.RemoveAt(0);
-            if (queue.Count>0)yield return InGameContainer.GetInstance().delayBetweenTurn*delayPercentageApply;
+            if (queue.Count==0)break;
+            yield return InGameContainer.GetInstance().delayBetweenTurn*delayPercentageApply;
+            if (owner.Owner.currTween!=null)yield return owner.Owner.currTween.WaitForCompletion();
         }
         runnningQueue = false;
     }
