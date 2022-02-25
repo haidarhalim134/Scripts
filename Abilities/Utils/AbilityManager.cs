@@ -37,11 +37,13 @@ namespace Attributes.Abilities
         }
         public IEnumerator Activate(BaseCreature caster, BaseCreature target, AbilityData Data)
         {
+            caster.currTween = true;
             foreach (var abil in ContainedAbilities)
             {
                 if (target.dead)break;
                 yield return StartCoroutine(abil(caster, target, Data));
             }
+            caster.currTween = false;
         }
         void Awake()
         {

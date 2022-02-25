@@ -124,6 +124,7 @@ namespace Control.Deck
         }
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (!enableHover) return;
             var abil = InGameContainer.GetInstance().SpawnAbilityPrefab(Ability.name);
             if (draggableAbil.IndexOf(abil.target) != -1) return;
             var raycastRes = Utils.RaycastMouse();
@@ -140,12 +141,14 @@ namespace Control.Deck
         }
         public void OnPointerDown(PointerEventData eventData)
         {
+            if (!enableHover) return;
             var abil = InGameContainer.GetInstance().SpawnAbilityPrefab(Ability.name);
             if (draggableAbil.IndexOf(abil.target) != -1)return;
             stillDown = true;
         }
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (!enableHover)return;
             var abil = InGameContainer.GetInstance().SpawnAbilityPrefab(Ability.name);
             if (draggableAbil.IndexOf(abil.target) != -1) return;
             if (stillDown)OnClick();

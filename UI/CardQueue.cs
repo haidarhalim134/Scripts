@@ -25,13 +25,8 @@ public class CardQueue : MonoBehaviour
         ability.enableHover = false;
         ability.transform.SetParent(transform);
         ability.transform.SetAsFirstSibling();
-        StartCoroutine(waitMove(ability));
         ability.transform.DOMove(waitPlace.transform.position, InGameContainer.GetInstance().delayBetweenTurn * delayPercentageMoving).WaitForCompletion();
         startQueue();
-    }
-    IEnumerator waitMove(CardHandler ability)
-    {
-        yield return null;
     }
     void startQueue()
     {
@@ -45,20 +40,30 @@ public class CardQueue : MonoBehaviour
         {
             destroyQueue.Add(queue[0]);
             queue[0].ability.transform.DOKill();
-            yield return queue[0].ability.transform.DOMove(applyPlace.transform.position, InGameContainer.GetInstance().delayBetweenTurn * delayPercentageMoving)
-            .OnComplete(()=>{
-                destroyQueue[0].ability.Destroy(RemoveStatus.used);
-                owner.Owner.DeckMoveToUsed(destroyQueue[0].ability.Ability);
-                destroyQueue.RemoveAt(0);
-            }).WaitForCompletion();
             owner.Owner.OrderAbility(queue[0].ability.Ability, false);
             owner.Owner.AbilitySendOrdered(queue[0].target);
+            yield return queue[0].ability.transform.DOMove(applyPlace.transform.position, InGameContainer.GetInstance().delayBetweenTurn * delayPercentageMoving)
+            .OnComplete(()=>{
+                StartCoroutine(WaitThenDestroy());
+            }).WaitForCompletion();
             queue.RemoveAt(0);
+            yield return StartCoroutine(WaitUntilFinish());
+            while (owner.Owner.currTween)yield return null;
             if (queue.Count==0)break;
             yield return InGameContainer.GetInstance().delayBetweenTurn*delayPercentageApply;
-            if (owner.Owner.currTween!=null)yield return owner.Owner.currTween.WaitForCompletion();
         }
         runnningQueue = false;
+    }
+    IEnumerator WaitUntilFinish()
+    {
+        while (owner.Owner.currTween) yield return null;
+    }
+    IEnumerator WaitThenDestroy()
+    {
+        yield return StartCoroutine(WaitUntilFinish());
+        destroyQueue[0].ability.Destroy(RemoveStatus.used);
+        owner.Owner.DeckMoveToUsed(destroyQueue[0].ability.Ability);
+        destroyQueue.RemoveAt(0);
     }
 }
 public class CardQ
