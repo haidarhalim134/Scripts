@@ -93,7 +93,7 @@ namespace Control.UI
                 {
                     this.transform.DOScale(0.2f, totaltime);
                     this.transform.DORotate(new Vector3(0,0,-45), 0.1f);
-                    this.transform.DOMoveY(this.Exit.y, totaltime).SetEase(Ease.OutQuad);
+                    this.transform.DOMoveY(this.Exit.y, totaltime).SetEase(Ease.InQuad);
                     this.transform.DOMoveX(this.Exit.x, totaltime).SetEase(Ease.Linear)
                     .OnComplete(() => Destroy(this.gameObject));
                 } else
