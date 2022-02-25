@@ -12,8 +12,9 @@ public class CardQueue : MonoBehaviour
 {
     [SerializeField]
     CardDeck owner;
-    List<CardQ> queue;
-    bool runnningQueue;
+    List<CardQ> queue = new List<CardQ>();
+    List<CardQ> destroyQueue = new List<CardQ>();
+    public bool runnningQueue;
     public float delayPercentageApply;
     public float delayPercentageMoving;
     public GameObject waitPlace;
@@ -23,28 +24,39 @@ public class CardQueue : MonoBehaviour
         queue.Add(new CardQ(ability, target));
         ability.enableHover = false;
         ability.transform.SetParent(transform);
-        ability.transform.DOMove(waitPlace.transform.position, InGameContainer.GetInstance().delayBetweenTurn*delayPercentageMoving);
         ability.transform.SetAsFirstSibling();
+        StartCoroutine(waitMove(ability));
+        ability.transform.DOMove(waitPlace.transform.position, InGameContainer.GetInstance().delayBetweenTurn * delayPercentageMoving).WaitForCompletion();
         startQueue();
+    }
+    IEnumerator waitMove(CardHandler ability)
+    {
+        yield return null;
     }
     void startQueue()
     {
+        if (!runnningQueue) StartCoroutine(RunQueue());
         runnningQueue = true;
-        StartCoroutine(RunQueue());
     }
     IEnumerator RunQueue()
     {
+        Debug.Log(queue.Count+"-"+runnningQueue);
         while (queue.Count > 0)
         {
-            if (runnningQueue) break;
-            queue[0].ability.transform.DOMove(applyPlace.transform.position, InGameContainer.GetInstance().delayBetweenTurn * delayPercentageMoving)
-            .OnComplete(()=>queue[0].ability.Destroy(RemoveStatus.used));
+            destroyQueue.Add(queue[0]);
+            queue[0].ability.transform.DOKill();
+            yield return queue[0].ability.transform.DOMove(applyPlace.transform.position, InGameContainer.GetInstance().delayBetweenTurn * delayPercentageMoving)
+            .OnComplete(()=>{
+                destroyQueue[0].ability.Destroy(RemoveStatus.used);
+                owner.Owner.DeckMoveToUsed(destroyQueue[0].ability.Ability);
+                destroyQueue.RemoveAt(0);
+            }).WaitForCompletion();
             owner.Owner.OrderAbility(queue[0].ability.Ability, false);
             owner.Owner.AbilitySendOrdered(queue[0].target);
             queue.RemoveAt(0);
-            if (queue.Count == 0) runnningQueue = false;
-            yield return InGameContainer.GetInstance().delayBetweenTurn*delayPercentageApply;
+            if (queue.Count>0)yield return InGameContainer.GetInstance().delayBetweenTurn*delayPercentageApply;
         }
+        runnningQueue = false;
     }
 }
 public class CardQ

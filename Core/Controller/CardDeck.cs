@@ -28,6 +28,7 @@ namespace Control.Deck
         [Tooltip("used as card exit route")]
         public GameObject UsedDeck;
         public CardHandler ActiveCard;
+        public CardQueue queue;
         LineRenderer lineRenderer;
         /// <summary>auto refresh before highlighting</summary>
         public void HighlightCard(CardHandler Card)
@@ -151,16 +152,19 @@ namespace Control.Deck
             yield return wait.WaitForCompletion();
             yield return new WaitForSeconds(0.1f);
         }
-        public void RemoveActiveCard()
+        public void AddToQueue(BaseCreature target)
+        {
+            queue.AddQueue(ActiveCard, target);
+            RemoveActive();
+        }
+        public void RemoveActive()
         {
             this.ActiveDeck.Remove(this.ActiveCard);
-            CardHandler handler = this.ActiveCard;
-            handler.Destroy(RemoveStatus.used);
-            // Destroy(this.ActiveCard);
-            if (ActiveDeck.Count>0)this.RefreshCardPos();
+            if (ActiveDeck.Count > 0) this.RefreshCardPos();
             this.ActiveCard = null;
             DestroyLine();
             ChangeCardRaycast(true);
+
         }
         public void ClearDeck()
         {

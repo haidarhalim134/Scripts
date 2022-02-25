@@ -49,7 +49,6 @@ namespace Control.Core
                 bool Success = CombatEngine.RequestCast(ability, this, Target, this.OrderedAbility.Data);
                 if (Success)
                 {
-                    this.DeckRemoveActive(this.OrderedAbility);
                     CombatEngine.ClearTarget();
                     this.OrderedAbility = null;
                 }
@@ -84,12 +83,6 @@ namespace Control.Core
                 this.Deck.AddCard(this.ReserveDeck[index]);
                 this.ReserveDeck.RemoveAt(index);
             }
-        }
-        /// <summary>called by player instance then order its deck to also remove it</summary>
-        public void DeckRemoveActive(AbilityContainer Ability)
-        {
-            this.Deck.RemoveActiveCard();
-            this.UsedDeck.Add(Ability);
         }
         public void DeckMoveToUsed(AbilityContainer Ability)
         {
