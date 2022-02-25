@@ -21,6 +21,7 @@ public class CardQueue : MonoBehaviour
     public GameObject applyPlace;
     public void AddQueue(CardHandler ability, BaseCreature target)
     {
+        ability.transform.DOScale(1, 0.1f);
         queue.Add(new CardQ(ability, target));
         ability.enableHover = false;
         ability.transform.SetParent(transform);
