@@ -19,7 +19,7 @@ namespace Attributes.Abilities
             void Hit()
             {
                 Mng.modifier.modifier[ModType.preDamage].ForEach((abil)=>abil(caster,target,data));
-                target.TakeDamage(Calc.CalcAttack(this.damage + data.Damage, caster, target), caster);
+                target.TakeDamage(Calc.CalcAttack(this.damage + data.Damage, caster, target), caster, DamageSource.attack);
                 Mng.modifier.modifier[ModType.postDamage].ForEach((abil) => abil(caster, target, data));
                 StartCoroutine(Animations.AwayCenterHit(target.gameObject, () => { }, 0.2f, 5f));
                 Animations.SpawnEffect(target.gameObject, effect);
