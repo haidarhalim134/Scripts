@@ -35,7 +35,6 @@ public class CardQueue : MonoBehaviour
     }
     IEnumerator RunQueue()
     {
-        Debug.Log(queue.Count+"-"+runnningQueue);
         while (queue.Count > 0)
         {
             destroyQueue.Add(queue[0]);

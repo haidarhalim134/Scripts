@@ -115,11 +115,11 @@ namespace Control.Deck
             }
             if (abil.target == AbTarget.self)
             {
-                Owner.AbilitySendOrdered(Owner);
+                CombatEngine.SendTargetToPlayer(Owner);
             }
             else if (abil.target == AbTarget.allEnemy)
             {
-                Owner.AbilitySendOrdered(CombatEngine.GetRandomTarget(Owner.EnemyId));
+                CombatEngine.SendTargetToPlayer(CombatEngine.GetRandomTarget(Owner.EnemyId));
             }
         }
         public void OnPointerUp(PointerEventData eventData)
