@@ -11,7 +11,7 @@ namespace Attributes.Abilities
         public static string r = "<color=\"red\">";
         public static string b = "<b>";
         public static Dictionary<CardModifier, string> cMPastTense = new Dictionary<CardModifier, string>()
-        {{CardModifier.keep, "kept"}};
+        {{CardModifier.normal, "used"},{CardModifier.keep, "kept"}};
         public static string CalcColor(int basenumber, int calcnumber)
         {
             if (basenumber == calcnumber)return "";
