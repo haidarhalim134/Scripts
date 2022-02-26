@@ -48,16 +48,17 @@ namespace Attributes.Abilities
     public class AbilityData
     {
         [SerializeField] int _level;
-        public int Level {get{return _level+tempAbData._level;} set{_level = value;}}
+        public int Level {get{return _level+tempAbData.level;} set{_level = value;}}
         [SerializeField] int _damage;
-        public int Damage {get{return _damage+tempAbData._damage;} set{_damage = value;}}
+        public int Damage {get{return _damage+tempAbData.damage;} set{_damage = value;}}
         [SerializeField] int _shield;
-        public int Shield {get{return _shield+tempAbData._shield;} set{_shield = value;}}
+        public int Shield {get{return _shield+tempAbData.shield;} set{_shield = value;}}
         [SerializeField] int _staminaCost;
-        public int Staminacost {get{return _staminaCost+tempAbData._staminaCost;} set{_staminaCost = value;}}
+        public int Staminacost {get{return _staminaCost+tempAbData.staminaCost;} set{_staminaCost = value;}}
         [SerializeField] int _attackRep;
-        public int AttackRep {get{return _attackRep+tempAbData._attackRep;} set{_attackRep = value;}}
-        public TempAbData tempAbData;
+        public int AttackRep {get{return _attackRep+tempAbData.attackRep;} set{_attackRep = value;}}
+        [NonSerialized]
+        public TempAbData tempAbData = new TempAbData();
         public AbilityData Add(AbilityData data)
         {
             var res = new AbilityData(){
@@ -70,7 +71,14 @@ namespace Attributes.Abilities
             return res;
         }
     }
-    public class TempAbData : AbilityData { new int tempAbData; }
+    public class TempAbData
+    {
+        public int level;
+        public int damage;
+        public int  shield;
+        public int staminaCost;
+        public int attackRep;
+    }
     public enum Debuffs{vulnerable, weakened, marked, evasive}
     public enum Stance{rage, excited, noStance}
     public enum Targeting{caster,target}

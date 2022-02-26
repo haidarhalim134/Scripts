@@ -11,7 +11,7 @@ public class WhenDamage : MonoBehaviour
     public int damageChange;
     void Activate(AbilityData data)
     {
-        data.tempAbData.Damage+= damageChange;
+        data.tempAbData.damage+= damageChange;
     }
     void Awake()
     {

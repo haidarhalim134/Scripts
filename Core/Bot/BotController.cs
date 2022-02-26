@@ -68,7 +68,7 @@ namespace Control.Core
             var rnd  = new Random();
             int index = attackPLoop.Next();
             var EnoughMana = this.Skills[index].abilities.Where((cont) => 
-            cont.Ability.GetComponent<AbilityManager>().GetStaminaCost(cont.Data) <= this.stamina.Curr);
+            {return InGameContainer.GetInstance().SpawnAbilityPrefab(cont.Ability).GetStaminaCost(cont.Data) <= this.stamina.Curr;});
             var Cont = rnd.Choice(EnoughMana.ToList(), EnoughMana.Select((cont)=>cont.weight).ToList())[0];
             intentCounter.Spawn(InGameContainer.GetInstance().SpawnAbilityPrefab(Cont.Ability), Cont.Data);
             return Cont;
