@@ -134,6 +134,7 @@ namespace Control.Deck
                     int RandIndex = Range(0, this.Owner.UsedDeck.Count);
                     this.Owner.ReserveDeck.Add(this.Owner.UsedDeck[RandIndex]);
                     this.Owner.UsedDeck.RemoveAt(RandIndex);
+                    this.ReserveDeck.GetComponent<ReserveDeckCounter>().Bump();
                     Destroy(Card);
                 }).SetEase(Ease.Linear);
                 // Card.transform.DOMoveY(exitPlace.y + 50, totalTime).SetEase(Ease.OutQuad);
@@ -169,13 +170,17 @@ namespace Control.Deck
         public void ClearDeck()
         {
             DestroyLine();
+            var toRemove = new List<CardHandler>();
             foreach (CardHandler Card in this.ActiveDeck)
             {
+                if (InGameContainer.GetInstance().SpawnAbilityPrefab(Card.Ability.name)
+                .cardModifiers.Any(type=>type==CardModifier.keep))continue;
                 this.Owner.DeckMoveToUsed(Card.Ability);
+                toRemove.Add(Card);
                 Card.Destroy(RemoveStatus.discard);
-                // Destroy(Card);
             }
-            this.ActiveDeck.Clear();
+            toRemove.ForEach((item)=>ActiveDeck.Remove(item));
+            RefreshCardPos();
         }
         int CalcBetweenNumber(int currCard, int cardMax, int min, int max)
         {

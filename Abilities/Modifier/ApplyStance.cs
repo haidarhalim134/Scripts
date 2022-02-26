@@ -11,6 +11,7 @@ namespace Attributes.Abilities
         public Stance stance;
         public Targeting targeting;
         public ModType modType;
+        public string closingDesc = ". ";
         static StatProcessor Calc = new StatProcessor();
         AbilityManager Mng;
         public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data = null)
@@ -22,7 +23,7 @@ namespace Attributes.Abilities
         }
         public string Text(AbilityData data, PlayerController caster, BaseCreature target)
         {
-            return stance == Stance.noStance?"Exit stance":$"Enter <b>{this.stance}</b>. ";
+            return stance == Stance.noStance?"Exit stance":$"Enter <b>{this.stance}</b>{closingDesc}";
         }
         void Awake()
         {

@@ -12,6 +12,7 @@ namespace Attributes.Abilities
         public int charge;
         public ModType modType;
         public GameObject debuffIcon;
+        public string closingDesc = ". ";
         static StatProcessor Calc = new StatProcessor();
         AbilityManager Mng;
         public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data)
@@ -30,7 +31,7 @@ namespace Attributes.Abilities
         }
         public string Text(AbilityData data, PlayerController caster, BaseCreature target)
         {
-            return $"Apply {this.charge} {this.DPT} DPT. ";
+            return $"Apply {this.charge} {this.DPT} DPT{closingDesc}";
         }
         void Awake()
         {

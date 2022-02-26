@@ -103,4 +103,8 @@ public class Animations
         gameObject.transform.DOScale(1.5f, 0.1f).OnComplete(()=>gameObject.transform.DOScale(1, 0.1f));
         gameObject.GetComponent<TextMeshProUGUI>().DOFade(0, time/3).SetDelay(time*2/3f).OnComplete(()=>GameObject.Destroy(gameObject));
     }
+    public static void BigThenSmall(GameObject gameObject, float tobig, float tosmall, float maxsize)
+    {
+        gameObject.transform.DOScale(maxsize, tobig).OnComplete(()=>gameObject.transform.DOScale(1, tosmall));
+    }
 }

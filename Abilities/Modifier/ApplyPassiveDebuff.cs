@@ -5,26 +5,28 @@ using Control.Core;
 
 namespace Attributes.Abilities
 {
-    public class Shield : MonoBehaviour
+    public class ApplyPassiveDebuff : MonoBehaviour
     {
         [Tooltip("modifier")]
-        public int shield = 10;
+        public Debuffs type;
+        public int charge;
         public Targeting targeting;
         public ModType modType;
         public GameObject effect;
+        public string closingDesc = ". ";
         static StatProcessor Calc = new StatProcessor();
         AbilityManager Mng;
         public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data = null)
-        {
+        {   
             BaseCreature to;
-            if (targeting==Targeting.target)to = target;
+            if (targeting == Targeting.target) to = target;
             else to = caster;
-            to.shield.Update(this.shield + Data.Shield);
-            Animations.SpawnEffect(to.gameObject, effect);
+            to.DebuffsAddPassive(this.type, this.charge);
+            Animations.SpawnEffect(caster.gameObject, effect);
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
-            return $"give {this.shield} shield. ";
+            return $"Apply {this.charge} <b>{this.type}</b>{closingDesc}";
         }
         void Awake()
         {

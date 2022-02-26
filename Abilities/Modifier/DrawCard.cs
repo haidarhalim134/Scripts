@@ -10,6 +10,7 @@ public class DrawCard : MonoBehaviour
     [Tooltip("modifier")]
     public int card = 1;
     public ModType modType;
+    public string closingDesc = ". ";
     static StatProcessor Calc = new StatProcessor();
     AbilityManager Mng;
     public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data)
@@ -27,7 +28,7 @@ public class DrawCard : MonoBehaviour
     }
     public string Text(AbilityData data, PlayerController caster, BaseCreature target)
     {
-        return $"draw {this.card} card. ";
+        return $"draw {this.card} card{closingDesc}";
     }
     void Awake()
     {

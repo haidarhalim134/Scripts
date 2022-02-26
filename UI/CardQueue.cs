@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,6 +39,11 @@ public class CardQueue : MonoBehaviour
     {
         while (queue.Count > 0)
         {
+            if (queue[0].target.dead)
+            { 
+                ReturnToDeck();
+                break;
+            }
             destroyQueue.Add(queue[0]);
             queue[0].ability.transform.DOKill();
             owner.Owner.OrderAbility(queue[0].ability.Ability, false);
@@ -64,6 +70,19 @@ public class CardQueue : MonoBehaviour
         destroyQueue[0].ability.Destroy(RemoveStatus.used);
         owner.Owner.DeckMoveToUsed(destroyQueue[0].ability.Ability);
         destroyQueue.RemoveAt(0);
+    }
+    void ReturnToDeck()
+    {
+        var handlers = queue.Select((item)=>item.ability);
+        owner.ActiveDeck.AddRange(handlers);
+        handlers.ToList().ForEach((item)=>{
+            item.transform.SetParent(owner.transform);
+            item.enableHover = true;
+            item.stillDown = false;
+        });
+        queue.Clear();
+        owner.RefreshCardPos();
+        owner.ChangeCardRaycast(true);
     }
 }
 public class CardQ

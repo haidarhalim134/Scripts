@@ -13,6 +13,10 @@ namespace Attributes.Abilities
             {
                 BaseDamage = (int)Math.Floor(BaseDamage * 1.5f);
             };
+            if (target.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.marked) != null)
+            {
+                BaseDamage = (int)Math.Floor(BaseDamage * 2f);
+            };
             if (caster.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.weakened) != null)
             {
                 BaseDamage = (int)Math.Floor(BaseDamage * 0.75f);

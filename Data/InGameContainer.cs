@@ -145,6 +145,7 @@ namespace DataContainer
         public GameObject prefab;
         public string description;
         public bool reduceCharge;
+        public ReduceChargeTime reduceChargeTime;
         public string GetDesc()
         {
             return description.Replace("\\n", "\n");
@@ -165,4 +166,5 @@ namespace DataContainer
         public AbilityType[] type;
         public GameObject prefab;
     }
+    public enum ReduceChargeTime{onEndTurn, onHitByAttack}
 }

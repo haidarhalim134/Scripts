@@ -13,4 +13,4 @@ public class CharacterDataCont : ScriptableObject
     public int initialCardNumber;
     public BotAbilityCont[] AvailableAbility;
 }
-public enum Character{Nocharacter,Ironclad, Watcher}
+public enum Character{Nocharacter,Ironclad, Watcher, Gunslinger}

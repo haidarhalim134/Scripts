@@ -53,7 +53,7 @@ namespace Control.Core
             AbilityManager Mng = GetMng(cont);
             var listoftarget = CombatEngine.GetTarget(Mng);
             CombatEngine.RequestCast(Mng, this,listoftarget[rnd.Next(0,listoftarget.Count)],cont.Data);
-            this.DebuffReduceCharge();
+            this.DebuffReduceCharge(ReduceChargeTime.onEndTurn);
             CombatEngine.ActionFinished();
             this.Control = false;
         }
@@ -69,7 +69,6 @@ namespace Control.Core
             int index = attackPLoop.Next();
             var EnoughMana = this.Skills[index].abilities.Where((cont) => 
             cont.Ability.GetComponent<AbilityManager>().GetStaminaCost(cont.Data) <= this.stamina.Curr);
-            // var Cont = EnoughMana.ToList()[rnd.Next(0, EnoughMana.Count())];
             var Cont = rnd.Choice(EnoughMana.ToList(), EnoughMana.Select((cont)=>cont.weight).ToList())[0];
             intentCounter.Spawn(InGameContainer.GetInstance().SpawnAbilityPrefab(Cont.Ability), Cont.Data);
             return Cont;
@@ -80,6 +79,7 @@ namespace Control.Core
         }
         public override void OnDeath()
         {
+            intentCounter.Destroy();
             if (CombatEngine.RegisteredCreature[this.TeamId].Count == 0) CombatEngine.EndGame(true);
         }
         // Start is called before the first frame update

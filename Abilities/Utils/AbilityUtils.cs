@@ -10,6 +10,8 @@ namespace Attributes.Abilities
         public static string g = "<color=#29b400>";
         public static string r = "<color=\"red\">";
         public static string b = "<b>";
+        public Dictionary<CardModifier, string> cMPastTense = new Dictionary<CardModifier, string>()
+        {{CardModifier.keep, "kept"}};
         public static string CalcColor(int basenumber, int calcnumber)
         {
             if (basenumber == calcnumber)return "";
@@ -45,11 +47,17 @@ namespace Attributes.Abilities
     [Serializable]
     public class AbilityData
     {
-        public int Level;
-        public int Damage;
-        public int Shield;
-        public int Staminacost;
-        public int AttackRep;
+        [SerializeField] int _level;
+        public int Level {get{return _level+tempAbData._level;} set{_level = value;}}
+        [SerializeField] int _damage;
+        public int Damage {get{return _damage+tempAbData._damage;} set{_damage = value;}}
+        [SerializeField] int _shield;
+        public int Shield {get{return _shield+tempAbData._shield;} set{_shield = value;}}
+        [SerializeField] int _staminaCost;
+        public int Staminacost {get{return _staminaCost+tempAbData._staminaCost;} set{_staminaCost = value;}}
+        [SerializeField] int _attackRep;
+        public int AttackRep {get{return _attackRep+tempAbData._attackRep;} set{_attackRep = value;}}
+        public TempAbData tempAbData;
         public AbilityData Add(AbilityData data)
         {
             var res = new AbilityData(){
@@ -62,10 +70,12 @@ namespace Attributes.Abilities
             return res;
         }
     }
-    public enum Debuffs{vulnerable, weakened}
+    public class TempAbData : AbilityData { new int tempAbData; }
+    public enum Debuffs{vulnerable, weakened, marked}
     public enum Stance{rage, excited, noStance}
     public enum Targeting{caster,target}
     public enum AbilityType{attack,buff,debuff,shield}
     public enum AbTarget{self, allies, enemy, allEnemy}
     public enum ModType{preAttack,preDamage,postDamage,postAttack}
+    public enum CardModifier{normal,keep}
 }

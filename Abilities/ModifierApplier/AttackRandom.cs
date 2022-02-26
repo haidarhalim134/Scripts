@@ -14,6 +14,7 @@ namespace Attributes.Abilities
         public float delay;
         public int repetition;
         public GameObject effect;
+        public string closingDesc = ". ";
         AbilityManager Mng;
         static StatProcessor Calc = new StatProcessor();
         public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData data)
@@ -37,9 +38,9 @@ namespace Attributes.Abilities
             {
                 int calcdamage = Calc.CalcAttack(this.damage + data.Damage, caster, target);
                 string color = AbilityUtils.CalcColor(this.damage, calcdamage);
-                return $"deal {color}{calcdamage}</color> damage to{(repetition>1?rep:" ")} random target. ";
+                return $"deal {color}{calcdamage}</color> damage to{(repetition>1?rep:" ")} random target{closingDesc}";
             }
-            else return $"deal {this.damage + data.Damage} damage to{(repetition > 1 ? rep : " ")} random target. ";
+            else return $"deal {this.damage + data.Damage} damage to{(repetition > 1 ? rep : " ")} random target{closingDesc}";
         }
         void Awake()
         {

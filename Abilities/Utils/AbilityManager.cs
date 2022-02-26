@@ -11,16 +11,29 @@ namespace Attributes.Abilities
     {
         public ListAbil ContainedAbilities = new ListAbil();
         public List<Func<AbilityData,PlayerController,BaseCreature, string>> DescGrabber = new List<Func<AbilityData, PlayerController, BaseCreature, string>>();
+        public List<Action<AbilityData>> onKeep = new List<Action<AbilityData>>();
+        public List<Action<AbilityData>> onUse = new List<Action<AbilityData>>();
         public Modifier modifier = new Modifier();
         [Tooltip("must give a non empty unique name")]
         public string AbName; 
         public int cost;
         public int GoldCost;
+        [HideInInspector]
+        public List<CardModifier> cardModifiers;
         public AbTarget target;
         [Tooltip("used for bot intention system")]
         public AbilityType[] types;
+        [HideInInspector]
         public AbilityData intentionData;
         public string Desc;
+        public void OnKeep(AbilityData data)
+        {
+            onKeep.ForEach((func)=>func(data));
+        }
+        public void OnUse(AbilityData data)
+        {
+            onUse.ForEach((func)=>func(data));
+        }
         public string GetDesc(AbilityData data, PlayerController caster=null, BaseCreature target=null)
         {
             this.Desc = "";
@@ -44,6 +57,7 @@ namespace Attributes.Abilities
                 yield return StartCoroutine(abil(caster, target, Data));
             }
             caster.currTween = false;
+            OnUse(Data);
         }
         void Awake()
         {

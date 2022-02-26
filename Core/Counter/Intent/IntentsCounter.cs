@@ -31,6 +31,13 @@ public class IntentsCounter : MonoBehaviour
     {
         currentIndicator.SetActive(true);
     }
+    public void Destroy()
+    {
+        if (currentIndicator!=null)
+        {
+            currentIndicator.GetComponent<IntentIndicator>().icon.DOFade(0, 0.2f).OnComplete(()=> Destroy(gameObject));
+        }else Destroy(gameObject);
+    }
     void Awake()
     {
         transform.DOMoveY(transform.position.y+50, 1f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutQuad);

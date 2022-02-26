@@ -9,6 +9,7 @@ public class IfStance : MonoBehaviour
 {
     public Stance stance;
     public GameObject ability;
+    public string closingDesc = ". ";
     AbilityManager abilityMng;
     AbilityManager Mng;
     public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData data)
@@ -21,7 +22,7 @@ public class IfStance : MonoBehaviour
     }
     public string Text(AbilityData data, PlayerController caster, BaseCreature target)
     {
-        return $"if {stance}, "+abilityMng.GetDesc(data, caster, target);
+        return $"if {stance}, "+abilityMng.GetDesc(data, caster, target)+closingDesc;
     }
     void Awake()
     {

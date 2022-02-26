@@ -96,9 +96,11 @@ namespace Control.Core
         {
             if (T)
             {
+                Deck.ChangeCardRaycast(true);
                 StartCoroutine(setup());
             }else
             {
+                Deck.ChangeCardRaycast(false);
                 endturnButton.Disable();
             }
             IEnumerator setup()
@@ -126,14 +128,9 @@ namespace Control.Core
             this.health.Fill();
             this.Deck = this.TEMP.GetComponent<CardDeck>();
         }
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
         public void FinishTurn()
         {
-            this.DebuffReduceCharge();
+            this.DebuffReduceCharge(ReduceChargeTime.onEndTurn);
             CombatEngine.ActionFinished();
             this.Deck.ClearDeck();
             this.Control = false;

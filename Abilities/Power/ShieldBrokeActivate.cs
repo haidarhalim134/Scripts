@@ -12,6 +12,7 @@ public class ShieldBrokeActivate : MonoBehaviour
     [Tooltip("since this target self, if caster target caster, else target random enemy")]
     public Targeting targeting;
     public GameObject ability;
+    public string closingDesc = ". ";
     AbilityManager abilityMng;
     AbilityManager Mng;
     static StatProcessor Calc = new StatProcessor();
@@ -25,7 +26,7 @@ public class ShieldBrokeActivate : MonoBehaviour
         }
         string desc(ActiveDebuff Data)
         {
-            return $"if your shield broke, " + abilityMng.GetDesc(data, null, null);
+            return $"if your shield broke, " + abilityMng.GetDesc(data, null, null)+closingDesc;
         }
         target.DebuffAddActive(target.buffDebuff.shieldBrokeActivate,
         new ActiveDebuff(Mng.AbName, -1, data, caster, target, debuff, desc), debuffIcon);
@@ -33,7 +34,7 @@ public class ShieldBrokeActivate : MonoBehaviour
     }
     public string Text(AbilityData data, PlayerController caster, BaseCreature target)
     {
-        return $"if your shield broke, " + abilityMng.GetDesc(data, null, null);
+        return $"everytime your shield broke, " + abilityMng.GetDesc(data, null, null)+closingDesc;
     }
     void Awake()
     {
