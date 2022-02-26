@@ -146,6 +146,7 @@ namespace DataContainer
         public string description;
         public bool reduceCharge;
         public ReduceChargeTime reduceChargeTime;
+        public bool hideWhen0Charge;
         /// <summary>else destroy when charge reaces 0 or less than zero</summary>
         [Tooltip("else destroy when charge reaces 0 or less than zero")]
         public bool allowNegative;

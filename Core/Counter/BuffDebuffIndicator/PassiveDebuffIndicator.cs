@@ -19,6 +19,7 @@ public class PassiveDebuffIndicator : MonoBehaviour
     string description;
     EventTrigger trigger;
     TooltipManager tooltipManager;
+    bool active = true;
     public void Init()
     {
         if (isPassive)
@@ -52,13 +53,27 @@ public class PassiveDebuffIndicator : MonoBehaviour
         {
             charge.text = "<b>" + passive.charge.ToString();
             charge.gameObject.transform.localScale = new Vector3(2, 2, 1);
-            if (passive.charge <= 0 &&!InGameContainer.GetInstance().FindPassiveDebuff(passive.debuff).allowNegative)
+            var cont = InGameContainer.GetInstance().FindPassiveDebuff(passive.debuff);
+            if (passive.charge <= 0 &&!cont.allowNegative)
             {
                 StartCoroutine(NewMethod());
             }
             else
             {
                 charge.gameObject.transform.DOScale(1, 0.5f);
+            }
+            if (passive.charge == 0&&cont.hideWhen0Charge)
+            {
+                Debug.Log("hide");
+                active = false;
+                charge.DOFade(0, 0.5f);
+                icon.GetComponent<Image>().DOFade(0, 0.5f);
+            }else if (!active)
+            {
+                Debug.Log("show");
+                charge.DOFade(1, 0.5f);
+                icon.GetComponent<Image>().DOFade(1, 0.5f);
+                active = true;
             }
         }
 
@@ -79,6 +94,10 @@ public class PassiveDebuffIndicator : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+        }
+        if (!active)
+        {
+            transform.SetAsLastSibling();
         }
     }
 }
