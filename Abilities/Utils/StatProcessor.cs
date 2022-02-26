@@ -9,6 +9,11 @@ namespace Attributes.Abilities
     {
         public int CalcAttack(int BaseDamage, BaseCreature caster, BaseCreature target)
         {
+            var str = caster.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.strength);
+            if (str != null)
+            {
+                BaseDamage+= str.charge;
+            }
             if (target.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.vulnerable) != null)
             {
                 BaseDamage = (int)Math.Floor(BaseDamage * 1.5f);

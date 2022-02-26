@@ -79,12 +79,13 @@ namespace Attributes.Abilities
         public int staminaCost;
         public int attackRep;
     }
+    [Serializable]
     public class OverrideDesc
     {
         public bool Override;
         public string desc;
     }
-    public enum Debuffs{vulnerable, weakened, marked, evasive}
+    public enum Debuffs{vulnerable, weakened, marked, evasive, strength}
     public enum Stance{rage, excited, noStance}
     public enum Targeting{caster,target}
     public enum AbilityType{attack,buff,debuff,shield}
