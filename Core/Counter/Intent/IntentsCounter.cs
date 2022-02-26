@@ -7,25 +7,41 @@ using TMPro;
 using Attributes.Abilities;
 using DataContainer;
 using DG.Tweening;
+using Control.Core;
 
 public class IntentsCounter : MonoBehaviour
 {
     GameObject currentIndicator;
+    BaseCreature owner;
+    AbilityManager currMng;
+    AbilityData currData;
     public void Spawn(AbilityManager Mng, AbilityData data)
     {
         if (currentIndicator!=null)StartCoroutine(currentIndicator.GetComponent<IntentIndicator>().Destroy());
-        // if (currentIndicator!=null)Destroy(currentIndicator);
-        var prefab = InGameContainer.GetInstance().FindIntent(Mng.types.ToList());
+        currMng = Mng;
+        currData = data;
+        var prefab = InGameContainer.GetInstance().FindIntent(currMng.types.ToList());
         currentIndicator = Instantiate(prefab, transform);
         currentIndicator.transform.localPosition = new Vector3();
-        var script = currentIndicator.GetComponent<IntentIndicator>();
-        var fullData = Mng.GetData(data);
-        if (Mng.types.Any(type=>type == AbilityType.attack))
-        {
-            if(fullData.AttackRep > 1)script.damage.text = $"{fullData.Damage}X{fullData.AttackRep}";
-            else script.damage.text = $"{fullData.Damage}";
-        }
         currentIndicator.SetActive(false);
+    }
+    IEnumerator textUpdater()
+    {
+        while (true)
+        {
+            if (currentIndicator!=null)
+            {
+                var script = currentIndicator.GetComponent<IntentIndicator>();
+                var fullData = currMng.GetData(currData);
+                if (currMng.types.Any(type => type == AbilityType.attack))
+                {
+                    if (fullData.AttackRep > 1) script.damage.text = $"{fullData.Damage}X{fullData.AttackRep}";
+                    else script.damage.text = $"{fullData.Damage}";
+                }
+
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
     }
     public void Activate()
     {
@@ -41,5 +57,6 @@ public class IntentsCounter : MonoBehaviour
     void Awake()
     {
         transform.DOMoveY(transform.position.y+50, 1f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutQuad);
+        StartCoroutine(textUpdater());  
     }
 }
