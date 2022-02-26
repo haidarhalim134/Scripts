@@ -71,7 +71,7 @@ namespace Attributes.Abilities
         }
     }
     public class TempAbData : AbilityData { new int tempAbData; }
-    public enum Debuffs{vulnerable, weakened, marked}
+    public enum Debuffs{vulnerable, weakened, marked, evasive}
     public enum Stance{rage, excited, noStance}
     public enum Targeting{caster,target}
     public enum AbilityType{attack,buff,debuff,shield}
