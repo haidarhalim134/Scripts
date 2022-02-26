@@ -30,6 +30,7 @@ namespace Attributes.Abilities
             {
                 yield return StartCoroutine(Animations.TowardsCenterAttack(caster.gameObject, Hit, () => { }));
             }
+            Mng.modifier.modifier[ModType.postAttack].ForEach((abil) => abil(caster, target, data));
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
