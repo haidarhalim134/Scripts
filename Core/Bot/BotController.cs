@@ -15,6 +15,7 @@ namespace Control.Core
     {
         public List<AttackPatternCont> Skills = new List<AttackPatternCont>();
         public BotAbilityCont nextAction;
+        BaseCreature tempTarget;
         public BaseCreature nextTarget;
         public IntentsCounter intentCounter;
         public LoopingIndex attackPLoop;
@@ -52,8 +53,9 @@ namespace Control.Core
             var cont = GetQAbil();
             yield return new WaitForSeconds(InGameContainer.GetInstance().delayBetweenTurn);
             AbilityManager Mng = GetMng(cont);
-            var listoftarget = CombatEngine.GetTarget(Mng);
+            var listoftarget = CombatEngine.GetTarget(this, Mng);
             CombatEngine.RequestCast(Mng, this, nextTarget, cont.Data);
+            nextTarget = tempTarget;
             this.DebuffReduceCharge(ReduceChargeTime.onEndTurn);
             CombatEngine.ActionFinished();
             this.Control = false;
@@ -71,7 +73,10 @@ namespace Control.Core
             var EnoughMana = this.Skills[index].abilities.Where((cont) => 
             {return InGameContainer.GetInstance().SpawnAbilityPrefab(cont.Ability).GetStaminaCost(cont.Data) <= this.stamina.Curr;});
             var Cont = rnd.Choice(EnoughMana.ToList(), EnoughMana.Select((cont)=>cont.weight).ToList())[0];
-            nextTarget = CombatEngine.RegisteredCreature[EnemyId][CombatEngine.RegisteredCreature[EnemyId].Count-1];
+            AbilityManager Mng = GetMng(Cont);
+            var listoftarget = CombatEngine.GetTarget(this, Mng);
+            tempTarget = listoftarget[listoftarget.Count-1];
+            if (nextTarget == null) nextTarget = tempTarget;
             intentCounter.Spawn(InGameContainer.GetInstance().SpawnAbilityPrefab(Cont.Ability), Cont.Data);
             return Cont;
         }
