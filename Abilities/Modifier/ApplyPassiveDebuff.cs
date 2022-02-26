@@ -15,6 +15,7 @@ namespace Attributes.Abilities
         public GameObject effect;
         public string verb = "apply";
         public string closingDesc = ". ";
+        public OverrideDesc Override;
         static StatProcessor Calc = new StatProcessor();
         AbilityManager Mng;
         public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data = null)
@@ -27,6 +28,7 @@ namespace Attributes.Abilities
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
+            if (Override.Override)return Override.desc;
             return $"{verb} {this.charge} <b>{this.type}</b>{closingDesc}";
         }
         void Awake()
