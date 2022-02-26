@@ -11,6 +11,7 @@ namespace Attributes.Abilities
         [Tooltip("Apply modifier, not instant")]
         public int damage = 10;
         public int repetition = 1;
+        public bool throughtArmor;
         public GameObject effect;
         public string closingDesc = ". ";
         AbilityManager Mng;
@@ -34,14 +35,15 @@ namespace Attributes.Abilities
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
-            string rep = $"{repetition+data.AttackRep} times";
+            string rep = repetition + data.AttackRep> 1?$"{repetition+data.AttackRep} times":"";
+            string ta = throughtArmor?"through armor":"";
             if (caster!=null)
             {
                 int calcdamage = Calc.CalcAttack(this.damage + data.Damage, caster, target);
                 string color = AbilityUtils.CalcColor(this.damage, calcdamage);
-                return $"deal {color}{calcdamage}</color> damage {(repetition>1?rep:"")}{closingDesc}";
+                return $"deal {color}{calcdamage}</color> damage {rep} {ta} {closingDesc}";
             }
-            else return $"deal {this.damage + data.Damage} damage {(repetition > 1 ? rep : "")}{closingDesc}";
+            else return $"deal {this.damage + data.Damage} damage {rep} {ta} {closingDesc}";
         }
         void Awake()
         {
