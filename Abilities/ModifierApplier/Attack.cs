@@ -11,7 +11,8 @@ namespace Attributes.Abilities
         [Tooltip("Apply modifier, not instant")]
         public int damage = 10;
         public int repetition = 1;
-        public bool throughtArmor;
+        public Targeting targeting = Targeting.target;
+        public bool throughArmor;
         public GameObject effect;
         public string verb = "deal";
         public string closingDesc = ". ";
@@ -19,25 +20,28 @@ namespace Attributes.Abilities
         static StatProcessor Calc = new StatProcessor();
         public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData data)
         {
+            BaseCreature to;
+            if (targeting == Targeting.target) to = target;
+            else to = caster;
             void Hit()
             {
-                Mng.modifier.modifier[ModType.preDamage].ForEach((abil)=>abil(caster,target,data));
-                target.TakeDamage(Calc.CalcAttack(this.damage + data.Damage, caster, target), caster, DamageSource.attack, throughtArmor);
-                Mng.modifier.modifier[ModType.postDamage].ForEach((abil) => abil(caster, target, data));
-                StartCoroutine(Animations.AwayCenterHit(target.gameObject, () => { }, 0.2f, 5f));
-                Animations.SpawnEffect(target.gameObject, effect);
+                Mng.modifier.modifier[ModType.preDamage].ForEach((abil)=>abil(caster,to,data));
+                to.TakeDamage(Calc.CalcAttack(this.damage + data.Damage, caster, to), caster, DamageSource.attack, throughArmor);
+                Mng.modifier.modifier[ModType.postDamage].ForEach((abil) => abil(caster, to, data));
+                StartCoroutine(Animations.AwayCenterHit(to.gameObject, () => { }, 0.2f, 5f));
+                Animations.SpawnEffect(to.gameObject, effect);
             }
-            Mng.modifier.modifier[ModType.preAttack].ForEach((abil) => abil(caster, target, data));
+            Mng.modifier.modifier[ModType.preAttack].ForEach((abil) => abil(caster, to, data));
             for (var i = 0; i< repetition+ data.AttackRep;i++)
             {
                 yield return StartCoroutine(Animations.TowardsCenterAttack(caster.gameObject, Hit, () => { }));
             }
-            Mng.modifier.modifier[ModType.postAttack].ForEach((abil) => abil(caster, target, data));
+            Mng.modifier.modifier[ModType.postAttack].ForEach((abil) => abil(caster, to, data));
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
             string rep = repetition + data.AttackRep> 1?$"{repetition+data.AttackRep} times":"";
-            string ta = throughtArmor?"through armor":"";
+            string ta = throughArmor?"through armor":"";
             if (caster!=null)
             {
                 int calcdamage = Calc.CalcAttack(this.damage + data.Damage, caster, target);
