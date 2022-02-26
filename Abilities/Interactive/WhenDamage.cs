@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,10 @@ public class WhenDamage : MonoBehaviour
     {
         data.tempAbData.damage+= damageChange;
     }
+    string Text(AbilityData data, PlayerController caster, BaseCreature target)
+    {
+        return $" when {AbilityUtils.cMPastTense[whenApply]}, {(damageChange>0?"increase":"decrease")} damage by {Math.Abs(damageChange)}";
+    }
     void Awake()
     {
         AbilityManager mng = GetComponent<AbilityManager>();
@@ -25,5 +30,6 @@ public class WhenDamage : MonoBehaviour
                 mng.onKeep.Add(Activate);
                 break;
         }
+        mng.DescGrabber.Add(Text);
     }
 }
