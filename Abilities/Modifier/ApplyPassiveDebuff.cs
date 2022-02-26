@@ -25,7 +25,7 @@ namespace Attributes.Abilities
             if (targeting == Targeting.target) to = target;
             else to = caster;
             to.DebuffsAddPassive(this.type, this.charge);
-            Animations.SpawnEffect(caster.gameObject, effect);
+            Animations.SpawnEffect(to.gameObject, effect);
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {

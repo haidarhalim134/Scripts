@@ -64,6 +64,7 @@ namespace LevelManager
             GameObject ShieldC = SpawnCounterPrefab(InGameContainer.GetInstance().ShieldCounter, Object);
             GameObject DebuffC = Instantiate(InGameContainer.GetInstance().debuffCounter, Object.transform);
             GameObject IntentC = Instantiate(InGameContainer.GetInstance().intentCounter, Object.transform);
+            IntentC.GetComponent<IntentsCounter>().owner = Object.GetComponent<BotController>();
             DebuffC.GetComponent<DebuffCounter>().Creature = Object.GetComponent<BaseCreature>();
             Object.GetComponent<BotController>().intentCounter = IntentC.GetComponent<IntentsCounter>();
             // float heights = RT.rect.height;

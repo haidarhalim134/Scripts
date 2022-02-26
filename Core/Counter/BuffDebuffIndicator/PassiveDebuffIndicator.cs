@@ -52,7 +52,7 @@ public class PassiveDebuffIndicator : MonoBehaviour
         {
             charge.text = "<b>" + passive.charge.ToString();
             charge.gameObject.transform.localScale = new Vector3(2, 2, 1);
-            if (passive.charge <= 0)
+            if (passive.charge <= 0 &&!InGameContainer.GetInstance().FindPassiveDebuff(passive.debuff).allowNegative)
             {
                 StartCoroutine(NewMethod());
             }

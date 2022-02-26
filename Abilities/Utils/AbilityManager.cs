@@ -48,6 +48,11 @@ namespace Attributes.Abilities
         {
             return intentionData.Add(data);
         }
+        public int GetDamageDeal(AbilityData data, BaseCreature caster, BaseCreature target)
+        {
+            StatProcessor Calc = new StatProcessor();
+            return Calc.CalcAttack(GetData(data).Damage, caster, target);
+        }
         public IEnumerator Activate(BaseCreature caster, BaseCreature target, AbilityData Data)
         {
             caster.currTween = true;

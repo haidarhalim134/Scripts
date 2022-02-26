@@ -12,7 +12,7 @@ using Control.Core;
 public class IntentsCounter : MonoBehaviour
 {
     GameObject currentIndicator;
-    BaseCreature owner;
+    public BotController owner;
     AbilityManager currMng;
     AbilityData currData;
     public void Spawn(AbilityManager Mng, AbilityData data)
@@ -32,11 +32,12 @@ public class IntentsCounter : MonoBehaviour
             if (currentIndicator!=null)
             {
                 var script = currentIndicator.GetComponent<IntentIndicator>();
-                var fullData = currMng.GetData(currData);
+                var fulldata = currMng.GetData(currData);
+                var fulldamage = currMng.GetDamageDeal(currData, owner, owner.nextTarget);
                 if (currMng.types.Any(type => type == AbilityType.attack))
                 {
-                    if (fullData.AttackRep > 1) script.damage.text = $"{fullData.Damage}X{fullData.AttackRep}";
-                    else script.damage.text = $"{fullData.Damage}";
+                    if (fulldata.AttackRep > 1) script.damage.text = $"{fulldamage}X{fulldata.AttackRep}";
+                    else script.damage.text = $"{fulldamage}";
                 }
 
             }
