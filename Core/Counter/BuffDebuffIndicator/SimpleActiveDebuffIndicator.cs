@@ -35,7 +35,7 @@ public class SimpleActiveDebuffIndicator : MonoBehaviour
         tooltipManager.SpawnTooltip(active.description(active), (Vector2)this.transform.position +
         new Vector2(0, this.icon.GetComponent<RectTransform>().rect.height / 2));
     }
-    void Update()
+    public void update()
     {
         if (active != null&&active.charge>0)
         {

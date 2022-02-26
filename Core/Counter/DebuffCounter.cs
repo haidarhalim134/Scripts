@@ -45,11 +45,12 @@ public class DebuffCounter : MonoBehaviour
         indicator.stance = stance;
         indicator.Init();
     }
-    public void SpawnSimpleActive(GameObject prefab, ActiveDebuff debuff)
+    public SimpleActiveDebuffIndicator SpawnSimpleActive(GameObject prefab, ActiveDebuff debuff)
     {
         GameObject Object = Instantiate(prefab, this.transform);
         SimpleActiveDebuffIndicator indicator = Object.GetComponent<SimpleActiveDebuffIndicator>();
         indicator.active = debuff;
+        return indicator;
     }
     void Update()
     {

@@ -22,7 +22,7 @@ public class ShieldBrokeActivate : MonoBehaviour
         {
             if (targeting == Targeting.caster)StartCoroutine(abilityMng.Activate(caster, target, data));
             else StartCoroutine(abilityMng.Activate(caster, CombatEngine.GetRandomTarget(caster.EnemyId), data));
-            Data.charge -= 1;
+            Data.update(-1);
         }
         string desc(ActiveDebuff Data)
         {
