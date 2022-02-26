@@ -13,6 +13,7 @@ public class AttackAll : MonoBehaviour
     public int damage = 10;
     public int repetition = 1;
     public GameObject effect;
+    public string verb = "deal";
     public string closingDesc = ". ";
     AbilityManager Mng;
     static StatProcessor Calc = new StatProcessor();
@@ -33,9 +34,9 @@ public class AttackAll : MonoBehaviour
         {
             int calcdamage = Calc.CalcAttack(this.damage + data.Damage, caster, target);
             string color = AbilityUtils.CalcColor(this.damage, calcdamage);
-            return $"deal {color}{calcdamage}</color> damage to All enemies{closingDesc}";
+            return $"{verb} {color}{calcdamage}</color> damage to All enemies{closingDesc}";
         }
-        else return $"deal {this.damage + data.Damage} damage to All enemies{closingDesc}";
+        else return $"{verb} {this.damage + data.Damage} damage to All enemies{closingDesc}";
     }
     void Awake()
     {

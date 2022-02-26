@@ -11,6 +11,7 @@ namespace Attributes.Abilities
         [Tooltip("Apply modifier, not instant")]
         public int damage = 10;
         public GameObject effect;
+        public string verb = "deal";
         public string closingDesc = ". ";
         static StatProcessor Calc = new StatProcessor();
         AbilityManager Mng;
@@ -37,9 +38,9 @@ namespace Attributes.Abilities
             {
                 int calcdamage = Calc.CalcAttack(this.damage + data.Damage, caster, target);
                 string color = AbilityUtils.CalcColor(this.damage, calcdamage);
-                return $"deal {color}{calcdamage}</color> damage to enemy{closingDesc}";
+                return $"{verb} {color}{calcdamage}</color> damage to enemy{closingDesc}";
             }
-            else return $"deal {this.damage + data.Damage} damage to enemy{closingDesc}";
+            else return $"{verb} {this.damage + data.Damage} damage to enemy{closingDesc}";
         }
         void Awake()
         {
