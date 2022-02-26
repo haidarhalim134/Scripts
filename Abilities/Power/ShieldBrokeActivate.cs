@@ -29,7 +29,7 @@ public class ShieldBrokeActivate : MonoBehaviour
             return $"if your shield broke, " + abilityMng.GetDesc(data, null, null)+closingDesc;
         }
         target.DebuffAddActive(target.buffDebuff.shieldBrokeActivate,
-        new ActiveDebuff(Mng.AbName, -1, data, caster, target, debuff, desc), debuffIcon);
+        new ActiveDebuff(Mng.AbName, int.MaxValue, data, caster, target, debuff, desc), debuffIcon);
         yield return null;
     }
     public string Text(AbilityData data, PlayerController caster, BaseCreature target)
