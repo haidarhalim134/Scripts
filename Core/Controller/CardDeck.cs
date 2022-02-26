@@ -180,7 +180,7 @@ namespace Control.Deck
                 Card.Destroy(RemoveStatus.discard);
             }
             toRemove.ForEach((item)=>ActiveDeck.Remove(item));
-            RefreshCardPos();
+            if (ActiveDeck.Count > 0) RefreshCardPos();
         }
         int CalcBetweenNumber(int currCard, int cardMax, int min, int max)
         {
