@@ -13,6 +13,7 @@ namespace Attributes.Abilities
         public Targeting targeting;
         public ModType modType;
         public GameObject effect;
+        public string verb = "apply";
         public string closingDesc = ". ";
         static StatProcessor Calc = new StatProcessor();
         AbilityManager Mng;
@@ -26,7 +27,7 @@ namespace Attributes.Abilities
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
-            return $"Apply {this.charge} <b>{this.type}</b>{closingDesc}";
+            return $"{verb} {this.charge} <b>{this.type}</b>{closingDesc}";
         }
         void Awake()
         {
