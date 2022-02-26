@@ -45,8 +45,6 @@ namespace LevelManager
             SpawnCounter(Object);
             Script.Skills.AddRange(Data.attackPattern);
             Script.initAbilLoop();
-
-            Script.nextAction = Script.GetRandomAbil();
         }
         public static void SpawnCounter(GameObject Object)
         {
