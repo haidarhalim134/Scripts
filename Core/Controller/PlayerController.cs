@@ -51,6 +51,7 @@ namespace Control.Core
                 if (Success)
                 {
                     CombatEngine.ClearTarget();
+                    lastPlayedAbility = OrderedAbility;
                     this.OrderedAbility = null;
                 }
             }
