@@ -1,7 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;  
+using UnityEngine.EventSystems;
+using System;
+using System.Linq;
+using UnityEngine.UI;
+using Attributes.Abilities;
+using Control.Core;
+using Control.Combat;
+using static UnityEngine.Random;
+using DG.Tweening;
+using DataContainer; 
+using Control.Deck;
 
 public class Utils
 {
@@ -26,6 +36,17 @@ public class Utils
         var res = result.Find((obj)=>obj.gameObject.GetComponent<T>()!=null).gameObject;
         if (res == null)return default(T);
         return res.gameObject.GetComponent<T>();
+    }
+    public static CardHandler SpawnCard(AbilityContainer ability, GameObject owner, Vector2 spawnPlace, GameObject prefab, Transform parent)
+    {
+        GameObject Card = GameObject.Instantiate(prefab, spawnPlace, new Quaternion(), parent);
+        CardHandler Script = Card.GetComponent<CardHandler>();
+        Script.SmallToBig();
+        Script.Ability = ability;
+        Script.UpdateText();
+        Script.TargetOwner = owner.gameObject;
+        Script.InitOwner();
+        return Script;
     }
 }
 public class LoopingIndex

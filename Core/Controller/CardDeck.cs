@@ -106,13 +106,7 @@ namespace Control.Deck
         public void AddCard(AbilityContainer Ability)
         {
             Vector2 spawnPlace = (Vector2)this.ReserveDeck.gameObject.transform.position - new Vector2(0f, 1f);
-            GameObject Card = Instantiate(this.CardPrefab, spawnPlace, new Quaternion(), gameObject.transform);
-            CardHandler Script = Card.GetComponent<CardHandler>();
-            Script.SmallToBig();
-            Script.Ability = Ability;
-            Script.UpdateText();
-            Script.TargetOwner = Owner.gameObject;
-            Script.InitOwner();
+            CardHandler Script = Utils.SpawnCard(Ability, Owner.gameObject, spawnPlace, CardPrefab, gameObject.transform);
             Script.usedExit = this.UsedDeck.transform.position;
             Script.exhaustExit = this.ExhaustDeck.transform.position;
             Script.deck = this;
@@ -156,6 +150,7 @@ namespace Control.Deck
             yield return wait.WaitForCompletion();
             yield return new WaitForSeconds(0.1f);
         }
+        /// <summary>add active card to queue</summary>
         public void AddToQueue(BaseCreature target)
         {
             queue.AddQueue(ActiveCard, target);
