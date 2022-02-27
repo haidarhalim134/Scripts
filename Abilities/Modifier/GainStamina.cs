@@ -20,11 +20,11 @@ namespace Attributes.Abilities
             BaseCreature to;
             if (targeting == Targeting.target) to = target;
             else to = caster;
-            to.stamina.Update(stamina);
+            to.stamina.Update(stamina+Data.BonusStamina);
         }
         public string Text(AbilityData data, PlayerController caster, BaseCreature target)
         {
-            return $"Gain {stamina} stamina{closingDesc}";
+            return $"Gain {stamina+ data.BonusStamina} stamina{closingDesc}";
         }
         void Awake()
         {

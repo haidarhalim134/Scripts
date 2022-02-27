@@ -58,6 +58,8 @@ namespace Attributes.Abilities
         public int Staminacost {get{return _staminaCost+tempAbData.staminaCost;} set{_staminaCost = value;}}
         [SerializeField] int _attackRep;
         public int AttackRep {get{return _attackRep+tempAbData.attackRep;} set{_attackRep = value;}}
+        [SerializeField] int _bonusStamina;
+        public int BonusStamina { get { return _bonusStamina + tempAbData.bonusStamina; } set { _bonusStamina = value; } }
         [NonSerialized]
         public TempAbData tempAbData = new TempAbData();
         public AbilityData Add(AbilityData data)
@@ -67,18 +69,33 @@ namespace Attributes.Abilities
                 Damage = this.Damage + data.Damage,
                 Shield = this.Shield + data.Shield,
                 Staminacost = this.Staminacost + data.Staminacost,
-                AttackRep = this.AttackRep + data.AttackRep
+                AttackRep = this.AttackRep + data.AttackRep,
+                BonusStamina = this.BonusStamina + data.BonusStamina
             };
             return res;
+        }
+        public int Sum()
+        {
+            return Damage+Shield+BonusStamina;
         }
     }
     public class TempAbData
     {
         public int level;
         public int damage;
-        public int  shield;
+        public int shield;
         public int staminaCost;
         public int attackRep;
+        public int bonusStamina;
+    }
+    public class Charge
+    {
+        public AbilityData data;
+        public int sum {get{return data.Sum();}}
+        public void add(Charge charge)
+        {
+            data = data.Add(charge.data);
+        }
     }
     [Serializable]
     public class OverrideDesc

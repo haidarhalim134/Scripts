@@ -14,11 +14,13 @@ public class SimpleActiveDebuffIndicator : MonoBehaviour
     public ActiveDebuff active;
     EventTrigger trigger;
     TooltipManager tooltipManager;
-    void Awake()
+    public void Init()
     {
+        Debug.Log(active.charge);
         trigger = icon.GetComponent<EventTrigger>();
         tooltipManager = TooltipManager.GetInstance();
         if (active.charge == int.MaxValue)charge.text = "";
+        update();
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerEnter;
         entry.callback.AddListener((eventData) => { showDesc(); });

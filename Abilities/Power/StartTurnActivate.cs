@@ -6,11 +6,12 @@ using Control.Combat;
 using Attributes.Abilities;
 using DataContainer;
 
-public class ShieldBrokeActivate : MonoBehaviour
+public class StartTurnActivate : MonoBehaviour
 {
     public GameObject debuffIcon;
     [Tooltip("since this target self, if caster target caster, else target random enemy")]
     public Targeting targeting;
+    /// <summary>only fill one field for the ability data</summary>
     public BotAbilityCont ability;
     public bool hideCharge;
     public string closingDesc = ". ";
@@ -21,20 +22,20 @@ public class ShieldBrokeActivate : MonoBehaviour
     {
         void debuff(ActiveDebuff Data)
         {
-            if (targeting == Targeting.caster)StartCoroutine(abilityMng.Activate(caster, target, Data.data));
+            if (targeting == Targeting.caster) StartCoroutine(abilityMng.Activate(caster, target, Data.data));
             else StartCoroutine(abilityMng.Activate(caster, CombatEngine.GetRandomTarget(caster.EnemyId), Data.data));
         }
         string desc(ActiveDebuff Data)
         {
-            return $"if your shield broke, " + abilityMng.GetDesc(Data.data, null, null)+closingDesc;
+            return $"at the start of your turn, " + abilityMng.GetDesc(Data.data, null, null) + closingDesc;
         }
-        target.DebuffAddActive(target.buffDebuff.shieldBrokeActivate,
-        new ActiveDebuff(Mng.AbName, hideCharge?int.MaxValue:data.Add(ability.Data).Sum(), data.Add(ability.Data), caster, target, debuff, desc), debuffIcon);
+        target.DebuffAddActive(target.buffDebuff.startTurnActivate,
+        new ActiveDebuff(Mng.AbName, hideCharge ? int.MaxValue : data.Add(ability.Data).Sum(), data.Add(ability.Data), caster, target, debuff, desc), debuffIcon);
         yield return null;
     }
     public string Text(AbilityData data, PlayerController caster, BaseCreature target)
     {
-        return $"everytime your shield broke, " + abilityMng.GetDesc(data, null, null)+closingDesc;
+        return $"at the start of your turn, " + abilityMng.GetDesc(data.Add(ability.Data), null, null) + closingDesc;
     }
     void Awake()
     {
