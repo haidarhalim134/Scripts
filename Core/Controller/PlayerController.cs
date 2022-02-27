@@ -53,6 +53,7 @@ namespace Control.Core
                     CombatEngine.ClearTarget();
                     lastPlayedAbility = OrderedAbility;
                     this.OrderedAbility = null;
+                    buffDebuff.Activate(buffDebuff.attackPlayActivate, OrderedAbility);
                 }
             }
         }
