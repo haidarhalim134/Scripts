@@ -92,5 +92,5 @@ namespace Attributes.Abilities
     public enum AbilityType{attack,buff,debuff,shield}
     public enum AbTarget{self, allies, enemy, allEnemy}
     public enum ModType{preAttack,preDamage,postDamage,postAttack}
-    public enum CardModifier{normal,keep}
+    public enum CardModifier{normal,keep, exhaust}
 }

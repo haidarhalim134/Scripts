@@ -20,7 +20,8 @@ namespace Control.UI
         private TextMeshProUGUI NameTXT;
         public TextMeshProUGUI desctxt;
         Sequence sequence;
-        public Vector2 Exit;
+        public Vector2 usedExit;
+        public Vector2 exhaustExit;
         void Awake()
         {
             var trigger = this.GetComponent<EventTrigger>();

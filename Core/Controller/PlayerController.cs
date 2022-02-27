@@ -16,6 +16,7 @@ namespace Control.Core
         public List<AbilityContainer> FullDeck = new List<AbilityContainer>();
         public List<AbilityContainer> ReserveDeck = new List<AbilityContainer>();
         public List<AbilityContainer> UsedDeck = new List<AbilityContainer>();
+        public List<AbilityContainer> ExhaustedDeck = new List<AbilityContainer>();
         public AbilityContainer OrderedAbility;
         public float CardOutSpeed = 0.1f;
         public int MaxDeckSize = 10;
@@ -87,6 +88,10 @@ namespace Control.Core
         public void DeckMoveToUsed(AbilityContainer Ability)
         {
             this.UsedDeck.Add(Ability);
+        }
+        public void DeckMoveToExhausted(AbilityContainer Ability)
+        {
+            this.ExhaustedDeck.Add(Ability);
         }
         private IEnumerator DeckRefillReservedCard()
         {

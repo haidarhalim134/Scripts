@@ -188,8 +188,8 @@ namespace Control.Deck
                 // .SetDelay(0.2f).OnComplete(()=>Destroy(this.gameObject)));
                 this.transform.DOScale(0.3f, totaltime);
                 this.transform.DORotate(new Vector3(), totaltime / 2f);
-                this.transform.DOMoveY(this.Exit.y, totaltime / 2f);
-                this.transform.DOMoveX(this.Exit.x, totaltime).SetEase(Ease.Linear)
+                this.transform.DOMoveY(this.usedExit.y, totaltime / 2f);
+                this.transform.DOMoveX(this.usedExit.x, totaltime).SetEase(Ease.Linear)
                 .OnComplete(() => {Destroy(this.gameObject); deck.UsedDeck.GetComponent<UsedDeckCounter>().Bump();});
                 // Destroy(this.gameObject);
             }
@@ -197,9 +197,17 @@ namespace Control.Deck
             {
                 this.transform.DOScale(0.2f, totaltime);
                 this.transform.DORotate(new Vector3(0, 0, -45), 0.1f);
-                this.transform.DOMoveY(this.Exit.y, totaltime).SetEase(Ease.InQuad);
-                this.transform.DOMoveX(this.Exit.x, totaltime).SetEase(Ease.Linear)
+                this.transform.DOMoveY(this.usedExit.y, totaltime).SetEase(Ease.InQuad);
+                this.transform.DOMoveX(this.usedExit.x, totaltime).SetEase(Ease.Linear)
                 .OnComplete(() => {Destroy(this.gameObject); deck.UsedDeck.GetComponent<UsedDeckCounter>().Bump();});
+            }
+            else if (type == RemoveStatus.exhausted)
+            {
+                this.transform.DOScale(0.2f, totaltime);
+                this.transform.DORotate(new Vector3(0, 0, -45), 0.1f);
+                this.transform.DOMoveY(this.exhaustExit.y, totaltime).SetEase(Ease.InQuad);
+                this.transform.DOMoveX(this.exhaustExit.x, totaltime).SetEase(Ease.Linear)
+                .OnComplete(() => { Destroy(this.gameObject); deck.ExhaustDeck.GetComponent<ExhaustDeckCounter>().Bump(); });
             }
             else
             {

@@ -67,8 +67,15 @@ public class CardQueue : MonoBehaviour
     IEnumerator WaitThenDestroy()
     {
         yield return StartCoroutine(WaitUntilFinish());
-        destroyQueue[0].ability.Destroy(RemoveStatus.used);
-        owner.Owner.DeckMoveToUsed(destroyQueue[0].ability.Ability);
+        if (InGameContainer.GetInstance().SpawnAbilityPrefab(destroyQueue[0].ability.Ability.name).cardModifiers.Any((item)=>item == CardModifier.exhaust))
+        {
+            destroyQueue[0].ability.Destroy(RemoveStatus.exhausted);
+            owner.Owner.DeckMoveToExhausted(destroyQueue[0].ability.Ability);
+        }else
+        {
+            destroyQueue[0].ability.Destroy(RemoveStatus.used);
+            owner.Owner.DeckMoveToUsed(destroyQueue[0].ability.Ability);
+        }
         destroyQueue.RemoveAt(0);
     }
     void ReturnToDeck()

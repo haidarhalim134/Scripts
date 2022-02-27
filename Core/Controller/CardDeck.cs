@@ -27,6 +27,8 @@ namespace Control.Deck
         public GameObject ReserveDeck;
         [Tooltip("used as card exit route")]
         public GameObject UsedDeck;
+        [Tooltip("used as card exit route")]
+        public GameObject ExhaustDeck;
         public CardHandler ActiveCard;
         public CardQueue queue;
         LineRenderer lineRenderer;
@@ -111,7 +113,8 @@ namespace Control.Deck
             Script.UpdateText();
             Script.TargetOwner = Owner.gameObject;
             Script.InitOwner();
-            Script.Exit = this.UsedDeck.transform.position;
+            Script.usedExit = this.UsedDeck.transform.position;
+            Script.exhaustExit = this.ExhaustDeck.transform.position;
             Script.deck = this;
             this.ActiveDeck.Add(Script);
             this.RefreshCardPos();
@@ -277,5 +280,5 @@ namespace Control.Deck
             }
         }
     }
-    public enum RemoveStatus { discard, used };
+    public enum RemoveStatus { discard, used, exhausted };
 }
