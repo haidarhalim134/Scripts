@@ -88,15 +88,6 @@ namespace Attributes.Abilities
         public int attackRep;
         public int bonusStamina;
     }
-    public class Charge
-    {
-        public AbilityData data;
-        public int sum {get{return data.Sum();}}
-        public void add(Charge charge)
-        {
-            data = data.Add(charge.data);
-        }
-    }
     [Serializable]
     public class OverrideDesc
     {
