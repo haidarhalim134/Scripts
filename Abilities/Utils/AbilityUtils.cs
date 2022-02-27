@@ -86,7 +86,7 @@ namespace Attributes.Abilities
         public bool Override;
         public string desc;
     }
-    public enum Debuffs{vulnerable, weakened, marked, evasive, strength}
+    public enum Debuffs{vulnerable, weakened, marked, evasive, strength, wound}
     public enum Stance{rage, excited, noStance}
     public enum Targeting{caster,target}
     public enum AbilityType{attack,buff,debuff,shield}

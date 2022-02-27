@@ -9,10 +9,15 @@ namespace Attributes.Abilities
     {
         public int CalcAttack(int BaseDamage, BaseCreature caster, BaseCreature target)
         {
-            var str = caster.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.strength);
-            if (str != null)
+            var pDebuff = caster.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.strength);
+            if (pDebuff != null)
             {
-                BaseDamage+= str.charge;
+                BaseDamage+= pDebuff.charge;
+            }
+            pDebuff = target.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.wound);
+            if (pDebuff != null)
+            {
+                BaseDamage += pDebuff.charge;
             }
             if (target.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.vulnerable) != null)
             {
