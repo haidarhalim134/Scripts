@@ -42,15 +42,15 @@ namespace Attributes.Abilities
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
-            string rep = repetition + data.AttackRep> 1?$"{repetition+data.AttackRep} times":"";
-            string ta = throughArmor?"through armor":"";
+            string rep = repetition + data.AttackRep> 1?$" {repetition+data.AttackRep} times":"";
+            string ta = throughArmor?" through armor":"";
             if (caster!=null)
             {
                 int calcdamage = Calc.CalcAttack(this.damage + data.Damage, caster, target);
                 string color = AbilityUtils.CalcColor(this.damage, calcdamage);
-                return $"{verb} {color}{calcdamage}</color> damage {rep} {ta} {closingDesc}";
+                return $"{verb} {color}{calcdamage}</color> damage {rep}{ta}{closingDesc}";
             }
-            else return $"{verb} {this.damage + data.Damage} damage {rep} {ta} {closingDesc}";
+            else return $"{verb} {this.damage + data.Damage} damage{rep}{ta}{closingDesc}";
         }
         void Awake()
         {
