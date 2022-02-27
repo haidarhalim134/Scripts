@@ -12,16 +12,23 @@ public class Animations
 {
     public static IEnumerator TowardsCenterAttack(GameObject target, Action onHit,Action postHit, AnimData data)
     {
-        if (target.transform.position.x>0)
+        if (data.toHit!=0)
         {
-            data.distance*= -1;
+            if (target.transform.position.x>0)
+            {
+                data.distance*= -1;
+            }
+            var tween = target.transform.DOLocalMoveX(target.transform.localPosition.x + data.distance, data.toHit).SetEase(data.inEase);
+            yield return tween.WaitForCompletion();
+            onHit();
+            tween = target.transform.DOLocalMoveX(target.transform.localPosition.x - data.distance, data.toBack).SetEase(data.OutEase);
+            yield return tween.WaitForCompletion();
+            postHit();
+        }else
+        {
+            onHit();
+            postHit();
         }
-        var tween = target.transform.DOLocalMoveX(target.transform.localPosition.x + data.distance, data.toHit).SetEase(data.inEase);
-        yield return tween.WaitForCompletion();
-        onHit();
-        tween = target.transform.DOLocalMoveX(target.transform.localPosition.x - data.distance, data.toBack).SetEase(data.OutEase);
-        yield return tween.WaitForCompletion();
-        postHit();
     }
     public static IEnumerator AwayCenterHit(GameObject target, Action onHit, float totalTime = 0.5f, float distance = 50f)
     {
