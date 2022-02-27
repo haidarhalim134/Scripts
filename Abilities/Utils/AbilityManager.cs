@@ -17,6 +17,7 @@ namespace Attributes.Abilities
         [Tooltip("must give a non empty unique name")]
         public string AbName; 
         public int cost;
+        public CardType type;
         public int GoldCost;
         [HideInInspector]
         public List<CardModifier> cardModifiers;
