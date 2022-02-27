@@ -16,6 +16,8 @@ namespace Attributes.Abilities
         public GameObject effect;
         public string verb = "deal";
         public string closingDesc = ". ";
+        public AnimData casterAnim;
+        public AnimData targetAnim;
         AbilityManager Mng;
         static StatProcessor Calc = new StatProcessor();
         public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData data)
@@ -28,13 +30,13 @@ namespace Attributes.Abilities
                 Mng.modifier.modifier[ModType.preDamage].ForEach((abil)=>abil(caster,to,data));
                 to.TakeDamage(Calc.CalcAttack(this.damage + data.Damage, caster, to), caster, DamageSource.attack, throughArmor);
                 Mng.modifier.modifier[ModType.postDamage].ForEach((abil) => abil(caster, to, data));
-                StartCoroutine(Animations.AwayCenterHit(to.gameObject, () => { }, 0.2f, 5f));
+                StartCoroutine(Animations.TowardsCenterAttack(to.gameObject, () => { }, () => { }, targetAnim));
                 Animations.SpawnEffect(to.gameObject, effect);
             }
             Mng.modifier.modifier[ModType.preAttack].ForEach((abil) => abil(caster, to, data));
             for (var i = 0; i< repetition+ data.AttackRep;i++)
             {
-                yield return StartCoroutine(Animations.TowardsCenterAttack(caster.gameObject, Hit, () => { }));
+                yield return StartCoroutine(Animations.TowardsCenterAttack(caster.gameObject, Hit, () => { }, casterAnim));
             }
             Mng.modifier.modifier[ModType.postAttack].ForEach((abil) => abil(caster, to, data));
         }

@@ -5,22 +5,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Attributes.Abilities;
 using TMPro;
 
 public class Animations
 {
-    public static IEnumerator TowardsCenterAttack(GameObject target, Action onHit,Action postHit, float totalTime = 0.25f, float distance = 25f)
+    public static IEnumerator TowardsCenterAttack(GameObject target, Action onHit,Action postHit, AnimData data)
     {
-        float tohit = totalTime * 2/3f;
-        float toback = totalTime * 1/3f;
         if (target.transform.position.x>0)
         {
-            distance*= -1;
+            data.distance*= -1;
         }
-        var tween = target.transform.DOLocalMoveX(target.transform.localPosition.x + distance, tohit).SetEase(Ease.InCirc);
+        var tween = target.transform.DOLocalMoveX(target.transform.localPosition.x + data.distance, data.toHit).SetEase(data.inEase);
         yield return tween.WaitForCompletion();
         onHit();
-        tween = target.transform.DOLocalMoveX(target.transform.localPosition.x - distance, toback).SetEase(Ease.Linear);
+        tween = target.transform.DOLocalMoveX(target.transform.localPosition.x - data.distance, data.toBack).SetEase(data.OutEase);
         yield return tween.WaitForCompletion();
         postHit();
     }

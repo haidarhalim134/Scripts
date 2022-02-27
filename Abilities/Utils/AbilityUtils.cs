@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using DataContainer;
+using DG.Tweening;
 
 namespace Attributes.Abilities
 {
