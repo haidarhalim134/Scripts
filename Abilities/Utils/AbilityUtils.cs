@@ -23,7 +23,7 @@ namespace Attributes.Abilities
     [Serializable]
     public class AbilityContainer
     {
-        public AbilityData Data;
+        public AbilityData Data = new AbilityData();
         public string name;
         public AbilityManager GetManager()
         {
