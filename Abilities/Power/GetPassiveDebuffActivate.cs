@@ -8,7 +8,7 @@ using DataContainer;
 
 public class GetPassiveDebuffActivate : BasePower
 {
-    Debuffs whenActivate;
+    public Debuffs whenActivate;
     override public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData data)
     {
         void debuff(ActiveDebuff data, Debuffs lastGet)

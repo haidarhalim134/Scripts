@@ -64,6 +64,7 @@ namespace Attributes.Abilities
         public int Charge { get { return _charge + tempAbData.charge; } set { _charge = value; } }
         [NonSerialized]
         public TempAbData tempAbData = new TempAbData();
+        // everytime you add new field also write it in the add, sum method, and temp. also on all of the requiring ability
         public AbilityData Add(AbilityData data)
         {
             var res = new AbilityData(){
@@ -72,13 +73,14 @@ namespace Attributes.Abilities
                 Shield = this.Shield + data.Shield,
                 Staminacost = this.Staminacost + data.Staminacost,
                 AttackRep = this.AttackRep + data.AttackRep,
-                BonusStamina = this.BonusStamina + data.BonusStamina
+                BonusStamina = this.BonusStamina + data.BonusStamina,
+                Charge = this.Charge + data.Charge
             };
             return res;
         }
         public int Sum()
         {
-            return Damage+Shield+BonusStamina;
+            return Damage+Shield+BonusStamina+Charge;
         }
     }
     public class TempAbData

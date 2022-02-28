@@ -26,4 +26,9 @@ public class BasePower : MonoBehaviour
         Mng.ContainedAbilities.Add(this.Ability);
         Mng.DescGrabber.Add(this.Text);
     }
+    public void activate(ActiveDebuffCardPlay data)
+    {
+        if (targeting == Targeting.caster) StartCoroutine(abilityMng.Activate(data.caster, data.target, data.data));
+        else StartCoroutine(abilityMng.Activate(data.caster, CombatEngine.GetRandomTarget(data.caster.EnemyId), data.data));
+    }
 }

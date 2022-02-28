@@ -16,7 +16,6 @@ public class SimpleActiveDebuffIndicator : MonoBehaviour
     TooltipManager tooltipManager;
     public void Init()
     {
-        Debug.Log(active.charge);
         trigger = icon.GetComponent<EventTrigger>();
         tooltipManager = TooltipManager.GetInstance();
         if (active.charge == int.MaxValue)charge.text = "";
