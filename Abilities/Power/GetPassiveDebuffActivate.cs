@@ -6,13 +6,14 @@ using Control.Combat;
 using Attributes.Abilities;
 using DataContainer;
 
-public class AttackPlayActivate : BasePower
+public class GetPassiveDebuffActivate : BasePower
 {
+    Debuffs whenActivate;
     override public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData data)
     {
-        void debuff(ActiveDebuff data, AbilityContainer lastPlayed)
+        void debuff(ActiveDebuff data, Debuffs lastGet)
         {
-            if (lastPlayed.GetManager().type == CardType.attack)
+            if (lastGet == whenActivate)
             {
                 if (targeting == Targeting.caster) StartCoroutine(abilityMng.Activate(caster, target, data.data));
                 else StartCoroutine(abilityMng.Activate(caster, CombatEngine.GetRandomTarget(caster.EnemyId), data.data));
@@ -20,14 +21,14 @@ public class AttackPlayActivate : BasePower
         }
         string desc(ActiveDebuff Data)
         {
-            return $"if your shield broke, " + abilityMng.GetDesc(Data.data, null, null) + closingDesc;
+            return $"everytime your gain {whenActivate}, " + abilityMng.GetDesc(Data.data, null, null) + closingDesc;
         }
-        target.DebuffAddActive(target.buffDebuff.attackPlayActivate,
-        new ActiveDebuffCardPlay(Mng.AbName, hideCharge ? int.MaxValue : data.Add(ability.Data).Sum(), data.Add(ability.Data), caster, target, debuff, desc), debuffIcon);
+        target.DebuffAddActive(target.buffDebuff.passiveGetActivate,
+        new ActiveDebuffGetPassiveDebuff(Mng.AbName, hideCharge ? int.MaxValue : data.Add(ability.Data).Sum(), data.Add(ability.Data), caster, target, debuff, desc), debuffIcon);
         yield return null;
     }
     override public string Text(AbilityData data, PlayerController caster, BaseCreature target)
     {
-        return $"everytime your play attack card, " + abilityMng.GetDesc(data.Add(ability.Data), null, null) + closingDesc;
+        return $"everytime your gain {whenActivate}, " + abilityMng.GetDesc(data.Add(ability.Data), null, null) + closingDesc;
     }
 }
