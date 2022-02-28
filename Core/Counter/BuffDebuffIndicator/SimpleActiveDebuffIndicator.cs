@@ -38,11 +38,11 @@ public class SimpleActiveDebuffIndicator : MonoBehaviour
     }
     public void update()
     {
-        if (active != null&&active.charge>0)
+        if (active != null)
         {
-            charge.text = "<b>"+active.charge.ToString();
+            charge.text = active.charge == int.MaxValue?"":"<b>"+active.charge.ToString();
         }
-        if (active.charge == 0)
+        if (active.charge == 0&&active.destroyWhen0)
         {
             Destroy(gameObject);
         }

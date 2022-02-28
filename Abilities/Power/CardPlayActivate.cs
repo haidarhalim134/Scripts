@@ -29,14 +29,25 @@ public class CardPlayActivate : BasePower
                 if (lastPlayed.GetManager().type == cardType)activate(data);
             }
         }
+        void reseter(ActiveDebuff data)
+        {
+            data.sibling.update(data.sibling.charge*-1);
+        }
         string desc(ActiveDebuff Data)
         {
             string rep = repetitionRequired>1?$" {repetitionRequired}":"";
             string turn = repetitionRequired > 1 ? $" in a single turn" : "";
             return $"everytime your play{rep} attack card{turn}, " + abilityMng.GetDesc(Data.data, null, null) + closingDesc;
         }
-        target.DebuffAddActive(target.buffDebuff.attackPlayActivate,
-        new ActiveDebuffCardPlay(Mng.AbName, hideCharge ? int.MaxValue : data.Add(ability.Data).Sum(), data.Add(ability.Data), caster, target, debuff, desc), debuffIcon);
+        var cont = new ActiveDebuffCardPlay(Mng.AbName, hideCharge ? int.MaxValue : repetitionRequired > 1 ? 0 : data.Add(ability.Data).Sum(), data.Add(ability.Data), caster, target, debuff, desc);
+        cont.destroyWhen0 = false;
+        target.DebuffAddActive(target.buffDebuff.attackPlayActivate, cont, debuffIcon);
+        if (repetitionRequired > 1)
+        {
+            var conti = new ActiveDebuff(Mng.AbName, int.MaxValue, data.Add(ability.Data), caster, target, reseter, desc);
+            conti.sibling = cont;
+            target.DebuffAddActive(target.buffDebuff.endTurnActivate, conti, debuffIcon);
+        }
         yield return null;
     }
     override public string Text(AbilityData data, PlayerController caster, BaseCreature target)

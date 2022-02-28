@@ -64,7 +64,6 @@ public class PassiveDebuffIndicator : MonoBehaviour
             }
             if (passive.charge == 0&&cont.hideWhen0Charge)
             {
-                Debug.Log("hide");
                 active = false;
                 charge.DOFade(0, 0.5f);
                 icon.GetComponent<Image>().DOFade(0, 0.5f);
