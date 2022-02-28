@@ -46,7 +46,7 @@ public class CardPlayActivate : BasePower
         {
             var conti = new ActiveDebuff(Mng.AbName, int.MaxValue, data.Add(ability.Data), caster, target, reseter, desc);
             conti.sibling = cont;
-            target.DebuffAddActive(target.buffDebuff.endTurnActivate, conti, debuffIcon);
+            target.DebuffAddActive(target.buffDebuff.endTurnActivate, conti, null);
         }
         yield return null;
     }
