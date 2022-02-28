@@ -11,6 +11,7 @@ namespace DataContainer
 {
     public class InGameContainer : MonoBehaviour
     {
+        public PlayerController currPlayer;
         public float delayBetweenTurn;
         public GameObject StaminaCounter;
         public GameObject HealthCounter;

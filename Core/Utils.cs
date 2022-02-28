@@ -12,6 +12,7 @@ using static UnityEngine.Random;
 using DG.Tweening;
 using DataContainer; 
 using Control.Deck;
+using UnityEditor;
 
 public class Utils
 {
@@ -47,6 +48,32 @@ public class Utils
         Script.TargetOwner = owner.gameObject;
         Script.InitOwner();
         return Script;
+    }
+    [MenuItem("CONTEXT/AbilityManager/Get Description")]
+    static void menuDesc()
+    {
+        AbilityManager mng = InGameContainer.GetInstance().SpawnAbilityPrefab(Selection.activeGameObject);
+        Debug.Log(mng.GetDesc(new AbilityData()));
+        GameObject.DestroyImmediate(mng.gameObject);
+    }
+    [MenuItem("CONTEXT/AbilityManager/Give to Hand")]
+    static void menuGiveHand()
+    {
+        if (!Application.isPlaying) return;
+        AbilityManager mng = InGameContainer.GetInstance().SpawnAbilityPrefab(Selection.activeGameObject);
+        InGameContainer.GetInstance().currPlayer.Deck.AddCard(new AbilityContainer(){name = mng.AbName});
+    }
+    [MenuItem("Tools/cheat/Give 1 stamina")]
+    static void menuGiveStamina()
+    {
+        if (!Application.isPlaying) return;
+        InGameContainer.GetInstance().currPlayer.stamina.Update(1);
+    }
+    [MenuItem("Tools/cheat/Finish game")]
+    static void menuEndGame()
+    {
+        if (!Application.isPlaying) return;
+        CombatEngine.EndGame(true);
     }
 }
 public class LoopingIndex
