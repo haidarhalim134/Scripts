@@ -143,6 +143,7 @@ namespace DataContainer
     {
         public Debuffs debuff;
         public GameObject prefab;
+        [TextArea]
         public string description;
         public bool reduceCharge;
         public ReduceChargeTime reduceChargeTime;
