@@ -18,18 +18,18 @@ public class ApplyPassiveDebuffAll : MonoBehaviour
     public OverrideDesc Override = new OverrideDesc();
     static StatProcessor Calc = new StatProcessor();
     AbilityManager Mng;
-    public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data = null)
+    public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data)
     {
         CombatEngine.RegisteredCreature[target.TeamId].ForEach((creature) =>
         {
-            creature.DebuffsAddPassive(this.type, this.charge);
+            creature.DebuffsAddPassive(this.type, this.charge + Data.Charge);
             Animations.SpawnEffect(creature.gameObject, effect);
         });
     }
     public string Text(AbilityData data, PlayerController caster, BaseCreature target)
     {
         if (Override.Override) return Override.desc;
-        return $"{verb} {Math.Abs(this.charge)} <b>{this.type}</b> to All enemy{closingDesc}";
+        return $"{verb} {Math.Abs(this.charge + data.Charge)} <b>{this.type}</b> to All enemy{closingDesc}";
     }
     void Awake()
     {

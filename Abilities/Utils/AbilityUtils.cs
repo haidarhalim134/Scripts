@@ -60,6 +60,8 @@ namespace Attributes.Abilities
         public int AttackRep {get{return _attackRep+tempAbData.attackRep;} set{_attackRep = value;}}
         [SerializeField] int _bonusStamina;
         public int BonusStamina { get { return _bonusStamina + tempAbData.bonusStamina; } set { _bonusStamina = value; } }
+        [SerializeField] int _charge;
+        public int Charge { get { return _charge + tempAbData.charge; } set { _charge = value; } }
         [NonSerialized]
         public TempAbData tempAbData = new TempAbData();
         public AbilityData Add(AbilityData data)
@@ -87,6 +89,7 @@ namespace Attributes.Abilities
         public int staminaCost;
         public int attackRep;
         public int bonusStamina;
+        public int charge;
     }
     [Serializable]
     public class OverrideDesc

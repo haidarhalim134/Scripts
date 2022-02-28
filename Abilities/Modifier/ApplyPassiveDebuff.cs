@@ -19,18 +19,18 @@ namespace Attributes.Abilities
         public OverrideDesc Override = new OverrideDesc();
         static StatProcessor Calc = new StatProcessor();
         AbilityManager Mng;
-        public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data = null)
-        {   
+        public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data)
+        {
             BaseCreature to;
             if (targeting == Targeting.target) to = target;
             else to = caster;
-            to.DebuffsAddPassive(this.type, this.charge);
+            to.DebuffsAddPassive(this.type, this.charge + Data.Charge);
             Animations.SpawnEffect(to.gameObject, effect);
         }
-        public string Text(AbilityData data,PlayerController caster, BaseCreature target)
+        public string Text(AbilityData data, PlayerController caster, BaseCreature target)
         {
-            if (Override.Override)return Override.desc;
-            return $"{verb} {Math.Abs(this.charge)} <b>{this.type}</b>{closingDesc}";
+            if (Override.Override) return Override.desc;
+            return $"{verb} {Math.Abs(this.charge + data.Charge)} <b>{this.type}</b>{closingDesc}";
         }
         void Awake()
         {
