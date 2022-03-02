@@ -18,6 +18,7 @@ namespace Attributes.Abilities
         public string AbName; 
         public int cost;
         public CardType type;
+        public CardRarity rarity;
         public int GoldCost;
         [HideInInspector]
         public List<CardModifier> cardModifiers;

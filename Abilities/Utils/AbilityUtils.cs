@@ -107,4 +107,5 @@ namespace Attributes.Abilities
     public enum ModType{preAttack,preDamage,postDamage,postAttack}
     public enum CardModifier{normal,keep, exhaust}
     public enum CardType{attack, skill, power}
+    public enum CardRarity{common, rare, epic}
 }
