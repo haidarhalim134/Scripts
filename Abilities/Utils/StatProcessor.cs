@@ -9,32 +9,43 @@ namespace Attributes.Abilities
     {
         public int CalcAttack(int BaseDamage, BaseCreature caster, BaseCreature target)
         {
-            var pDebuff = caster.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.strength);
-            if (pDebuff != null)
+            if (caster != null)
             {
-                BaseDamage+= pDebuff.charge;
+                var pDebuff = caster.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.strength);
+                if (pDebuff != null)
+                {
+                    BaseDamage+= pDebuff.charge;
+                }
             }
-            pDebuff = target.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.wound);
-            if (pDebuff != null)
+            if (target != null)
             {
-                BaseDamage += pDebuff.charge;
+                var pDebuff = target.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.wound);
+                if (pDebuff != null)
+                {
+                    BaseDamage += pDebuff.charge;
+                }
             }
+            if (target != null)
             if (target.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.vulnerable) != null)
             {
                 BaseDamage = (int)Math.Floor(BaseDamage * 1.5f);
-            };
+            }
+            if (target != null)
             if (target.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.marked) != null)
             {
                 BaseDamage = (int)Math.Floor(BaseDamage * 2f);
             };
+            if (caster != null)
             if (caster.buffDebuff.passiveDebuffs.Find((cont) => cont.debuff == Debuffs.weakened) != null)
             {
                 BaseDamage = (int)Math.Floor(BaseDamage * 0.75f);
             };
+            if (caster != null)
             if (caster.buffDebuff.stance.stance == Stance.rage)
             {
                 BaseDamage*= 2;
             }
+            if (target != null)
             if (target.buffDebuff.stance.stance == Stance.rage)
             {
                 BaseDamage *= 2;
