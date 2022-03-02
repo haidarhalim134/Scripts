@@ -134,6 +134,15 @@ namespace Control.Core
             CombatEngine.RegisterCreature(this, true);
             this.health.Fill();
             this.Deck = this.TEMP.GetComponent<CardDeck>();
+            IEnumerator updater()
+            {
+                while (true)
+                {
+                    Deck.UpdateAllCardText(this);
+                    yield return new WaitForSeconds(0.1f);
+                }
+            }
+            StartCoroutine(updater());
         }
         public void FinishTurn()
         {

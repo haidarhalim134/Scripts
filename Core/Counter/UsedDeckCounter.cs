@@ -21,7 +21,7 @@ namespace Control.Core
         }
         public void OnClick()
         {
-            this.Viewer.GetComponent<CardViewer>().Enable(this.Player.UsedDeck);
+            this.Viewer.GetComponent<CardViewer>().Enable(this.Player.UsedDeck, Player);
         }
         public void Bump()
         {

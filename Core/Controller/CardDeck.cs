@@ -60,9 +60,16 @@ namespace Control.Deck
             if (this.ActiveCard!=null)
             {
                 CardHandler script = this.ActiveCard;
-                if (caster!=null)script.UpdateText(caster,target);
-                else script.UpdateText();
+                if (caster!=null) script.UpdateText(caster,target);
+                else script.UpdateText(Owner);
             }
+        }
+        public void UpdateAllCardText(PlayerController caster = null)
+        {
+            ActiveDeck.ForEach((item)=>{
+                if (caster != null) item.UpdateText(caster);
+                else item.UpdateText();
+            });
         }
         public void ClearHighlight()
         {

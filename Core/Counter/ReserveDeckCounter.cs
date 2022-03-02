@@ -20,7 +20,7 @@ namespace Control.Core
         }
         public void OnClick()
         {
-            this.Viewer.GetComponent<CardViewer>().Enable(this.Player.ReserveDeck);
+            this.Viewer.GetComponent<CardViewer>().Enable(this.Player.ReserveDeck, Player);
         }
         public void Bump()
         {

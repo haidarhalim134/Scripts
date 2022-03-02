@@ -19,7 +19,7 @@ public class ExhaustDeckCounter : BaseCounter
     }
     public void OnClick()
     {
-        this.Viewer.GetComponent<CardViewer>().Enable(this.Player.ExhaustedDeck);
+        this.Viewer.GetComponent<CardViewer>().Enable(this.Player.ExhaustedDeck, Player);
     }
     public void Bump()
     {

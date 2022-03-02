@@ -52,7 +52,7 @@ namespace Control.Deck
                 this.Active = false;
                 this.Magnify(false);
                 this.transform.SetAsLastSibling();
-                this.UpdateText();
+                this.UpdateText(Owner);
             }
         }
         public void SemiHighlight(bool to)
@@ -70,7 +70,7 @@ namespace Control.Deck
                 else if (!this.Active)
                 {
                     if (deck.isCardHovered == this)deck.isCardHovered = null;
-                    this.UpdateText();
+                    this.UpdateText(Owner);
                     this.transform.SetAsLastSibling();
                     transform.DOScaleX(1,0f).OnComplete(()=>{if (deck.isCardHovered == null) deck.RefreshCardPos();});
                     deck.RefreshCardPos();

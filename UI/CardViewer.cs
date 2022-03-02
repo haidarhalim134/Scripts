@@ -14,7 +14,7 @@ namespace Control.Core
         public GameObject Prefab;
         public GameObject Grid;
         /// <summary>pass an on click method if there is any</summary>
-        public void Enable(List<AbilityContainer> Abilities, bool ordered = false)
+        public void Enable(List<AbilityContainer> Abilities, PlayerController owner = null, bool ordered = false)
         {
             if (!ordered)Abilities = CardSorter.SortByWord(Abilities);
             GameObject Prefab = new GameObject("box");
@@ -27,7 +27,7 @@ namespace Control.Core
                 CardHandlerVisual Script = Object.GetComponent<CardHandlerVisual>();
                 Script.Ability = cont;
                 Script.enableHover = true;
-                Script.UpdateText();
+                Script.UpdateText(owner);
             }
             Destroy(Prefab);
             this.gameObject.SetActive(true);
