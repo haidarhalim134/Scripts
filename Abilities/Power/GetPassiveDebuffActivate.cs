@@ -15,8 +15,7 @@ public class GetPassiveDebuffActivate : BasePower
         {
             if (lastGet == whenActivate)
             {
-                if (targeting == Targeting.caster) StartCoroutine(abilityMng.Activate(caster, target, data.data));
-                else StartCoroutine(abilityMng.Activate(caster, CombatEngine.GetRandomTarget(caster.EnemyId), data.data));
+                activate(data);
             }
         }
         string desc(ActiveDebuff Data)

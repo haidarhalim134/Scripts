@@ -102,6 +102,7 @@ namespace Attributes.Abilities
     public enum Debuffs{vulnerable, weakened, marked, evasive, strength, wound}
     public enum Stance{rage, excited, noStance}
     public enum Targeting{caster,target}
+    public enum PowerTargeting{caster, target, randomenemy}
     public enum AbilityType{attack,buff,debuff,shield}
     public enum AbTarget{self, allies, enemy, allEnemy}
     public enum ModType{preAttack,preDamage,postDamage,postAttack}

@@ -10,10 +10,9 @@ public class StartTurnActivate : BasePower
 {
     override public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData data)
     {
-        void debuff(ActiveDebuff Data)
+        void debuff(ActiveDebuff data)
         {
-            if (targeting == Targeting.caster) StartCoroutine(abilityMng.Activate(caster, target, Data.data));
-            else StartCoroutine(abilityMng.Activate(caster, CombatEngine.GetRandomTarget(caster.EnemyId), Data.data));
+            activate(data);
         }
         string desc(ActiveDebuff Data)
         {

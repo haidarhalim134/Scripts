@@ -10,7 +10,7 @@ public class BasePower : MonoBehaviour
 {
     public GameObject debuffIcon;
     [Tooltip("since this target self, if caster target caster, else target random enemy")]
-    public Targeting targeting;
+    public PowerTargeting targeting;
     public BotAbilityCont ability;
     public bool hideCharge;
     public string closingDesc = ". ";
@@ -26,9 +26,10 @@ public class BasePower : MonoBehaviour
         Mng.ContainedAbilities.Add(this.Ability);
         Mng.DescGrabber.Add(this.Text);
     }
-    public void activate(ActiveDebuffCardPlay data)
+    public void activate(ActiveDebuff data)
     {
-        if (targeting == Targeting.caster) StartCoroutine(abilityMng.Activate(data.caster, data.target, data.data));
+        if (targeting == PowerTargeting.caster) StartCoroutine(abilityMng.Activate(data.caster, data.caster, data.data));
+        else if (targeting == PowerTargeting.target) StartCoroutine(abilityMng.Activate(data.caster, data.target, data.data));
         else StartCoroutine(abilityMng.Activate(data.caster, CombatEngine.GetRandomTarget(data.caster.EnemyId), data.data));
     }
 }
