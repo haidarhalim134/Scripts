@@ -6,12 +6,14 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Attributes.Abilities;
 using Control.Core;
+using Control.Deck;
 
 namespace DataContainer
 {
     public class InGameContainer : MonoBehaviour
     {
         public PlayerController currPlayer;
+        public CardDeck currDeck;
         public float delayBetweenTurn;
         public GameObject StaminaCounter;
         public GameObject HealthCounter;

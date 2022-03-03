@@ -20,9 +20,7 @@ namespace Control.Core
         public AbilityContainer OrderedAbility;
         public float CardOutSpeed = 0.1f;
         public int MaxDeckSize = 10;
-        // TODO: removing this hardcoded assignment is preferred, can assign the instance directly
-        public GameObject TEMP;
-        public CardDeck Deck;
+        public CardDeck Deck {get{return InGameContainer.GetInstance().currDeck; }}
         public EndTurnButton endturnButton;
         /// <returns>true if order accepted else false</returns>
         public bool OrderAbility(AbilityContainer name, bool setupTarget = true)
@@ -124,7 +122,7 @@ namespace Control.Core
         void Awake() {
             this.BaseInit();
             this.IsPlayer = true;
-            this.PlayerStats = LoadedSave.Loaded.Player;
+            this.PlayerStats = Loaded.loaded.Player;
             this.stamina.Max = this.PlayerStats.MaxStamina;
             this.health.Max = this.PlayerStats.MaxHealth;
             this.FullDeck = new List<AbilityContainer>(this.PlayerStats.FullDeck);
@@ -133,7 +131,6 @@ namespace Control.Core
             this.EnemyId = 1;
             CombatEngine.RegisterCreature(this, true);
             this.health.Fill();
-            this.Deck = this.TEMP.GetComponent<CardDeck>();
             IEnumerator updater()
             {
                 while (true)

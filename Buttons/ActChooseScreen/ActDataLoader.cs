@@ -14,20 +14,20 @@ namespace Control.Core
         public static void firstLoadAct(Act act)
         {
             loadedActData = InGameContainer.GetInstance().FindAct(act);
-            LoadedSave.Loaded.currAct = act;
-            if (LoadedSave.Loaded.QueuedLevel.Queue.Count == 0)LoadedSave.Loaded.QueuedLevel.FillQueue();
+            Loaded.loaded.currAct = act;
+            if (Loaded.loaded.QueuedLevel.Queue.Count == 0)Loaded.loaded.QueuedLevel.FillQueue();
         }
         public static void nextAct()
         {
-            int index = Array.IndexOf(actOrder, LoadedSave.Loaded.currAct) + 1;
+            int index = Array.IndexOf(actOrder, Loaded.loaded.currAct) + 1;
             if (index >= actOrder.Length)
             {
                 // TODO: create game finish func
             }
-            LoadedSave.Loaded.currAct = actOrder[index];
+            Loaded.loaded.currAct = actOrder[index];
             loadedActData = InGameContainer.GetInstance().FindAct(actOrder[index]);
-            LoadedSave.Loaded.QueuedLevel.FillQueue();
-            Debug.Log(loadedActData.name+"picked"+LoadedSave.Loaded.QueuedLevel.Queue[0]);
+            Loaded.loaded.QueuedLevel.FillQueue();
+            Debug.Log(loadedActData.name+"picked"+Loaded.loaded.QueuedLevel.Queue[0]);
             ChangeScene.LoadActMap();
         }
     }

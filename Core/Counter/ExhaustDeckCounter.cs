@@ -29,6 +29,6 @@ public class ExhaustDeckCounter : BaseCounter
     // Update is called once per frame
     void Update()
     {
-        this.Counter.text = this.Player.ExhaustedDeck.Count.ToString();
+        if (Player!=null) this.Counter.text = this.Player.ExhaustedDeck.Count.ToString();
     }
 }

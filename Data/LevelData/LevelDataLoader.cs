@@ -1,17 +1,24 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 using static UnityEngine.Random;
 using DataContainer;
 using Control.Core;
+using Control.Combat;
 using Attributes.Abilities;
 
 namespace LevelManager
 {
     public class LevelDataLoader : MonoBehaviour
     {
+        public static void SpawnPlayer(GameObject prefab)
+        {
+            GameObject obj = Instantiate(prefab, GameObject.Find("Team0").transform);
+            InGameContainer.GetInstance().currPlayer = obj.transform.Find("Player").GetComponent<PlayerController>();
+        }
         /// <summary>default spreader : random</summary>
         public static void LoadLevel(LevelDataContainer Level)
         {

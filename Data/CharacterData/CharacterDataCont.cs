@@ -6,6 +6,7 @@ using Attributes.Abilities;
 [CreateAssetMenu(fileName = "LevelData", menuName = "new Character")]
 public class CharacterDataCont : ScriptableObject
 {
+    public GameObject prefab;
     public Character Name;
     public int MaxStamina;
     public BotAbilityCont[] StartingAbilitiy;

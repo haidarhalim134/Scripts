@@ -23,6 +23,7 @@ public class EndTurnButton : MonoBehaviour
     void Awake()
     {
         Disable();
+        Owner.endturnButton = this;
     }
     public void onClick()
     {

@@ -64,15 +64,15 @@ namespace Map
             }else if (this.tree.CurrentPlayerPos)
             {
                 LevelDataContainer cont = ActDataLoader.loadedActData
-                .GetLevel(NodeType.Enemy, LoadedSave.Loaded.QueuedLevel.GetQueued(this.Type));
+                .GetLevel(NodeType.Enemy, Loaded.loaded.QueuedLevel.GetQueued(this.Type));
                 LevelLoader.LoadLevel(cont);
             }else{
                 this.tree.CurrentPlayerPos = true;
                 mapHandler.ProgressPosition(this);
                 // this.SetActive(false);
                 this.CloseChoiceNode();
-                LoadedSave.Loaded.LastLevelWin = false;
-                SaveFile.Save(LoadedSave.Loaded);
+                Loaded.loaded.LastLevelWin = false;
+                SaveFile.Save(Loaded.loaded);
             }
         }
         /// <summary>set the activation of all of this node's childs</summary>

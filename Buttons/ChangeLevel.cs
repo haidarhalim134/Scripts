@@ -12,7 +12,7 @@ public class ChangeLevel : MonoBehaviour
     public Character CharacterName;
     private void OnMouseDown() 
     {
-        LoadedSave.Loaded.InitCharacter(InGameContainer.GetInstance().FindCharacter(CharacterName));
+        Loaded.loaded.InitCharacter(InGameContainer.GetInstance().FindCharacter(CharacterName));
         Debug.Log(target);
         LevelLoader.LoadLevel(target, SceneId);
         LevelLoader.testing = true;

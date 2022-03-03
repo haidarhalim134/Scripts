@@ -10,9 +10,10 @@ using DataContainer;
 
 namespace Control.Core
 {
-    public class LoadedSave
+    public class Loaded
     {
-        public static SaveFile Loaded = new SaveFile();
+        public static SaveFile loaded = new SaveFile();
+        public static CharacterDataCont LoadedCharacter;
     };
     [Serializable]
     public class SaveFile
@@ -63,6 +64,7 @@ namespace Control.Core
         }
         public void InitCharacter(CharacterDataCont cont)
         {
+            Loaded.LoadedCharacter = cont;
             this.CharacterId = cont.Name;
             this.Player = new PlayerDataContainer();
             this.Player.MaxHealth = cont.StartingHealth;

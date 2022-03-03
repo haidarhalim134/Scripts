@@ -31,7 +31,7 @@ namespace Control.Core
         // Update is called once per frame
         void Update()
         {
-            this.Counter.text = this.Player.UsedDeck.Count.ToString();
+            if (Player != null) this.Counter.text = this.Player.UsedDeck.Count.ToString();
             // if (before<this.Player.UsedDeck.Count)Bump();
             // before = this.Player.UsedDeck.Count;
         }

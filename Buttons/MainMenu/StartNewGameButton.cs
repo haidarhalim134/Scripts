@@ -13,8 +13,8 @@ namespace Control.Core
         {
             SaveFile newsafe = new SaveFile();
             SaveFile.Save(newsafe);
-            LoadedSave.Loaded = newsafe;
-            ActDataLoader.firstLoadAct(LoadedSave.Loaded.currAct);
+            Loaded.loaded = newsafe;
+            ActDataLoader.firstLoadAct(Loaded.loaded.currAct);
             ChangeScene.LoadCharacteChoose();
         }
     }

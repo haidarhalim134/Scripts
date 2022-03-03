@@ -12,9 +12,9 @@ namespace Control.Core
         }
         public void onClick()
         {
-            LoadedSave.Loaded = SaveFile.Load();
-            ActDataLoader.firstLoadAct(LoadedSave.Loaded.currAct);
-            if (LoadedSave.Loaded.CharacterId != Character.Nocharacter) ChangeScene.LoadActMap();
+            Loaded.loaded = SaveFile.Load();
+            ActDataLoader.firstLoadAct(Loaded.loaded.currAct);
+            if (Loaded.loaded.CharacterId != Character.Nocharacter) ChangeScene.LoadActMap();
             else ChangeScene.LoadCharacteChoose();
         }
     }

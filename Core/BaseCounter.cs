@@ -16,7 +16,7 @@ namespace Control.Core
         public void Awoke()
         {
             this.Counter = this.GetComponent<TextMeshProUGUI>();
-            this.Creature = this.Target.GetComponent<BaseCreature>();
+            if (Target!=null) this.Creature = this.Target.GetComponent<BaseCreature>();
         }
     }
 }
