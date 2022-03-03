@@ -4,19 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using DataContainer;
 
 namespace Control.Core
 {
     public class ReserveDeckCounter : BaseCounter
     {
-        PlayerController Player;
+        PlayerController Player { get { return InGameContainer.GetInstance().currPlayer; } }
         public GameObject Viewer;
         public Image icon;
         // Start is called before the first frame update
         void Start()
         {
             this.Awoke();
-            this.Player = this.Creature.gameObject.GetComponent<PlayerController>();
         }
         public void OnClick()
         {

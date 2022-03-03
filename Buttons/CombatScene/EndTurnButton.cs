@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using Control.Core;
+using DataContainer;
 
 public class EndTurnButton : MonoBehaviour
 {
-    public PlayerController Owner;
+    public PlayerController Owner {get{return InGameContainer.GetInstance().currPlayer;}}
     private bool Clickable;
     public void Disable()
     {

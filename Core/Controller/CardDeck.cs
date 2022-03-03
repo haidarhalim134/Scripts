@@ -17,7 +17,7 @@ namespace Control.Deck
     {
         public List<CardHandler> ActiveDeck = new List<CardHandler>();
         public GameObject CardPrefab;
-        public PlayerController Owner;
+        public PlayerController Owner {get{return InGameContainer.GetInstance().currPlayer;}}
         public CardHandler isCardHovered;
         public int CardSep;
         public int DeckCurve;
