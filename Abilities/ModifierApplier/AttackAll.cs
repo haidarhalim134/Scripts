@@ -20,9 +20,9 @@ public class AttackAll : MonoBehaviour
     public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData data)
     {
         CombatEngine.RegisteredCreature[target.TeamId].ForEach((creature)=>{
-            Mng.modifier.modifier[ModType.preDamage].ForEach((abil) => abil(caster, creature, data));
+            Mng.ActivateModifier(ModType.preDamage, caster, creature, data);
             creature.TakeDamage(Calc.CalcAttack(this.damage + data.Damage, caster, creature), caster, DamageSource.attack);
-            Mng.modifier.modifier[ModType.postDamage].ForEach((abil) => abil(caster, creature, data));
+            Mng.ActivateModifier(ModType.postDamage, caster, creature, data);
             Animations.SpawnEffect(creature.gameObject, effect);
         });
         yield return null;

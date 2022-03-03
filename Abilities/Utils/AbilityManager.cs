@@ -36,6 +36,10 @@ namespace Attributes.Abilities
         {
             onUse.ForEach((func)=>func(data));
         }
+        public void ActivateModifier(ModType type, BaseCreature caster, BaseCreature target, AbilityData data)
+        {
+            modifier.modifier[type].ForEach((abil) => abil(caster, target, data));
+        }
         public string GetDesc(AbilityData data, PlayerController caster=null, BaseCreature target=null)
         {
             this.Desc = "";

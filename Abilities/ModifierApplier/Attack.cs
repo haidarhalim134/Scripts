@@ -27,18 +27,18 @@ namespace Attributes.Abilities
             else to = caster;
             void Hit()
             {
-                Mng.modifier.modifier[ModType.preDamage].ForEach((abil)=>abil(caster,to,data));
+                Mng.ActivateModifier(ModType.preDamage, caster, to, data);
                 to.TakeDamage(Calc.CalcAttack(this.damage + data.Damage, caster, to), caster, DamageSource.attack, throughArmor);
-                Mng.modifier.modifier[ModType.postDamage].ForEach((abil) => abil(caster, to, data));
+                Mng.ActivateModifier(ModType.postDamage, caster, to, data);
                 StartCoroutine(Animations.TowardsCenterAttack(to.gameObject, () => { }, () => { }, targetAnim));
                 Animations.SpawnEffect(to.gameObject, effect);
             }
-            Mng.modifier.modifier[ModType.preAttack].ForEach((abil) => abil(caster, to, data));
+            Mng.ActivateModifier(ModType.preAttack, caster, to, data);
             for (var i = 0; i< repetition+ data.AttackRep;i++)
             {
                 yield return StartCoroutine(Animations.TowardsCenterAttack(caster.gameObject, Hit, () => { }, casterAnim));
             }
-            Mng.modifier.modifier[ModType.postAttack].ForEach((abil) => abil(caster, to, data));
+            Mng.ActivateModifier(ModType.postAttack, caster, to, data);
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {

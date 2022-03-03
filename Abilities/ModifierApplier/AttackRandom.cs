@@ -21,16 +21,16 @@ namespace Attributes.Abilities
         public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData data)
         {
             var to = CombatEngine.GetRandomTarget(target.TeamId);
-            Mng.modifier.modifier[ModType.preAttack].ForEach((abil) => abil(caster, to, data));
+            Mng.ActivateModifier(ModType.preAttack, caster, to, data);
             for (var x = 0; x < repetition+ data.AttackRep; x++)
             {
                 yield return new WaitForSeconds(this.delay);
-                Mng.modifier.modifier[ModType.preDamage].ForEach((abil) => abil(caster, to, data));
+                Mng.ActivateModifier(ModType.preDamage, caster, to, data);
                 to.TakeDamage(Calc.CalcAttack(this.damage + data.Damage, caster, to), caster, DamageSource.attack);
-                Mng.modifier.modifier[ModType.postDamage].ForEach((abil) => abil(caster, to, data));
+                Mng.ActivateModifier(ModType.postDamage, caster, to, data);
                 Animations.SpawnEffect(to.gameObject, effect);
             }
-            Mng.modifier.modifier[ModType.postAttack].ForEach((abil) => abil(caster, to, data));
+            Mng.ActivateModifier(ModType.postAttack, caster, to, data);
         }
         public string Text(AbilityData data, PlayerController caster, BaseCreature target)
         {

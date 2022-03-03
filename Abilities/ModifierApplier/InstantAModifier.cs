@@ -11,11 +11,11 @@ public class InstantAModifier : MonoBehaviour
     [Tooltip("Apply modifier, instant")]
     static StatProcessor Calc = new StatProcessor();
     AbilityManager Mng;
-    public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData Data)
+    public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData data)
     {
         foreach (var key in Mng.modifier.modifier.Keys)
         {
-            Mng.modifier.modifier[key].ForEach((abil)=>abil(caster,target,Data));
+            Mng.ActivateModifier(key, caster, target, data);
         }
         yield return new WaitForSeconds(0);
     }
