@@ -66,7 +66,6 @@ public class Utils
     [MenuItem("CONTEXT/AbilityManager/fill name with random GUID")]
     static void menuGiveName()
     {
-        if (!Application.isPlaying) return;
         string base64Guid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
         Selection.activeGameObject.GetComponent<AbilityManager>().AbName = base64Guid;
     }
