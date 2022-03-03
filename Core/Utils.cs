@@ -63,6 +63,13 @@ public class Utils
         AbilityManager mng = InGameContainer.GetInstance().SpawnAbilityPrefab(Selection.activeGameObject);
         InGameContainer.GetInstance().currPlayer.Deck.AddCard(new AbilityContainer(){name = mng.AbName});
     }
+    [MenuItem("CONTEXT/AbilityManager/fill name with random GUID")]
+    static void menuGiveName()
+    {
+        if (!Application.isPlaying) return;
+        string base64Guid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+        Selection.activeGameObject.GetComponent<AbilityManager>().AbName = base64Guid;
+    }
     [MenuItem("Tools/cheat/Give 1 stamina")]
     static void menuGiveStamina()
     {
