@@ -19,6 +19,10 @@ public class ChangeScene
     {
         InGameContainer.GetInstance().StartCoroutine(CloseTransition("CombatScene"));
     }
+    public static void LoadCardUpgradeScene()
+    {
+        InGameContainer.GetInstance().StartCoroutine(CloseTransition("CardUpgradeScene"));
+    }
     public static IEnumerator CloseTransition(string scene)
     {
         Transition.Close();
