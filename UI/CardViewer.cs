@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using Attributes.Abilities;
 using Control.UI;
 
@@ -14,7 +14,7 @@ namespace Control.Core
         public GameObject Prefab;
         public GameObject Grid;
         /// <summary>pass an on click method if there is any</summary>
-        public void Enable(List<AbilityContainer> Abilities, PlayerController owner = null, bool ordered = false)
+        public void Enable(List<AbilityContainer> Abilities, PlayerController owner = null, bool ordered = false, Action<CardHandlerVisual> clickFunc = null)
         {
             if (!ordered)Abilities = CardSorter.SortByWord(Abilities);
             GameObject Prefab = new GameObject("box");
@@ -28,6 +28,11 @@ namespace Control.Core
                 Script.Ability = cont;
                 Script.enableHover = true;
                 Script.UpdateText(owner);
+                if (clickFunc != null)
+                {
+                    Button btn = Script.GetComponent<Button>();
+                    btn.onClick.AddListener(()=>clickFunc(Script));
+                }
             }
             Destroy(Prefab);
             this.gameObject.SetActive(true);
