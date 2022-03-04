@@ -1,10 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System;
 using System.Linq;
-using UnityEngine.UI;
+using Control.UI;
 using Attributes.Abilities;
 using Control.Core;
 using Control.Combat;
@@ -38,15 +38,12 @@ public class Utils
         if (res == null)return default(T);
         return res.gameObject.GetComponent<T>();
     }
-    public static CardHandler SpawnCard(AbilityContainer ability, GameObject owner, Vector2 spawnPlace, GameObject prefab, Transform parent)
+    public static T SpawnCard<T>(AbilityContainer ability, GameObject owner, Vector2 spawnPlace, GameObject prefab, Transform parent) where T : CardHandlerVisual
     {
         GameObject Card = GameObject.Instantiate(prefab, spawnPlace, new Quaternion(), parent);
-        CardHandler Script = Card.GetComponent<CardHandler>();
-        Script.SmallToBig();
+        T Script = Card.GetComponent<T>();
         Script.Ability = ability;
         Script.UpdateText();
-        Script.TargetOwner = owner.gameObject;
-        Script.InitOwner();
         return Script;
     }
     [MenuItem("CONTEXT/AbilityManager/Get Description")]

@@ -113,7 +113,10 @@ namespace Control.Deck
         public void AddCard(AbilityContainer Ability)
         {
             Vector2 spawnPlace = (Vector2)this.ReserveDeck.gameObject.transform.position - new Vector2(0f, 1f);
-            CardHandler Script = Utils.SpawnCard(Ability, Owner.gameObject, spawnPlace, CardPrefab, gameObject.transform);
+            CardHandler Script = Utils.SpawnCard<CardHandler>(Ability, Owner.gameObject, spawnPlace, CardPrefab, gameObject.transform);
+            Script.SmallToBig();
+            Script.TargetOwner = Owner.gameObject;
+            Script.InitOwner();
             Script.usedExit = this.UsedDeck.transform.position;
             Script.exhaustExit = this.ExhaustDeck.transform.position;
             Script.deck = this;
