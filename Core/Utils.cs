@@ -38,7 +38,7 @@ public class Utils
         if (res == null)return default(T);
         return res.gameObject.GetComponent<T>();
     }
-    public static T SpawnCard<T>(AbilityContainer ability, GameObject owner, Vector2 spawnPlace, GameObject prefab, Transform parent) where T : CardHandlerVisual
+    public static T SpawnCard<T>(AbilityContainer ability, Vector2 spawnPlace, GameObject prefab, Transform parent) where T : CardHandlerVisual
     {
         GameObject Card = GameObject.Instantiate(prefab, spawnPlace, new Quaternion(), parent);
         T Script = Card.GetComponent<T>();
