@@ -9,9 +9,28 @@ using DataContainer;
 public class CardUpgradeScene : MonoBehaviour
 {
     public CardViewer viewer;
+    public GameObject nextSceneButton;
+    bool opened;
     public void OpenCardUpgradeMenu()
     {
-        viewer.Enable(Loaded.loaded.Player.FullDeck, clickFunc: CardOnClick);
+        if (!opened)
+        {
+            viewer.Enable(Loaded.loaded.Player.FullDeck, clickFunc: CardOnClick);
+            StartCoroutine(CheckIfFinish());
+            opened = true;
+        }
+    }
+    IEnumerator CheckIfFinish()
+    {
+        while (viewer.gameObject.activeSelf)
+        {
+            yield return null;
+        }
+        nextSceneButton.SetActive(true);
+    }
+    public void NextScene()
+    {
+        ChangeScene.LoadActMap();
     }
     void CardOnClick(CardHandlerVisual data)
     {
