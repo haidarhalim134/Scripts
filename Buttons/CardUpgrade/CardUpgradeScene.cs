@@ -31,6 +31,7 @@ public class CardUpgradeScene : MonoBehaviour
     public void NextScene()
     {
         ChangeScene.LoadActMap();
+        Loaded.loaded.LastLevelWin = true;
     }
     void CardOnClick(CardHandlerVisual data)
     {

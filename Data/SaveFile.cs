@@ -64,7 +64,7 @@ namespace Control.Core
         }
         public void InitCharacter(CharacterDataCont cont)
         {
-            Loaded.LoadedCharacter = cont;
+            LoadCharacter(cont);
             this.CharacterId = cont.Name;
             this.Player = new PlayerDataContainer();
             this.Player.MaxHealth = cont.StartingHealth;
@@ -72,6 +72,10 @@ namespace Control.Core
             this.Player.FullDeck = new List<AbilityContainer>(cont.StartingAbilitiy.Select((cont)=>cont.ToNormalContainer()));
             this.Player.initialCardNumber = cont.initialCardNumber;
             this.Player.DeckShuffle();
+        }
+        public static void LoadCharacter(CharacterDataCont cont)
+        {
+            Loaded.LoadedCharacter = cont;
         }
     }
     public enum Act{ Act1, Act2 }

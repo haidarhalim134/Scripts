@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DataContainer;
 
 namespace Control.Core
 {
@@ -14,7 +15,11 @@ namespace Control.Core
         {
             Loaded.loaded = SaveFile.Load();
             ActDataLoader.firstLoadAct(Loaded.loaded.currAct);
-            if (Loaded.loaded.CharacterId != Character.Nocharacter) ChangeScene.LoadActMap();
+            if (Loaded.loaded.CharacterId != Character.Nocharacter) 
+            {
+                ChangeScene.LoadActMap();
+                SaveFile.LoadCharacter(InGameContainer.GetInstance().FindCharacter(Loaded.loaded.CharacterId));
+            }
             else ChangeScene.LoadCharacteChoose();
         }
     }

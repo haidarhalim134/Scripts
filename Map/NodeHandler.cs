@@ -63,9 +63,15 @@ namespace Map
                 return;
             }else if (this.tree.CurrentPlayerPos)
             {
-                LevelDataContainer cont = ActDataLoader.loadedActData
-                .GetLevel(NodeType.Enemy, Loaded.loaded.QueuedLevel.GetQueued(this.Type));
-                LevelLoader.LoadLevel(cont);
+                if (Type == NodeType.Enemy)
+                {
+                    LevelDataContainer cont = ActDataLoader.loadedActData
+                    .GetLevel(NodeType.Enemy, Loaded.loaded.QueuedLevel.GetQueued(this.Type));
+                    LevelLoader.LoadLevel(cont);
+                }else
+                {
+                    ChangeScene.LoadCardUpgradeScene();
+                }
             }else{
                 this.tree.CurrentPlayerPos = true;
                 mapHandler.ProgressPosition(this);

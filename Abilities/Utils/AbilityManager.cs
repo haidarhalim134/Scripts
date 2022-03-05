@@ -19,6 +19,7 @@ namespace Attributes.Abilities
         public int cost;
         public CardType type;
         public CardRarity rarity;
+        public AbilityData bonusPerLevel;
         public int GoldCost;
         [HideInInspector]
         public List<CardModifier> cardModifiers;
@@ -58,6 +59,12 @@ namespace Attributes.Abilities
         {
             StatProcessor Calc = new StatProcessor();
             return Calc.CalcAttack(GetData(data).Damage, caster, target);
+        }
+        public AbilityData GetLevelBonus(AbilityData data)
+        {
+            AbilityData newdata = new AbilityData();
+            for (var i = 0;i < data.Level;i++) newdata = newdata.Add(bonusPerLevel);
+            return data.Add(newdata);
         }
         public IEnumerator Activate(BaseCreature caster, BaseCreature target, AbilityData Data)
         {

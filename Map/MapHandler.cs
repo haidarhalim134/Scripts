@@ -41,6 +41,7 @@ namespace Map
                 if (Loaded.loaded.LastLevelWin)
                 {
                     this.CurrentPlayerPos.ProceedNode();
+                    this.CurrentPlayerPos.Active = false;
                     if (this.CurrentPlayerPos.Child.Count == 0)
                     {
                         // LoadedSave.Loaded.act[LoadedActData.CurrAct].finished = true;

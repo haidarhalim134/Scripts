@@ -17,7 +17,7 @@ public class CardUpgrader : MonoBehaviour
         if (currToUpgrade != null)
         {
             Destroy(currToUpgrade.gameObject);
-            Destroy(showUpgradeSpot.gameObject);
+            Destroy(currShowUpgrade.gameObject);
         }
         AbilityContainer Uability = new AbilityContainer()
         { name = ability.name, Data = ability.Data.Add(new AbilityData() { Level = 1 }) };
@@ -28,7 +28,6 @@ public class CardUpgrader : MonoBehaviour
     }
     public void Upgrade()
     {
-        Debug.Log(currToUpgrade.Ability);
         currToUpgrade.Ability.Data = currShowUpgrade.Ability.Data;
         Disable();
     }
