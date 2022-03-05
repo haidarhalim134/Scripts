@@ -14,6 +14,8 @@ namespace DataContainer
     {
         public PlayerController currPlayer;
         public CardDeck currDeck;
+        public CardUpgrader currCardUpgrader;
+        public GameObject cardViewPrefab;
         public float delayBetweenTurn;
         public GameObject StaminaCounter;
         public GameObject HealthCounter;
