@@ -98,12 +98,14 @@ namespace Control.Core
         public string GetQueued(NodeType type)
         {
             TypeLevelIdCont cont = Queue.Find(cont => cont.Type == type);
-            string result = cont.Levelid;
-            cont.Levelid = ActDataLoader.loadedActData
-            .GetRandomLevel(cont.Type).LevelId;
-            return result;
+            return cont.Levelid;
         }
-        public void FillQueue()
+        public void FillQueue(NodeType type)
+        {
+            ClearQueue(type);
+            Queue.Add(new TypeLevelIdCont(){Type = type, Levelid = ActDataLoader.loadedActData.GetRandomLevel(type).LevelId});
+        }
+        public void FillAllQueue()
         {
             foreach (NodeType type in this.types)
             {
