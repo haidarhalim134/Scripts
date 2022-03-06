@@ -18,11 +18,12 @@ namespace Control.Core
     [Serializable]
     public class SaveFile
     {
-        public PlayerDataContainer Player;
         public Character CharacterId;
         public int Gold = 500;
         public bool LastLevelWin;
         public QueuedLevel QueuedLevel = new QueuedLevel();
+        public QueuedCardShop queuedCardShop = new QueuedCardShop();
+        public PlayerDataContainer Player;
         public Act currAct = Act.Act1;
         // TODO: add every new arc to the initialization
         public Dictionary<Act,ActCont> act = new Dictionary<Act, ActCont>(){
@@ -129,5 +130,36 @@ namespace Control.Core
     {
         public NodeType Type;
         public string Levelid;
+    }
+    [Serializable]
+    public class QueuedCardShop
+    {
+        public List<AbilityContainer> queue = new List<AbilityContainer>();
+        public List<AbilityContainer> GetQueue()
+        {
+            if (queue.Count == 0) FillQueue();
+            return queue;
+        }
+        public void FillQueue()
+        {
+            var common = Loaded.LoadedCharacter.AvailableAbility.ToList().FindAll
+            ((item)=>item.Ability.GetComponent<AbilityManager>().rarity == CardRarity.common).Select((item)=> item.ToNormalContainer());
+            var rare = Loaded.LoadedCharacter.AvailableAbility.ToList().FindAll
+            ((item) => item.Ability.GetComponent<AbilityManager>().rarity == CardRarity.rare).Select((item) => item.ToNormalContainer()); ;
+            var epic = Loaded.LoadedCharacter.AvailableAbility.ToList().FindAll
+            ((item) => item.Ability.GetComponent<AbilityManager>().rarity == CardRarity.epic).Select((item) => item.ToNormalContainer()); ;
+            var prop = InGameContainer.GetInstance().shopProportion;
+            queue.Clear();
+            queue.AddRange(common.ToList().Shuffle<AbilityContainer>(true).GetRange(0, prop.common));
+            queue.AddRange(rare.ToList().Shuffle<AbilityContainer>(true).GetRange(0, prop.rare));
+            queue.AddRange(epic.ToList().Shuffle<AbilityContainer>(true).GetRange(0, prop.epic));
+        }
+    }
+    [Serializable]
+    public class CardShopProportion
+    {
+        public int common;
+        public int rare;
+        public int epic;
     }
 }

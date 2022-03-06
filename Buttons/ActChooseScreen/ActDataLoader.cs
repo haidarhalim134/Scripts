@@ -15,7 +15,7 @@ namespace Control.Core
         {
             loadedActData = InGameContainer.GetInstance().FindAct(act);
             Loaded.loaded.currAct = act;
-            if (Loaded.loaded.QueuedLevel.Queue.Count == 0)Loaded.loaded.QueuedLevel.FillQueue();
+            if (Loaded.loaded.QueuedLevel.Queue.Count == 0)Loaded.loaded.QueuedLevel.FillAllQueue();
         }
         public static void nextAct()
         {
@@ -26,7 +26,7 @@ namespace Control.Core
             }
             Loaded.loaded.currAct = actOrder[index];
             loadedActData = InGameContainer.GetInstance().FindAct(actOrder[index]);
-            Loaded.loaded.QueuedLevel.FillQueue();
+            Loaded.loaded.QueuedLevel.FillAllQueue();
             Debug.Log(loadedActData.name+"picked"+Loaded.loaded.QueuedLevel.Queue[0]);
             ChangeScene.LoadActMap();
         }

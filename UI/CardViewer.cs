@@ -37,13 +37,6 @@ namespace Control.Core
             Destroy(Prefab);
             this.gameObject.SetActive(true);
         }
-        public void Enable(List<AbilityContainer> Abilities, GameObject newPrefab)
-        {
-            var tmp = Prefab;
-            Prefab = newPrefab;
-            Enable(Abilities);
-            Prefab = tmp;
-        }
         public void Disable()
         {
             this.gameObject.SetActive(false);
