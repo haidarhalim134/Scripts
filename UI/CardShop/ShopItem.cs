@@ -11,22 +11,25 @@ namespace Control.Core
     public class ShopItem : MonoBehaviour
     {
         public TextMeshProUGUI Cost;
-        public GameObject Card;
-        public AbilityContainer Ability;
-        public void Init()
+        public CardHandlerVisual Card;
+        public CardShopCont item;
+        public void Init(CardShopCont cont)
         {
-            Card.GetComponent<Button>().onClick.AddListener(this.onClick);
+            item = cont;
+            Cost.text = "a"+cont.cost;
             CardHandlerVisual Script = Card.GetComponent<CardHandlerVisual>();
-            Script.Ability = Ability;
+            Script.Ability = item.item;
             Script.UpdateText();
-            Cost.text = Ability.GetManager().GoldCost.ToString();
         }
-        void onClick()
+        public void onClick()
         {
-            if (Ability.GetManager().GoldCost<= Loaded.loaded.Gold)
+            if (item.cost<= Loaded.loaded.Gold)
             {
-                Loaded.loaded.Player.CardAdd(this.Ability);
-                Destroy(this.gameObject);
+                Loaded.loaded.Gold-= item.cost;
+                Loaded.loaded.Player.CardAdd(item.item);
+                Loaded.loaded.queuedCardShop.queue.Remove(item);
+                Destroy(Card.gameObject);
+                Destroy(Cost.gameObject);
             }
         }
     }

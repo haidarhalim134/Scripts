@@ -70,7 +70,7 @@ namespace Map
                     LevelLoader.LoadLevel(cont);
                 }else
                 {
-                    ChangeScene.LoadCardUpgradeScene();
+                    ChangeScene.LoadShopScene();
                 }
             }else{
                 this.tree.CurrentPlayerPos = true;

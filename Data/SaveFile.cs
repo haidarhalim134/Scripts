@@ -151,10 +151,11 @@ namespace Control.Core
             ((item) => item.Ability.GetComponent<AbilityManager>().rarity == CardRarity.epic).Select((item) => item.ToNormalContainer()); ;
             var prop = InGameContainer.GetInstance().shopProportion;
             var cost = InGameContainer.GetInstance().shopCost;
+            Random rnd = new Random();
             queue.Clear();
-            queue.AddRange(common.ToList().Shuffle<AbilityContainer>(true).GetRange(0, prop.common).Select((item)=>new CardShopCont(cost.GetCost(CardRarity.common), item)));
-            queue.AddRange(rare.ToList().Shuffle<AbilityContainer>(true).GetRange(0, prop.rare).Select((item) => new CardShopCont(cost.GetCost(CardRarity.rare), item)));
-            queue.AddRange(epic.ToList().Shuffle<AbilityContainer>(true).GetRange(0, prop.epic).Select((item) => new CardShopCont(cost.GetCost(CardRarity.epic), item)));
+            queue.AddRange(common.ToList().Shuffle<AbilityContainer>(true).GetRange(0, prop.common).Select((item)=>new CardShopCont(){cost = cost.GetCost(CardRarity.common, rnd) , item = item}));
+            queue.AddRange(rare.ToList().Shuffle<AbilityContainer>(true).GetRange(0, prop.rare).Select((item) => new CardShopCont(){cost = cost.GetCost(CardRarity.rare, rnd), item = item}));
+            queue.AddRange(epic.ToList().Shuffle<AbilityContainer>(true).GetRange(0, prop.epic).Select((item) => new CardShopCont(){cost = cost.GetCost(CardRarity.epic, rnd) , item = item}));
         }
     }
     [Serializable]
@@ -169,11 +170,11 @@ namespace Control.Core
     {
         public int cost;
         public AbilityContainer item;
-        public CardShopCont(int cost, AbilityContainer item)
-        {
-            this.cost = cost;
-            this.item = item;
-        }
+        // public CardShopCont(int cost, AbilityContainer item)
+        // {
+        //     this.cost = cost;
+        //     this.item = item;
+        // }
     }
     [Serializable]
     public class CardShopCost
@@ -181,13 +182,13 @@ namespace Control.Core
         public Cost common;
         public Cost rare;
         public Cost epic;
-        public int GetCost(CardRarity type)
+        public int GetCost(CardRarity type, Random rnd)
         {
-            Random rnd = new Random();
             Cost cost = type == CardRarity.common?common:type == CardRarity.rare?rare:epic;
             return rnd.Next(cost.min, cost.max+1);
         }
     }
+    [Serializable]
     public class Cost
     {
         public int min;
