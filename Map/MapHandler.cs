@@ -41,7 +41,8 @@ namespace Map
                 if (Loaded.loaded.LastLevelWin)
                 {
                     this.CurrentPlayerPos.ProceedNode();
-                    this.CurrentPlayerPos.Active = false;
+                    this.CurrentPlayerPos.SetActive(false);
+                    Debug.Log(CurrentPlayerPos.Active+"-"+(Vector2)CurrentPlayerPos.transform.localPosition);
                     if (this.CurrentPlayerPos.Child.Count == 0)
                     {
                         // LoadedSave.Loaded.act[LoadedActData.CurrAct].finished = true;
@@ -69,18 +70,20 @@ namespace Map
             this.InitializedMainTree = this.CurrentTree[0].SelfInstance;
             //enable the parent tree as starter
             // this.InitializedMainTree.ProceedNode();
-            this.InitializedMainTree.Active = true;
-            // so the movement is instant on load
-            float tmp = this.moveDuration;
-            this.moveDuration = 0;
+            this.InitializedMainTree.SetActive(true);
             this.ProgressPosition(this.CurrentPlayerPos);
-            this.moveDuration = tmp;
         }
-        public void ProgressPosition(NodeHandler Caller)
+        public void ProgressPosition(NodeHandler Caller, float duration = 0)
         {
-            Character.GetComponent<CharacterController>().AddMove(Character.transform.position, this.moveDuration);
             float deltax = Caller.transform.position.x - Character.transform.position.x;
             float deltay = Caller.transform.position.y - Character.transform.position.y;
+            if (duration == 0)
+            {
+                transform.position = this.transform.position - new Vector3(deltax, deltay) - Character.GetComponent<CharacterController>().GetDeltaY();
+                Character.GetComponent<CharacterController>().AddMove(Character.transform.position, this.moveDuration);
+                return;
+            }
+            Character.GetComponent<CharacterController>().AddMove(Character.transform.position, this.moveDuration);
             // this.transform.DOMoveX(this.transform.position.x - deltax, this.moveDuration).OnComplete(()=>Caller.Active = true);
             transform.DOMove(this.transform.position - new Vector3(deltax, deltay) - Character.GetComponent<CharacterController>().GetDeltaY(), this.moveDuration).OnComplete(()=>Caller.Active = true);
         }
@@ -121,7 +124,7 @@ namespace Map
                 if (Branch.CurrentPlayerPos)
                 {
                     this.CurrentPlayerPos = Script;
-                    Script.Active = true;
+                    Script.SetActive(true);
                 }
                 if(Branch.Parent.Count>0)
                 {

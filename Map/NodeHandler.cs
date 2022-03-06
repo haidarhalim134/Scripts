@@ -74,7 +74,8 @@ namespace Map
                 }
             }else{
                 this.tree.CurrentPlayerPos = true;
-                mapHandler.ProgressPosition(this);
+                mapHandler.CurrentPlayerPos = this;
+                mapHandler.ProgressPosition(this, mapHandler.moveDuration);
                 // this.SetActive(false);
                 this.CloseChoiceNode();
                 Loaded.loaded.LastLevelWin = false;
