@@ -18,6 +18,8 @@ namespace DataContainer
         public Menu currMenu;
         public CardViewer currCardViewer;
         public GameObject cardViewPrefab;
+        public CardShopProportion shopProportion;
+        public CardShopCost shopCost;
         public float delayBetweenTurn;
         public GameObject StaminaCounter;
         public GameObject HealthCounter;

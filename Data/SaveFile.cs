@@ -7,6 +7,7 @@ using Attributes.Player;
 using Attributes.Abilities;
 using Tree = Map.Tree;
 using DataContainer;
+using Random = System.Random;
 
 namespace Control.Core
 {
@@ -134,8 +135,8 @@ namespace Control.Core
     [Serializable]
     public class QueuedCardShop
     {
-        public List<AbilityContainer> queue = new List<AbilityContainer>();
-        public List<AbilityContainer> GetQueue()
+        public List<CardShopCont> queue = new List<CardShopCont>();
+        public List<CardShopCont> GetQueue()
         {
             if (queue.Count == 0) FillQueue();
             return queue;
@@ -149,10 +150,11 @@ namespace Control.Core
             var epic = Loaded.LoadedCharacter.AvailableAbility.ToList().FindAll
             ((item) => item.Ability.GetComponent<AbilityManager>().rarity == CardRarity.epic).Select((item) => item.ToNormalContainer()); ;
             var prop = InGameContainer.GetInstance().shopProportion;
+            var cost = InGameContainer.GetInstance().shopCost;
             queue.Clear();
-            queue.AddRange(common.ToList().Shuffle<AbilityContainer>(true).GetRange(0, prop.common));
-            queue.AddRange(rare.ToList().Shuffle<AbilityContainer>(true).GetRange(0, prop.rare));
-            queue.AddRange(epic.ToList().Shuffle<AbilityContainer>(true).GetRange(0, prop.epic));
+            queue.AddRange(common.ToList().Shuffle<AbilityContainer>(true).GetRange(0, prop.common).Select((item)=>new CardShopCont(cost.GetCost(CardRarity.common), item)));
+            queue.AddRange(rare.ToList().Shuffle<AbilityContainer>(true).GetRange(0, prop.rare).Select((item) => new CardShopCont(cost.GetCost(CardRarity.rare), item)));
+            queue.AddRange(epic.ToList().Shuffle<AbilityContainer>(true).GetRange(0, prop.epic).Select((item) => new CardShopCont(cost.GetCost(CardRarity.epic), item)));
         }
     }
     [Serializable]
@@ -161,5 +163,34 @@ namespace Control.Core
         public int common;
         public int rare;
         public int epic;
+    }
+    [Serializable]
+    public class CardShopCont
+    {
+        public int cost;
+        public AbilityContainer item;
+        public CardShopCont(int cost, AbilityContainer item)
+        {
+            this.cost = cost;
+            this.item = item;
+        }
+    }
+    [Serializable]
+    public class CardShopCost
+    {
+        public Cost common;
+        public Cost rare;
+        public Cost epic;
+        public int GetCost(CardRarity type)
+        {
+            Random rnd = new Random();
+            Cost cost = type == CardRarity.common?common:type == CardRarity.rare?rare:epic;
+            return rnd.Next(cost.min, cost.max+1);
+        }
+    }
+    public class Cost
+    {
+        public int min;
+        public int max;
     }
 }
