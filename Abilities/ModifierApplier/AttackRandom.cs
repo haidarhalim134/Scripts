@@ -35,13 +35,12 @@ namespace Attributes.Abilities
         public string Text(AbilityData data, PlayerController caster, BaseCreature target)
         {
             string rep = " " + repetition + data.AttackRep;
+            int based = this.damage + Mng.GetLevelBonus(data).Damage;
             if (caster != null)
             {
-                int calcdamage = Calc.CalcAttack(this.damage + data.Damage, caster, target);
-                string color = AbilityUtils.CalcColor(this.damage, calcdamage);
-                return $"{verb} {color}{calcdamage}</color> damage to{(repetition>1?rep:" ")} random target{closingDesc}";
+                based = Calc.CalcAttack(based, caster, target);
             }
-            else return $"{verb} {this.damage + data.Damage} damage to{(repetition > 1 ? rep : " ")} random target{closingDesc}";
+            return $"{verb} {AbilityUtils.CalcColor(damage, based)}{based}{AbilityUtils.c} damage to{(repetition > 1 ? rep : " ")} random target{closingDesc}";
         }
         void Awake()
         {

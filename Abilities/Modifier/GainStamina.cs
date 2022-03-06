@@ -24,7 +24,8 @@ namespace Attributes.Abilities
         }
         public string Text(AbilityData data, PlayerController caster, BaseCreature target)
         {
-            return $"Gain {stamina + Mng.GetLevelBonus(data).BonusStamina} stamina{closingDesc}";
+            int stam = stamina + Mng.GetLevelBonus(data).BonusStamina;
+            return $"Gain {AbilityUtils.CalcColor(stamina, stam)}{stam}{AbilityUtils.c} stamina{closingDesc}";
         }
         void Awake()
         {

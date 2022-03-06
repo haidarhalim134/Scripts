@@ -29,8 +29,9 @@ namespace Attributes.Abilities
         }
         public string Text(AbilityData data, PlayerController caster, BaseCreature target)
         {
+            int charg = charge + Mng.GetLevelBonus(data).Charge;
             if (Override.Override) return Override.desc;
-            return $"{verb} {Math.Abs(charge + Mng.GetLevelBonus(data).Charge)} <b>{this.type}</b>{closingDesc}";
+            return $"{verb} {AbilityUtils.CalcColor(charge, charg)}{Math.Abs(charg)}{AbilityUtils.c} <b>{this.type}</b>{closingDesc}";
         }
         void Awake()
         {

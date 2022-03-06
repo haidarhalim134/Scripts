@@ -17,7 +17,8 @@ public class WhenDamage : MonoBehaviour
     }
     string Text(AbilityData data, PlayerController caster, BaseCreature target)
     {
-        return $" when {AbilityUtils.cMPastTense[whenApply]}, {(damageChange>0?"increase":"decrease")} damage by {Math.Abs(damageChange)}";
+        int damage = damageChange + mng.GetLevelBonus(data).Damage1;
+        return $" when {AbilityUtils.cMPastTense[whenApply]}, {(damage >0?"increase":"decrease")} damage by {AbilityUtils.CalcColor(damageChange, damage)}{Math.Abs(damage)}{AbilityUtils.c}";
     }
     void Awake()
     {

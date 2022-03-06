@@ -25,7 +25,8 @@ namespace Attributes.Abilities
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
-            return $"give {shield + Mng.GetLevelBonus(data).Shield} shield{closingDesc}";
+            int shil = shield + Mng.GetLevelBonus(data).Shield;
+            return $"give {AbilityUtils.CalcColor(shield, shil)}{shil}{AbilityUtils.c} shield{closingDesc}";
         }
         void Awake()
         {

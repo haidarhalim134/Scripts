@@ -28,7 +28,8 @@ public class DrawCard : MonoBehaviour
     }
     public string Text(AbilityData data, PlayerController caster, BaseCreature target)
     {
-        return $"draw {card + Mng.GetLevelBonus(data).DrawCard} card{closingDesc}";
+        int car = card + Mng.GetLevelBonus(data).DrawCard;
+        return $"draw {AbilityUtils.CalcColor(card, car)}{car}{AbilityUtils.c} card{closingDesc}";
     }
     void Awake()
     {

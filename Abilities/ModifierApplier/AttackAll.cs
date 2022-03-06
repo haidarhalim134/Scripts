@@ -30,14 +30,14 @@ public class AttackAll : MonoBehaviour
     }
     public string Text(AbilityData data, PlayerController caster, BaseCreature target)
     {
-        string rep = $"{repetition + Mng.GetLevelBonus(data).AttackRep} times";
+        int finalrep = repetition + Mng.GetLevelBonus(data).AttackRep;
+        string rep = finalrep > 0?$" {AbilityUtils.CalcColor(repetition, finalrep)}{finalrep}{AbilityUtils.c} times":"";
+        int based = damage + Mng.GetLevelBonus(data).Damage;
         if (caster != null)
         {
-            int calcdamage = Calc.CalcAttack(damage + Mng.GetLevelBonus(data).Damage, caster, target);
-            string color = AbilityUtils.CalcColor(this.damage, calcdamage);
-            return $"{verb} {color}{calcdamage}</color> damage to All enemies{closingDesc}";
+            based = Calc.CalcAttack(based, caster, target);
         }
-        else return $"{verb} {damage + Mng.GetLevelBonus(data).Damage} damage to All enemies{closingDesc}";
+        return $"{verb} {AbilityUtils.CalcColor(damage, based)}{based}{AbilityUtils.c} damage to All enemies{rep}{closingDesc}";
     }
     void Awake()
     {

@@ -28,7 +28,8 @@ public class AddCard : MonoBehaviour
     }
     public string Text(AbilityData data, PlayerController caster, BaseCreature target)
     {
-        return $"add {amount + Mng.GetLevelBonus(data).DrawCard} {abilityMng.AbName} to your hand{closingDesc}";
+        int amo = amount + Mng.GetLevelBonus(data).DrawCard;
+        return $"add {AbilityUtils.CalcColor(amount, amo)}{amo}{AbilityUtils.c} {abilityMng.AbName} to your hand{closingDesc}";
     }
     void Awake()
     {
