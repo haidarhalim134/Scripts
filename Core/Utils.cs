@@ -105,11 +105,11 @@ public class LoopingIndex
 }
 public static class file_extension
 {
-    public static List<T> Shuffle<T>(this List<T> list)
+    public static List<T> Shuffle<T>(this List<T> list, bool mutate = false)
     {
         Random rng = new Random();
         int n = list.Count;
-        var newl = new List<T>(list);
+        var newl = mutate? list:new List<T>(list);
         while (n > 1)
         {
             n--;

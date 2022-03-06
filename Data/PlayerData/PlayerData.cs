@@ -23,7 +23,7 @@ namespace Attributes.Player
         }
         public void DeckShuffle()
         {
-            this.FullDeck = this.FullDeck.Shuffle<AbilityContainer>();
+            this.FullDeck.Shuffle<AbilityContainer>(true);
         }
     }
 }
