@@ -22,7 +22,7 @@ namespace Map
             this.Type = Type;
             this.Parent = Parent;
             gameObject.GetComponent<Image>().color =
-             this.Type == NodeType.Enemy ? Color.red : this.Type == NodeType.Event ? Color.blue : Color.yellow;
+             this.Type == NodeType.Enemy ? Color.red : this.Type == NodeType.Upgrade ? Color.blue : Color.yellow;
             if (this.Parent != null)
             {
                 foreach (NodeHandler parent in this.Parent)
@@ -68,9 +68,12 @@ namespace Map
                     LevelDataContainer cont = ActDataLoader.loadedActData
                     .GetLevel(NodeType.Enemy, Loaded.loaded.QueuedLevel.GetQueued(this.Type));
                     LevelLoader.LoadLevel(cont);
-                }else
+                }else if (Type == NodeType.Upgrade)
                 {
                     ChangeScene.LoadShopScene();
+                }else
+                {
+                    ChangeScene.LoadCardUpgradeScene();
                 }
             }else{
                 this.tree.CurrentPlayerPos = true;

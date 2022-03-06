@@ -34,15 +34,17 @@ namespace Map
                 {"join", new int[] {2}}
             }},
             {"node", new Dictionary<string, int[]>(){
-                {"Home", new int[] {2}},
+                {"Home", new int[] {1,2,3,2,1}},
                 {"Enemy", new int[] {8}},
-                {"Event", new int[] {0}}
+                {"Event", new int[] {0}},
+                {"Upgrade", new int[] {1, 2, 3, 2, 1 }}
             }}
         };
         static Dictionary<string, NodeType> Convert = new Dictionary<string, NodeType>(){
             {"Home",NodeType.Home},
             {"Enemy",NodeType.Enemy},
             {"Event",NodeType.Event},
+            {"Upgrade",NodeType.Upgrade},
         };
         public static float BranchValue(int count)
         {

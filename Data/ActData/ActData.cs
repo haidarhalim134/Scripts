@@ -43,7 +43,7 @@ namespace Control.Core
             return null;
         }
     }
-    public enum NodeType{Enemy,Home,Event}
+    public enum NodeType{Enemy,Home,Event, Upgrade}
     [Serializable]
     public class ActsLevelCont
     {
