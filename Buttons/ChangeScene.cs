@@ -27,6 +27,10 @@ public class ChangeScene
     {
         InGameContainer.GetInstance().StartCoroutine(CloseTransition("CardUpgradeScene"));
     }
+    public static void LoadShopScene()
+    {
+        InGameContainer.GetInstance().StartCoroutine(CloseTransition("ShopScene"));
+    }
     public static IEnumerator CloseTransition(string scene)
     {
         Transition.Close();
