@@ -13,6 +13,7 @@ using DG.Tweening;
 using DataContainer; 
 using Control.Deck;
 using UnityEditor;
+using Map;
 
 public class Utils
 {
@@ -66,17 +67,24 @@ public class Utils
         string base64Guid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
         Selection.activeGameObject.GetComponent<AbilityManager>().AbName = base64Guid;
     }
-    [MenuItem("Tools/cheat/Give 1 stamina")]
+    [MenuItem("Tools/combat cheat/Give 1 stamina")]
     static void menuGiveStamina()
     {
         if (!Application.isPlaying) return;
         InGameContainer.GetInstance().currPlayer.stamina.Update(1);
     }
-    [MenuItem("Tools/cheat/Finish game")]
+    [MenuItem("Tools/combat cheat/Finish game")]
     static void menuEndGame()
     {
         if (!Application.isPlaying) return;
         CombatEngine.EndGame(true);
+    }
+    [MenuItem("Tools/map cheat/Finish game")]
+    static void menuPorceedNode()
+    {
+        if (!Application.isPlaying) return;
+        MapHandler map = GameObject.FindObjectOfType<MapHandler>();
+        map.CurrentPlayerPos.ProceedNode();
     }
 }
 public class LoopingIndex
