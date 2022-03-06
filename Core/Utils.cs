@@ -14,6 +14,7 @@ using DataContainer;
 using Control.Deck;
 using UnityEditor;
 using Map;
+using Random = System.Random;
 
 public class Utils
 {
@@ -100,5 +101,23 @@ public class LoopingIndex
         int res = index;
         index = index + 1 >= maxIndex ? 0 : index + 1;
         return res;
+    }
+}
+public static class file_extension
+{
+    public static List<T> Shuffle<T>(this List<T> list)
+    {
+        Random rng = new Random();
+        int n = list.Count;
+        var newl = new List<T>(list);
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            T value = newl[k];
+            newl[k] = newl[n];
+            newl[n] = value;
+        }
+        return newl;
     }
 }

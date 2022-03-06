@@ -23,16 +23,7 @@ namespace Attributes.Player
         }
         public void DeckShuffle()
         {
-            Random rng = new Random();
-            int n = this.FullDeck.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = rng.Next(n + 1);
-                AbilityContainer value = this.FullDeck[k];
-                this.FullDeck[k] = this.FullDeck[n];
-                this.FullDeck[n] = value;
-            }
+            this.FullDeck = this.FullDeck.Shuffle<AbilityContainer>();
         }
     }
 }
