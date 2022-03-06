@@ -7,6 +7,10 @@ using DataContainer;
 
 public class ChangeScene
 {
+    public static void LoadMainMenu()
+    {
+        InGameContainer.GetInstance().StartCoroutine(CloseTransition("MainMenu"));
+    }
     public static void LoadActMap()
     {
         InGameContainer.GetInstance().StartCoroutine(CloseTransition("ActMap"));

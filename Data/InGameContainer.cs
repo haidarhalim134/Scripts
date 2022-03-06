@@ -15,6 +15,7 @@ namespace DataContainer
         public PlayerController currPlayer;
         public CardDeck currDeck;
         public CardUpgrader currCardUpgrader;
+        public Menu currMenu;
         public GameObject cardViewPrefab;
         public float delayBetweenTurn;
         public GameObject StaminaCounter;
@@ -123,6 +124,14 @@ namespace DataContainer
         public static InGameContainer GetInstance()
         {
             return GameObject.Find("Container").GetComponent<InGameContainer>();
+        }
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (currMenu.gameObject.activeSelf) currMenu.Disable();
+                else currMenu.Enable();
+            }
         }
     }
     [Serializable]
