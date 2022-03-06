@@ -80,11 +80,9 @@ namespace Map
             if (duration == 0)
             {
                 transform.position = this.transform.position - new Vector3(deltax, deltay) - Character.GetComponent<CharacterController>().GetDeltaY();
-                Character.GetComponent<CharacterController>().AddMove(Character.transform.position, this.moveDuration);
                 return;
             }
             Character.GetComponent<CharacterController>().AddMove(Character.transform.position, this.moveDuration);
-            // this.transform.DOMoveX(this.transform.position.x - deltax, this.moveDuration).OnComplete(()=>Caller.Active = true);
             transform.DOMove(this.transform.position - new Vector3(deltax, deltay) - Character.GetComponent<CharacterController>().GetDeltaY(), this.moveDuration).OnComplete(()=>Caller.Active = true);
         }
         public void DrawTree(List<Tree> tree)
