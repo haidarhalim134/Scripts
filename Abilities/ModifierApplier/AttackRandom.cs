@@ -22,7 +22,7 @@ namespace Attributes.Abilities
         {
             var to = CombatEngine.GetRandomTarget(target.TeamId);
             Mng.ActivateModifier(ModType.preAttack, caster, to, data);
-            for (var x = 0; x < repetition+ data.AttackRep; x++)
+            for (var x = 0; x < repetition + Mng.GetLevelBonus(data).AttackRep; x++)
             {
                 yield return new WaitForSeconds(this.delay);
                 Mng.ActivateModifier(ModType.preDamage, caster, to, data);

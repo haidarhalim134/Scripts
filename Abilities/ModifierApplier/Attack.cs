@@ -27,14 +27,14 @@ namespace Attributes.Abilities
             else to = caster;
             void Hit()
             {
-                Mng.ActivateModifier(ModType.preDamage, caster, to, data);
-                to.TakeDamage(Calc.CalcAttack(this.damage + data.Damage, caster, to), caster, DamageSource.attack, throughArmor);
-                Mng.ActivateModifier(ModType.postDamage, caster, to, data);
+                Mng.ActivateModifier(ModType.preDamage, caster, to, Mng.GetLevelBonus(data));
+                to.TakeDamage(Calc.CalcAttack(damage + Mng.GetLevelBonus(data).Damage, caster, to), caster, DamageSource.attack, throughArmor);
+                Mng.ActivateModifier(ModType.postDamage, caster, to, Mng.GetLevelBonus(data));
                 StartCoroutine(Animations.TowardsCenterAttack(to.gameObject, () => { }, () => { }, targetAnim));
                 Animations.SpawnEffect(to.gameObject, effect);
             }
-            Mng.ActivateModifier(ModType.preAttack, caster, to, data);
-            for (var i = 0; i< repetition+ data.AttackRep;i++)
+            Mng.ActivateModifier(ModType.preAttack, caster, to, Mng.GetLevelBonus(data));
+            for (var i = 0; i< repetition+ Mng.GetLevelBonus(data).AttackRep;i++)
             {
                 yield return StartCoroutine(Animations.TowardsCenterAttack(caster.gameObject, Hit, () => { }, casterAnim));
             }
@@ -42,15 +42,15 @@ namespace Attributes.Abilities
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
-            string rep = repetition + data.AttackRep> 1?$" {repetition+data.AttackRep} times":"";
+            string rep = repetition + Mng.GetLevelBonus(data).AttackRep > 1?$" {repetition + Mng.GetLevelBonus(data).AttackRep} times":"";
             string ta = throughArmor?" through armor":"";
             if (caster!=null)
             {
-                int calcdamage = Calc.CalcAttack(this.damage + data.Damage, caster, target);
+                int calcdamage = Calc.CalcAttack(damage + Mng.GetLevelBonus(data).Damage, caster, target);
                 string color = AbilityUtils.CalcColor(this.damage, calcdamage);
                 return $"{verb} {color}{calcdamage}</color> damage{rep}{ta}{closingDesc}";
             }
-            else return $"{verb} {this.damage + data.Damage} damage{rep}{ta}{closingDesc}";
+            else return $"{verb} {damage + Mng.GetLevelBonus(data).Damage} damage{rep}{ta}{closingDesc}";
         }
         void Awake()
         {

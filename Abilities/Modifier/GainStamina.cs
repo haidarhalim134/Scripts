@@ -15,16 +15,16 @@ namespace Attributes.Abilities
         public string closingDesc = ". ";
         static StatProcessor Calc = new StatProcessor();
         AbilityManager Mng;
-        public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data = null)
+        public void Ability(BaseCreature caster, BaseCreature target, AbilityData data = null)
         {
             BaseCreature to;
             if (targeting == Targeting.target) to = target;
             else to = caster;
-            to.stamina.Update(stamina+Data.BonusStamina);
+            to.stamina.Update(stamina + Mng.GetLevelBonus(data).BonusStamina);
         }
         public string Text(AbilityData data, PlayerController caster, BaseCreature target)
         {
-            return $"Gain {stamina+ data.BonusStamina} stamina{closingDesc}";
+            return $"Gain {stamina + Mng.GetLevelBonus(data).BonusStamina} stamina{closingDesc}";
         }
         void Awake()
         {

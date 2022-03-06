@@ -19,24 +19,25 @@ public class AttackAll : MonoBehaviour
     static StatProcessor Calc = new StatProcessor();
     public IEnumerator Ability(BaseCreature caster, BaseCreature target, AbilityData data)
     {
+        for (var i = 0;i < repetition + Mng.GetLevelBonus(data).AttackRep;i++)
         CombatEngine.RegisteredCreature[target.TeamId].ForEach((creature)=>{
-            Mng.ActivateModifier(ModType.preDamage, caster, creature, data);
-            creature.TakeDamage(Calc.CalcAttack(this.damage + data.Damage, caster, creature), caster, DamageSource.attack);
-            Mng.ActivateModifier(ModType.postDamage, caster, creature, data);
+            Mng.ActivateModifier(ModType.preDamage, caster, creature, Mng.GetLevelBonus(data));
+            creature.TakeDamage(Calc.CalcAttack(damage + Mng.GetLevelBonus(data).Damage, caster, creature), caster, DamageSource.attack);
+            Mng.ActivateModifier(ModType.postDamage, caster, creature, Mng.GetLevelBonus(data));
             Animations.SpawnEffect(creature.gameObject, effect);
         });
         yield return null;
     }
     public string Text(AbilityData data, PlayerController caster, BaseCreature target)
     {
-        string rep = $"{repetition + data.AttackRep} times";
+        string rep = $"{repetition + Mng.GetLevelBonus(data).AttackRep} times";
         if (caster != null)
         {
-            int calcdamage = Calc.CalcAttack(this.damage + data.Damage, caster, target);
+            int calcdamage = Calc.CalcAttack(damage + Mng.GetLevelBonus(data).Damage, caster, target);
             string color = AbilityUtils.CalcColor(this.damage, calcdamage);
             return $"{verb} {color}{calcdamage}</color> damage to All enemies{closingDesc}";
         }
-        else return $"{verb} {this.damage + data.Damage} damage to All enemies{closingDesc}";
+        else return $"{verb} {damage + Mng.GetLevelBonus(data).Damage} damage to All enemies{closingDesc}";
     }
     void Awake()
     {

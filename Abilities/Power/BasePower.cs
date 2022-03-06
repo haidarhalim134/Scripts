@@ -28,8 +28,8 @@ public class BasePower : MonoBehaviour
     }
     public void activate(ActiveDebuff data)
     {
-        if (targeting == PowerTargeting.caster) StartCoroutine(abilityMng.Activate(data.caster, data.caster, data.data));
-        else if (targeting == PowerTargeting.target) StartCoroutine(abilityMng.Activate(data.caster, data.target, data.data));
-        else StartCoroutine(abilityMng.Activate(data.caster, CombatEngine.GetRandomTarget(data.caster.EnemyId), data.data));
+        if (targeting == PowerTargeting.caster) StartCoroutine(abilityMng.Activate(data.caster, data.caster, Mng.GetLevelBonus(data.data)));
+        else if (targeting == PowerTargeting.target) StartCoroutine(abilityMng.Activate(data.caster, data.target, Mng.GetLevelBonus(data.data)));
+        else StartCoroutine(abilityMng.Activate(data.caster, CombatEngine.GetRandomTarget(data.caster.EnemyId), Mng.GetLevelBonus(data.data)));
     }
 }

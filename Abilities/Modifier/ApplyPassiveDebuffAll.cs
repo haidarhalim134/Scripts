@@ -22,14 +22,14 @@ public class ApplyPassiveDebuffAll : MonoBehaviour
     {
         CombatEngine.RegisteredCreature[target.TeamId].ForEach((creature) =>
         {
-            creature.DebuffsAddPassive(this.type, this.charge + Data.Charge);
+            creature.DebuffsAddPassive(this.type, charge + Mng.GetLevelBonus(Data).Charge);
             Animations.SpawnEffect(creature.gameObject, effect);
         });
     }
     public string Text(AbilityData data, PlayerController caster, BaseCreature target)
     {
         if (Override.Override) return Override.desc;
-        return $"{verb} {Math.Abs(this.charge + data.Charge)} <b>{this.type}</b> to All enemy{closingDesc}";
+        return $"{verb} {Math.Abs(charge + Mng.GetLevelBonus(data).Charge)} <b>{this.type}</b> to All enemy{closingDesc}";
     }
     void Awake()
     {

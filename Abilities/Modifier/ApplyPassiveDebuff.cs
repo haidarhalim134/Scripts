@@ -24,13 +24,13 @@ namespace Attributes.Abilities
             BaseCreature to;
             if (targeting == Targeting.target) to = target;
             else to = caster;
-            to.DebuffsAddPassive(this.type, this.charge + Data.Charge);
+            to.DebuffsAddPassive(this.type, charge+Mng.GetLevelBonus(Data).Charge);
             Animations.SpawnEffect(to.gameObject, effect);
         }
         public string Text(AbilityData data, PlayerController caster, BaseCreature target)
         {
             if (Override.Override) return Override.desc;
-            return $"{verb} {Math.Abs(this.charge + data.Charge)} <b>{this.type}</b>{closingDesc}";
+            return $"{verb} {Math.Abs(charge + Mng.GetLevelBonus(data).Charge)} <b>{this.type}</b>{closingDesc}";
         }
         void Awake()
         {

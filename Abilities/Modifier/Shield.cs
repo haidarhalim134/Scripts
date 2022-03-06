@@ -15,17 +15,17 @@ namespace Attributes.Abilities
         public string closingDesc = ". ";
         static StatProcessor Calc = new StatProcessor();
         AbilityManager Mng;
-        public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data = null)
+        public void Ability(BaseCreature caster, BaseCreature target, AbilityData data = null)
         {
             BaseCreature to;
             if (targeting==Targeting.target)to = target;
             else to = caster;
-            to.shield.Update(this.shield + Data.Shield);
+            to.shield.Update(shield + Mng.GetLevelBonus(data).Shield);
             Animations.SpawnEffect(to.gameObject, effect);
         }
         public string Text(AbilityData data,PlayerController caster, BaseCreature target)
         {
-            return $"give {this.shield} shield{closingDesc}";
+            return $"give {shield + Mng.GetLevelBonus(data).Shield} shield{closingDesc}";
         }
         void Awake()
         {

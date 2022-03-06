@@ -18,7 +18,7 @@ public class DrawCard : MonoBehaviour
         PlayerController control = caster.transform.GetComponent<PlayerController>();
         IEnumerator draw()
         {
-            for (var x = 0;x<this.card;x++)
+            for (var x = 0;x<card+Mng.GetLevelBonus(Data).DrawCard;x++)
             {
                 yield return StartCoroutine(control.DeckAddTo(0));
                 yield return new WaitForSeconds(control.CardOutSpeed);
@@ -28,7 +28,7 @@ public class DrawCard : MonoBehaviour
     }
     public string Text(AbilityData data, PlayerController caster, BaseCreature target)
     {
-        return $"draw {this.card} card{closingDesc}";
+        return $"draw {card + Mng.GetLevelBonus(data).DrawCard} card{closingDesc}";
     }
     void Awake()
     {

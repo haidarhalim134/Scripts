@@ -52,6 +52,8 @@ namespace Attributes.Abilities
         public int Level {get{return _level+tempAbData.level;} set{_level = value;}}
         [SerializeField] int _damage;
         public int Damage {get{return _damage+tempAbData.damage;} set{_damage = value;}}
+        [SerializeField] int _damage1;
+        public int Damage1 { get { return _damage1 + tempAbData.damage1; } set { _damage1 = value; } }
         [SerializeField] int _shield;
         public int Shield {get{return _shield+tempAbData.shield;} set{_shield = value;}}
         [SerializeField] int _staminaCost;
@@ -62,6 +64,8 @@ namespace Attributes.Abilities
         public int BonusStamina { get { return _bonusStamina + tempAbData.bonusStamina; } set { _bonusStamina = value; } }
         [SerializeField] int _charge;
         public int Charge { get { return _charge + tempAbData.charge; } set { _charge = value; } }
+        [SerializeField] int _drawCard;
+        public int DrawCard { get { return _drawCard + tempAbData.drawCard; } set { _drawCard = value; } }
         [NonSerialized]
         public TempAbData tempAbData = new TempAbData();
         // everytime you add new field also write it in the add, sum method, and temp. also on all of the requiring ability
@@ -70,28 +74,32 @@ namespace Attributes.Abilities
             var res = new AbilityData(){
                 Level = this.Level + data.Level,
                 Damage = this.Damage + data.Damage,
+                Damage1 = this.Damage1 + data.Damage1,
                 Shield = this.Shield + data.Shield,
                 Staminacost = this.Staminacost + data.Staminacost,
                 AttackRep = this.AttackRep + data.AttackRep,
                 BonusStamina = this.BonusStamina + data.BonusStamina,
-                Charge = this.Charge + data.Charge
+                Charge = this.Charge + data.Charge,
+                DrawCard = this.DrawCard + data.DrawCard,
             };
             return res;
         }
         public int Sum()
         {
-            return Damage+Shield+BonusStamina+Charge;
+            return Damage+Damage1+Shield+BonusStamina+Charge+DrawCard;
         }
     }
     public class TempAbData
     {
         public int level;
         public int damage;
+        public int damage1;
         public int shield;
         public int staminaCost;
         public int attackRep;
         public int bonusStamina;
         public int charge;
+        public int drawCard;
     }
     [Serializable]
     public class OverrideDesc

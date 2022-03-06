@@ -18,7 +18,7 @@ public class AddCard : MonoBehaviour
         PlayerController ctrl = caster.GetComponent<PlayerController>();
         IEnumerator drawer()
         {
-            for (int x = 0;x<amount;x++)
+            for (int x = 0;x<amount+Mng.GetLevelBonus(data).DrawCard;x++)
             {
                 ctrl.Deck.AddCard(new AbilityContainer() { name = abilityMng.AbName });
                 yield return new WaitForSeconds(ctrl.CardOutSpeed);
@@ -28,7 +28,7 @@ public class AddCard : MonoBehaviour
     }
     public string Text(AbilityData data, PlayerController caster, BaseCreature target)
     {
-        return $"add {amount} {abilityMng.AbName} to your hand{closingDesc}";
+        return $"add {amount + Mng.GetLevelBonus(data).DrawCard} {abilityMng.AbName} to your hand{closingDesc}";
     }
     void Awake()
     {

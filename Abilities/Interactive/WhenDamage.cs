@@ -10,9 +10,10 @@ public class WhenDamage : MonoBehaviour
 {
     public CardModifier whenApply;
     public int damageChange;
+    AbilityManager mng;
     void Activate(AbilityData data)
     {
-        data.tempAbData.damage+= damageChange;
+        data.tempAbData.damage+= damageChange + mng.GetLevelBonus(data).Damage1;
     }
     string Text(AbilityData data, PlayerController caster, BaseCreature target)
     {
@@ -20,7 +21,7 @@ public class WhenDamage : MonoBehaviour
     }
     void Awake()
     {
-        AbilityManager mng = GetComponent<AbilityManager>();
+        mng = GetComponent<AbilityManager>();
         switch(whenApply)
         {
             case CardModifier.normal:
