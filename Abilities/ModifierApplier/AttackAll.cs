@@ -22,7 +22,7 @@ public class AttackAll : MonoBehaviour
         for (var i = 0;i < repetition + Mng.GetLevelBonus(data).AttackRep;i++)
         CombatEngine.RegisteredCreature[target.TeamId].ForEach((creature)=>{
             Mng.ActivateModifier(ModType.preDamage, caster, creature, Mng.GetLevelBonus(data));
-            creature.TakeDamage(Calc.CalcAttack(damage + Mng.GetLevelBonus(data).Damage, caster, creature), caster, DamageSource.attack);
+            creature.TakeDamage(new DamageData(Calc.CalcAttack(damage + Mng.GetLevelBonus(data).Damage, caster, creature), caster, DamageSource.attack));
             Mng.ActivateModifier(ModType.postDamage, caster, creature, Mng.GetLevelBonus(data));
             Animations.SpawnEffect(creature.gameObject, effect);
         });

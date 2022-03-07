@@ -26,7 +26,7 @@ namespace Attributes.Abilities
             {
                 yield return new WaitForSeconds(this.delay);
                 Mng.ActivateModifier(ModType.preDamage, caster, to, data);
-                to.TakeDamage(Calc.CalcAttack(this.damage + data.Damage, caster, to), caster, DamageSource.attack);
+                to.TakeDamage(new DamageData(Calc.CalcAttack(this.damage + data.Damage, caster, to), caster, DamageSource.attack));
                 Mng.ActivateModifier(ModType.postDamage, caster, to, data);
                 Animations.SpawnEffect(to.gameObject, effect);
             }

@@ -28,7 +28,7 @@ namespace Attributes.Abilities
             void Hit()
             {
                 Mng.ActivateModifier(ModType.preDamage, caster, to, Mng.GetLevelBonus(data));
-                to.TakeDamage(Calc.CalcAttack(damage + Mng.GetLevelBonus(data).Damage, caster, to), caster, DamageSource.attack, throughArmor);
+                to.TakeDamage(new DamageData(Calc.CalcAttack(damage + Mng.GetLevelBonus(data).Damage, caster, to), caster, DamageSource.attack), throughArmor);
                 Mng.ActivateModifier(ModType.postDamage, caster, to, Mng.GetLevelBonus(data));
                 StartCoroutine(Animations.TowardsCenterAttack(to.gameObject, () => { }, () => { }, targetAnim));
                 Animations.SpawnEffect(to.gameObject, effect);
