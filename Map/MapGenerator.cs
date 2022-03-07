@@ -99,7 +99,7 @@ namespace Map
                 {
                     PreNode = "normal";
                 }
-                List<string> Nodes = rnd.Choice(new List<string>(Tendencies["node"].Keys), CalcNodeWeights(),
+                List<string> Nodes = rnd.Choice(new List<string>(Tendencies["node"].Keys), Tendencies["node"].Values.ToList().Select(item=>CalcWeightIndex(item)).ToList(),
                  PreNode=="normal"?1:2);
                 foreach (NodeType node in Nodes.Select((a)=>Convert[a]))
                 {
@@ -128,13 +128,6 @@ namespace Map
             (int)Math.Round(CalcWeightIndex(Tendencies[PreNode]["branch"])*MinWidth*1.5/(float)CurrentBranches.Count);
             int Join = CalcWeightIndex(Tendencies[PreNode]["join"]);
             return new List<int>(){Normal, Branch, Join};
-        }
-        private static List<int> CalcNodeWeights()
-        {
-            int wHome = CalcWeightIndex(Tendencies[Node]["Home"]);
-            int wEnemy = CalcWeightIndex(Tendencies[Node]["Enemy"]);
-            int wEvent = CalcWeightIndex(Tendencies[Node]["Event"]);
-            return new List<int>(){wHome, wEnemy, wEvent};
         }
         private static int CalcWeightIndex(int[] Weights)
         {
