@@ -73,7 +73,7 @@ namespace LevelManager
             GameObject DebuffC = Instantiate(InGameContainer.GetInstance().debuffCounter, Object.transform);
             GameObject IntentC = Instantiate(InGameContainer.GetInstance().intentCounter, Object.transform);
             IntentC.GetComponent<IntentsCounter>().owner = Object.GetComponent<BotController>();
-            DebuffC.GetComponent<DebuffCounter>().Creature = Object.GetComponent<BaseCreature>();
+            Object.GetComponent<BaseCreature>().debuffCounter = DebuffC.GetComponent<DebuffCounter>();
             Object.GetComponent<BotController>().intentCounter = IntentC.GetComponent<IntentsCounter>();
             // float heights = RT.rect.height;
             float height = SR.bounds.size.y / 1.5f;//UI.GetComponent<RectTransform>().localScale.y;

@@ -8,12 +8,6 @@ using DataContainer;
 
 public class DebuffCounter : MonoBehaviour
 {
-    public BaseCreature Creature;
-    public bool Active = false;
-    void Start()
-    {
-        Creature.debuffCounter = this;
-    }
     // void Enable()
     // {
     //     this.Creature.buffDebuff.passiveDebuffs.ForEach((debuff) => {
