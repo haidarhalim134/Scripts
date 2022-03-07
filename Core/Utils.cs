@@ -80,12 +80,19 @@ public class Utils
         if (!Application.isPlaying) return;
         CombatEngine.EndGame(true);
     }
-    [MenuItem("Tools/map cheat/Finish game")]
+    [MenuItem("Tools/map cheat/Proceed node")]
     static void menuPorceedNode()
     {
         if (!Application.isPlaying) return;
         MapHandler map = GameObject.FindObjectOfType<MapHandler>();
         map.CurrentPlayerPos.ProceedNode();
+    }
+    [MenuItem("Tools/map cheat/Spawn map")]
+    static void menuSpawnMap()
+    {
+        if (!Application.isPlaying) return;
+        MapHandler map = GameObject.FindObjectOfType<MapHandler>();
+        map.Spawn(testTree:true);
     }
 }
 public class LoopingIndex

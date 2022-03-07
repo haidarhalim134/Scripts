@@ -54,9 +54,10 @@ namespace Map
                 }
             }
         }
-        public void Spawn(List<Tree> tree = null)
+        public void Spawn(List<Tree> tree = null, bool testTree = false)
         {
-            if (tree == null)
+            if (testTree) this.CurrentTree = TreeGenerator.Generate(TargetLenp: 15);
+            else if (tree == null)
             {
                 this.CurrentTree = TreeGenerator.Generate(TargetLenp:ActDataLoader.loadedActData.Length);
                 this.CurrentTree[0].CurrentPlayerPos = true;
