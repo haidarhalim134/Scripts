@@ -29,9 +29,9 @@ namespace Map
         private static Dictionary<string, Dictionary<string, int[]>> Tendencies = new Dictionary<string, Dictionary<string, int[]>>()
         {
             {"pre_node", new Dictionary<string, int[]>(){
-                {"normal", new int[] {6}},
-                {"branch", new int[] {3}},
-                {"join", new int[] {2}}
+                {"normal", new int[] {12}},
+                {"branch", new int[] {2}},
+                {"join", new int[] {1}}
             }},
             {"node", new Dictionary<string, int[]>(){
                 {"Home", new int[] {1,2,3,2,1}},
