@@ -28,7 +28,8 @@ namespace LevelManager
                 GameObject parent = new GameObject("cont");
                 parent.transform.SetParent(GameObject.Find("Team" + Cont.TeamId).transform);
                 GameObject Creature = Instantiate(Level.CreaturePrefab, parent.transform) as GameObject;
-                Creature.AddComponent<BotController>();
+                BotController ctrl = Creature.AddComponent<BotController>();
+                CombatEngine.powerToApply.Add(new PowerQueue(Cont.CreatureAsset.powers, ctrl));
                 InitCreature(Creature, Cont.CreatureAsset, Level, Cont);
             }
         }

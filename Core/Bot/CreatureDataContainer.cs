@@ -15,6 +15,7 @@ namespace DataContainer
         public float ChanceForTwo;
         public BotAbilityCont[] Abilities;
         public AttackPatternCont[] attackPattern;
+        public List<Relic> powers;
         public Sprite Skin;
     }
     [Serializable]
