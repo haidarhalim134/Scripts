@@ -44,7 +44,7 @@ namespace Control.Deck
             {
                 this.Active = true;
                 this.Magnify(true);
-                this.transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0.1f);
+                this.transform.localRotation = Quaternion.Euler(0, 0, 0);
                 this.MoveY(25, 0.1f);
                 this.transform.SetAsLastSibling();
             }else
@@ -63,7 +63,7 @@ namespace Control.Deck
                 {
                     deck.isCardHovered = this;
                     deck.SemiHighlightCard(this);
-                    this.transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0.1f);
+                    this.transform.localRotation = Quaternion.Euler(0, 0, 0);
                     this.MoveY(25, 0.1f);
                     this.gameObject.transform.SetAsLastSibling();
                 }
