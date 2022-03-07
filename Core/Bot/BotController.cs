@@ -53,7 +53,7 @@ namespace Control.Core
             var cont = GetQAbil();
             yield return new WaitForSeconds(InGameContainer.GetInstance().delayBetweenTurn);
             AbilityManager Mng = GetMng(cont);
-            var listoftarget = CombatEngine.GetTarget(this, Mng);
+            var listoftarget = CombatEngine.GetTarget(this, Mng.target);
             CombatEngine.RequestCast(Mng, this, nextTarget, cont.Data);
             nextTarget = tempTarget;
             this.DebuffReduceCharge(ReduceChargeTime.onEndTurn);
@@ -74,7 +74,7 @@ namespace Control.Core
             {return InGameContainer.GetInstance().SpawnAbilityPrefab(cont.Ability).GetStaminaCost(cont.Data) <= this.stamina.Curr;});
             var Cont = rnd.Choice(EnoughMana.ToList(), EnoughMana.Select((cont)=>cont.weight).ToList())[0];
             AbilityManager Mng = GetMng(Cont);
-            var listoftarget = CombatEngine.GetTarget(this, Mng);
+            var listoftarget = CombatEngine.GetTarget(this, Mng.target);
             tempTarget = listoftarget[listoftarget.Count-1];
             if (nextTarget == null) nextTarget = tempTarget;
             intentCounter.Spawn(InGameContainer.GetInstance().SpawnAbilityPrefab(Cont.Ability), Cont.Data);
