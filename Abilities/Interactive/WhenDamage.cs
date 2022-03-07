@@ -8,6 +8,7 @@ using DataContainer;
 
 public class WhenDamage : MonoBehaviour
 {
+    [Header("damage1")]
     public CardModifier whenApply;
     public int damageChange;
     AbilityManager mng;

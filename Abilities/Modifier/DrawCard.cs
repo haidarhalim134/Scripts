@@ -7,7 +7,7 @@ using Attributes.Abilities;
 
 public class DrawCard : BaseModifier
 {
-    [Tooltip("modifier")]
+    [Header("drawCard")]
     public int card = 1;
     override public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data)
     {

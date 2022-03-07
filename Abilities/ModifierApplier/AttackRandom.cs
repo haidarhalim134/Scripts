@@ -9,7 +9,7 @@ namespace Attributes.Abilities
 {
     public class AttackRandom : MonoBehaviour
     {
-        [Tooltip("instant")]
+        [Header("damage, attackrep")]
         public int damage = 10;
         public float delay;
         public int repetition;

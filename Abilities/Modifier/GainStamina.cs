@@ -7,7 +7,7 @@ namespace Attributes.Abilities
 {
     public class GainStamina : BaseModifier
     {
-        [Tooltip("modifier")]
+        [Header("bonusStamina")]
         public int stamina;
         override public void Ability(BaseCreature caster, BaseCreature target, AbilityData data = null)
         {

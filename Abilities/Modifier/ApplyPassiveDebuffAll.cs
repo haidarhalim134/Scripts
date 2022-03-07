@@ -8,7 +8,7 @@ using Control.Combat;
 
 public class ApplyPassiveDebuffAll : BaseModifier
 {
-    [Tooltip("modifier")]
+    [Header("charge")]
     public Debuffs type;
     public int charge;
     public string verb = "apply";

@@ -7,7 +7,7 @@ namespace Attributes.Abilities
 {
     public class Shield : BaseModifier
     {
-        [Tooltip("modifier")]
+        [Header("shield")]
         public int shield = 10;
         override public void Ability(BaseCreature caster, BaseCreature target, AbilityData data = null)
         {

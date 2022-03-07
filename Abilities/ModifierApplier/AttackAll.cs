@@ -9,7 +9,7 @@ using Control.Combat;
 
 public class AttackAll : MonoBehaviour
 {
-    [Tooltip("Apply modifier, instant, pre attack and post attack not applied")]
+    [Header("damage, attackrep")]
     public int damage = 10;
     public int repetition = 1;
     public GameObject effect;

@@ -8,7 +8,7 @@ namespace Attributes.Abilities
 {
     public class ApplyPassiveDebuff : BaseModifier
     {
-        [Tooltip("modifier")]
+        [Header("charge")]
         public Debuffs type;
         public int charge;
         public string verb = "apply";

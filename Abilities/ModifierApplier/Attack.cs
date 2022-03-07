@@ -8,7 +8,7 @@ namespace Attributes.Abilities
 {
     public class Attack : MonoBehaviour
     {
-        [Tooltip("Apply modifier, not instant")]
+        [Header("damage, attackrep")]
         public int damage = 10;
         public int repetition = 1;
         public Targeting targeting = Targeting.target;

@@ -7,6 +7,7 @@ using DataContainer;
 
 public class AddCard : BaseModifier
 {
+    [Header("drawCard")]
     public int amount = 1;
     public GameObject ability;
     AbilityManager abilityMng;
