@@ -5,7 +5,7 @@ using Attributes.Abilities;
 
 namespace DataContainer
 {
-    [CreateAssetMenu(fileName = "CreatureData", menuName = "Creature/new Creature")]
+    [CreateAssetMenu(fileName = "CreatureData", menuName = "new Creature")]
     public class CreatureDataContainer : ScriptableObject
     {
         public int MaxHealth;
