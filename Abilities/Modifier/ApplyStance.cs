@@ -5,31 +5,20 @@ using Control.Core;
 
 namespace Attributes.Abilities
 {
-    public class ApplyStance : MonoBehaviour
+    public class ApplyStance : BaseModifier
     {
         [Tooltip("modifier")]
         public Stance stance;
-        public Targeting targeting;
-        public ModType modType;
-        public string closingDesc = ". ";
-        static StatProcessor Calc = new StatProcessor();
-        AbilityManager Mng;
-        public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data = null)
+        override public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data = null)
         {
             BaseCreature to;
             if (targeting == Targeting.target) to = target;
             else to = caster;
             to.DebuffsAddStance(stance);
         }
-        public string Text(AbilityData data, PlayerController caster, BaseCreature target)
+        override public string Text(AbilityData data, PlayerController caster, BaseCreature target)
         {
             return stance == Stance.noStance?"Exit stance":$"Enter <b>{this.stance}</b>{closingDesc}";
-        }
-        void Awake()
-        {
-            Mng = gameObject.GetComponent<AbilityManager>();
-            Mng.modifier.modifier[modType].Add(this.Ability);
-            Mng.DescGrabber.Add(this.Text);
         }
     }
 }

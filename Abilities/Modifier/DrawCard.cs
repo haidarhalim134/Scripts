@@ -5,15 +5,11 @@ using UnityEngine;
 using Control.Core;
 using Attributes.Abilities;
 
-public class DrawCard : MonoBehaviour
+public class DrawCard : BaseModifier
 {
     [Tooltip("modifier")]
     public int card = 1;
-    public ModType modType;
-    public string closingDesc = ". ";
-    static StatProcessor Calc = new StatProcessor();
-    AbilityManager Mng;
-    public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data)
+    override public void Ability(BaseCreature caster, BaseCreature target, AbilityData Data)
     {
         PlayerController control = caster.transform.GetComponent<PlayerController>();
         IEnumerator draw()
@@ -26,15 +22,9 @@ public class DrawCard : MonoBehaviour
         }
         StartCoroutine(draw());
     }
-    public string Text(AbilityData data, PlayerController caster, BaseCreature target)
+    override public string Text(AbilityData data, PlayerController caster, BaseCreature target)
     {
         int car = card + Mng.GetLevelBonus(data).DrawCard;
         return $"draw {AbilityUtils.CalcColor(card, car)}{car}{AbilityUtils.c} card{closingDesc}";
-    }
-    void Awake()
-    {
-        Mng = gameObject.GetComponent<AbilityManager>();
-        Mng.modifier.modifier[modType].Add(this.Ability);
-        Mng.DescGrabber.Add(this.Text);
     }
 }
