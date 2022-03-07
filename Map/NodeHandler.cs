@@ -70,10 +70,10 @@ namespace Map
                     LevelLoader.LoadLevel(cont);
                 }else if (Type == NodeType.Upgrade)
                 {
-                    ChangeScene.LoadShopScene();
+                    ChangeScene.LoadCardUpgradeScene();
                 }else
                 {
-                    ChangeScene.LoadCardUpgradeScene();
+                    ChangeScene.LoadShopScene();
                 }
             }else{
                 this.tree.CurrentPlayerPos = true;
