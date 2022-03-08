@@ -9,7 +9,7 @@ using DataContainer;
 
 public class CurrHealth : BaseAbility
 {
-    public GameObject debuffIcon;
+    public Sprite debuffIcon;
     [Header("insert > 0")]
     public int healthLostPerStack = 1;
     public AbilityManager increaser;

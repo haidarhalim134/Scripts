@@ -8,7 +8,7 @@ using DataContainer;
 
 public class BasePower : MonoBehaviour
 {
-    public GameObject debuffIcon;
+    public Sprite debuffIcon;
     [Tooltip("since this target self, if caster target caster, else target random enemy")]
     public PowerTargeting targeting;
     public BotAbilityCont ability;

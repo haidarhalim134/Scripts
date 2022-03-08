@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Control.Core;
 using Attributes.Abilities;
 using DataContainer;
@@ -40,15 +41,16 @@ public class DebuffCounter : MonoBehaviour
         indicator.Init();
     }
     /// <summary>if no prefab return null</summary>
-    public SimpleActiveDebuffIndicator SpawnSimpleActive(GameObject prefab, ActiveDebuff debuff)
+    public SimpleActiveDebuffIndicator SpawnSimpleActive(Sprite icon, ActiveDebuff debuff)
     {
-        if (prefab == null)
+        if (icon == null)
         {
             debuff.hideIndicator = true;
             return null;
         }
-        GameObject Object = Instantiate(prefab, this.transform);
-        SimpleActiveDebuffIndicator indicator = Object.GetComponent<SimpleActiveDebuffIndicator>();
+        SimpleActiveDebuffIndicator indicator = Instantiate(InGameContainer.GetInstance().activeDebuffIndicatorPrefab.gameObject, this.transform)
+        .GetComponent<SimpleActiveDebuffIndicator>();
+        indicator.icon.GetComponent<Image>().sprite = icon;
         indicator.active = debuff;
         indicator.Init();
         return indicator;
