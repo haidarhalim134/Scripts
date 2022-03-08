@@ -53,6 +53,7 @@ public class PassiveDebuffIndicator : MonoBehaviour
         {
             charge.text = "<b>" + passive.charge.ToString();
             charge.gameObject.transform.localScale = new Vector3(2, 2, 1);
+            charge.gameObject.transform.DOScale(1, 0.5f);
         }
 
     }
