@@ -7,18 +7,19 @@ using Attributes.Abilities;
 using DataContainer;
 
 
-public class Relic : MonoBehaviour
+[CreateAssetMenu(fileName = "Artifact", menuName = "new Artifact")]
+public class Relic : ScriptableObject
 {
     public AbTarget relicTargeting;
     public AbilityManager power;
     public void Activate(BaseCreature owner)
     {
-        var relic = Instantiate(gameObject).GetComponent<Relic>();
+        InGameContainer cont = InGameContainer.GetInstance();
         AbilityManager mng = InGameContainer.GetInstance().SpawnAbilityPrefab(power.gameObject);
-        if (relicTargeting == AbTarget.self) mng.Activate(owner, owner, new AbilityData());
+        if (relicTargeting == AbTarget.self) cont.StartCoroutine(mng.Activate(owner, owner, new AbilityData()));
         else
         {
-            CombatEngine.GetTarget(owner, relicTargeting).ForEach(item => relic.StartCoroutine(mng.Activate(owner, item, new AbilityData())));
+            CombatEngine.GetTarget(owner, relicTargeting).ForEach(item => cont.StartCoroutine(mng.Activate(owner, item, new AbilityData())));
         }
     }
 }
