@@ -18,7 +18,8 @@ namespace DataContainer
         public Menu currMenu;
         public CardViewer currCardViewer;
         public GameObject cardViewPrefab;
-        public SimpleActiveDebuffIndicator activeDebuffIndicatorPrefab;
+        public GameObject passiveDebuffIndicatorPrefab;
+        public GameObject activeDebuffIndicatorPrefab;
         public CardShopProportion shopProportion;
         public CardShopCost shopCost;
         public float delayBetweenTurn;
@@ -160,7 +161,7 @@ namespace DataContainer
     public class PassiveDebuffCont
     {
         public Debuffs debuff;
-        public GameObject prefab;
+        public Sprite icon;
         [TextArea]
         public string description;
         public bool reduceCharge;

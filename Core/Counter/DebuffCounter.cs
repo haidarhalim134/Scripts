@@ -24,9 +24,10 @@ public class DebuffCounter : MonoBehaviour
     // }
     public PassiveDebuffIndicator AddPassiveDebuff(PassiveDebuff debuff)
     {
-        GameObject prefab = InGameContainer.GetInstance().FindPassiveDebuff(debuff.debuff).prefab;
-        GameObject Object = Instantiate(prefab, this.transform);
+        InGameContainer cont = InGameContainer.GetInstance();
+        GameObject Object = Instantiate(cont.passiveDebuffIndicatorPrefab, this.transform);
         PassiveDebuffIndicator indicator = Object.GetComponent<PassiveDebuffIndicator>();
+        indicator.icon.GetComponent<Image>().sprite = cont.FindPassiveDebuff(debuff.debuff).icon;
         indicator.passive = debuff;
         indicator.Init();
         return indicator;
@@ -48,7 +49,7 @@ public class DebuffCounter : MonoBehaviour
             debuff.hideIndicator = true;
             return null;
         }
-        SimpleActiveDebuffIndicator indicator = Instantiate(InGameContainer.GetInstance().activeDebuffIndicatorPrefab.gameObject, this.transform)
+        SimpleActiveDebuffIndicator indicator = Instantiate(InGameContainer.GetInstance().activeDebuffIndicatorPrefab, this.transform)
         .GetComponent<SimpleActiveDebuffIndicator>();
         indicator.icon.GetComponent<Image>().sprite = icon;
         indicator.active = debuff;
